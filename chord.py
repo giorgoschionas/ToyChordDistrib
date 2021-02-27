@@ -37,6 +37,10 @@ class Chord:
             else:
                 print("ΧΑΜΟΣ ΘΑ ΓΙΝΕΙ")
             
-            # inform your successor that you exist
+            # inform other nodes that you exist
+            self.stabilize()
+            
+            # request table data that should belong to your hash table
+             
 
 

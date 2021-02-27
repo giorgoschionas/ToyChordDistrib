@@ -1,11 +1,15 @@
-service ChordService{
-    rpc Insert() returns 
-    rpc Depart() returns
+syntax = "proto2";
+
+package chord;
+
+service ChordService {
+  rpc Insert(InsertRequest) returns (InsertResponse) {}
 }
 
-message HelloRequest {
-  string name = 1;
+message InsertRequest {
+  required string song = 1;
 }
 
-
-
+message InsertResponse {
+  required string response = 1;
+}
