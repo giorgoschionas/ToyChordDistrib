@@ -1,0 +1,11 @@
+service ChordService{
+    rpc Insert() returns 
+    rpc Depart() returns
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+
+
