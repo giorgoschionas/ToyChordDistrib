@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package chord;
+
+service ChordService {
+  rpc Insert(InsertRequest) returns (InsertResponse) {}
+}
+
+message InsertRequest {
+  string song = 1;
+}
+
+message InsertResponse {
+  string response = 1;
+}
