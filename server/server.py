@@ -1,6 +1,7 @@
-import chord 
 import grpc
-import node_messages_pb2
+from concurrent.futures import ThreadPoolExecutor
+import node_messages_pb2_grpc
+from chord_servicer import ChordServicer
 
 # def main():
 #     local_ip = socket.gethostbyname(socket.gethostname())
@@ -8,9 +9,8 @@ import node_messages_pb2
 #     serve()
 
 def serve():
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-  route_guide_pb2_grpc.add_RouteGuideServicer_to_server(
-      RouteGuideServicer(), server)
+    server = grpc.server(ThreadPoolExecutor(max_workers=10))
+    node_messages_pb2_grpc.add_ChordServiceServicer_to_server(ChordServicer(), server)
     server.add_insecure_port("[::]:50051")
     server.start()
     server.wait_for_termination()

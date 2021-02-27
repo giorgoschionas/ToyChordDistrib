@@ -7,9 +7,9 @@ service ChordService {
 }
 
 message InsertRequest {
-  string song = 1;
+  required string song = 1;
 }
 
 message InsertResponse {
-  string response = 1;
+  required string response = 1;
 }
