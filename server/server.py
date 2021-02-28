@@ -1,7 +1,9 @@
+from concurrent import futures
 import grpc
-from concurrent.futures import ThreadPoolExecutor
 import node_messages_pb2_grpc
 from chord_servicer import ChordServicer
+import logging
+from signal import signal, SIGTERM
 
 # def main():
 #     local_ip = socket.gethostbyname(socket.gethostname())
@@ -9,11 +11,20 @@ from chord_servicer import ChordServicer
 #     serve()
 
 def serve():
-    server = grpc.server(ThreadPoolExecutor(max_workers=10))
+    port = 50051
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     node_messages_pb2_grpc.add_ChordServiceServicer_to_server(ChordServicer(), server)
-    server.add_insecure_port("[::]:50051")
+    server.add_insecure_port(f'[::]:{port}')
+    logging.info(f'gRPC server listening on port {port}')
     server.start()
+    signal(SIGTERM, handle_sigterm)
     server.wait_for_termination()
+
+def handle_sigterm(*_):
+    print("Received shutdown signal")
+    all_rpcs_done_event = server.stop(1)
+    all_rpcs_done_event.wait()
+    print("Shut down gracefully")
 
 if __name__ == '__main__':
     serve()
