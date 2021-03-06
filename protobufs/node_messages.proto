@@ -17,8 +17,7 @@ message InsertResponse {
 }
 
 message DeleteRequest {
-    required string key = 1;
-    required string value = 2;
+    required string song = 1;
 }
 
 message DeleteResponse{
@@ -26,10 +25,10 @@ message DeleteResponse{
 }
 
 message FindSuccessorRequest{
-  required string id =1;
+  required uint32 id =1;
 }
 
 message FindSuccessorResponse{
-  required string id=1;
+  required uint32 id=1;
 }
 
