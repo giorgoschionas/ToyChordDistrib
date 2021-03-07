@@ -1,11 +1,8 @@
 import logging
-from concurrent import futures
-import grpc
+from concurrent import futures                                                             
+import grpc     
 import node_messages_pb2
 import node_messages_pb2_grpc
-from chord_servicer import ChordServicer
-
-
 
 class Address:
     def __init__(self, ip, port):
@@ -40,14 +37,21 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
         server.add_insecure_port(f'[::]:{port}')
         print(f'gRPC server listening on port {port}')
         server.start()
-        server.wait_for_termination()
+        try:
+            server.wait_for_termination()
+        except KeyboardInterrupt:
+            # Shuts down the server with 0 seconds of grace period. During the
+            # grace period, the server won't accept new connections and allow
+            # existing RPCs to continue within the grace period.
+            server.stop(0)
+
     
     def createTopology(self):
         self.predecessor = None  
         self.successor = self.id      
     
     def join(self, node_id):
-        with grpc.insecure_channel('localhost:1024') as channel:
+        with aio.insecure_channel('localhost:1024') as channel:
             stub = node_messages_pb2_grpc.ChordServiceStub(channel)
             response = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=str(self.id)))
             print("Id of successor " , response.id)
@@ -69,12 +73,3 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
                     stub = node_messages_pb2_grpc.ChordServiceStub(channel)
                     response = stub.FindSuccessor(node_messages_pb2.FinsSuccessorRequest(id=request.id))
                     return response
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    chord_node = ChordNode(Address(21, 80))

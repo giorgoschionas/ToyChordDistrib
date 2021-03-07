@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import node_messages_pb2 as node__messages__pb2
+from protobufs import node_messages_pb2 as protobufs_dot_node__messages__pb2
 
 
 class ChordServiceStub(object):
@@ -16,8 +16,18 @@ class ChordServiceStub(object):
         """
         self.Insert = channel.unary_unary(
                 '/chord.ChordService/Insert',
-                request_serializer=node__messages__pb2.InsertRequest.SerializeToString,
-                response_deserializer=node__messages__pb2.InsertResponse.FromString,
+                request_serializer=protobufs_dot_node__messages__pb2.InsertRequest.SerializeToString,
+                response_deserializer=protobufs_dot_node__messages__pb2.InsertResponse.FromString,
+                )
+        self.Delete = channel.unary_unary(
+                '/chord.ChordService/Delete',
+                request_serializer=protobufs_dot_node__messages__pb2.DeleteRequest.SerializeToString,
+                response_deserializer=protobufs_dot_node__messages__pb2.DeleteResponse.FromString,
+                )
+        self.FindSuccessor = channel.unary_unary(
+                '/chord.ChordService/FindSuccessor',
+                request_serializer=protobufs_dot_node__messages__pb2.FindSuccessorRequest.SerializeToString,
+                response_deserializer=protobufs_dot_node__messages__pb2.FindSuccessorResponse.FromString,
                 )
 
 
@@ -30,13 +40,35 @@ class ChordServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Delete(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def FindSuccessor(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ChordServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Insert': grpc.unary_unary_rpc_method_handler(
                     servicer.Insert,
-                    request_deserializer=node__messages__pb2.InsertRequest.FromString,
-                    response_serializer=node__messages__pb2.InsertResponse.SerializeToString,
+                    request_deserializer=protobufs_dot_node__messages__pb2.InsertRequest.FromString,
+                    response_serializer=protobufs_dot_node__messages__pb2.InsertResponse.SerializeToString,
+            ),
+            'Delete': grpc.unary_unary_rpc_method_handler(
+                    servicer.Delete,
+                    request_deserializer=protobufs_dot_node__messages__pb2.DeleteRequest.FromString,
+                    response_serializer=protobufs_dot_node__messages__pb2.DeleteResponse.SerializeToString,
+            ),
+            'FindSuccessor': grpc.unary_unary_rpc_method_handler(
+                    servicer.FindSuccessor,
+                    request_deserializer=protobufs_dot_node__messages__pb2.FindSuccessorRequest.FromString,
+                    response_serializer=protobufs_dot_node__messages__pb2.FindSuccessorResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -60,7 +92,41 @@ class ChordService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/chord.ChordService/Insert',
-            node__messages__pb2.InsertRequest.SerializeToString,
-            node__messages__pb2.InsertResponse.FromString,
+            protobufs_dot_node__messages__pb2.InsertRequest.SerializeToString,
+            protobufs_dot_node__messages__pb2.InsertResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Delete(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.ChordService/Delete',
+            protobufs_dot_node__messages__pb2.DeleteRequest.SerializeToString,
+            protobufs_dot_node__messages__pb2.DeleteResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def FindSuccessor(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.ChordService/FindSuccessor',
+            protobufs_dot_node__messages__pb2.FindSuccessorRequest.SerializeToString,
+            protobufs_dot_node__messages__pb2.FindSuccessorResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

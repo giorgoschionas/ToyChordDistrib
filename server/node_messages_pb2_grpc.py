@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import node_messages_pb2 as protobufs_dot_node__messages__pb2
+from protobufs import node_messages_pb2 as protobufs_dot_node__messages__pb2
 
 
 class ChordServiceStub(object):
