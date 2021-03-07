@@ -25,10 +25,14 @@ message DeleteResponse{
 }
 
 message FindSuccessorRequest{
-  required uint32 id =1;
+  required uint64 id = 1;
+  required string ip = 2;
+  required uint32 port = 3;
 }
 
 message FindSuccessorResponse{
-  required uint32 id=1;
+  required uint64 id = 1;
+  required string ip = 2;
+  required uint32 port = 3;
 }
 

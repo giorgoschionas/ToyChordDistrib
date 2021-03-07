@@ -3,13 +3,12 @@ from concurrent import futures
 import grpc     
 import node_messages_pb2
 import node_messages_pb2_grpc
-from chord_servicer import ChordServicer
 import hashlib
 
 def sha1(msg):
     digest = hashlib.sha1(msg.encode())
     hex_digest= digest.hexdigest()
-    return int(hex_digest,16)
+    return int(hex_digest, 16) % 65536
 
 class Address:
     def __init__(self, ip, port):
@@ -45,8 +44,6 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
     def setSuccessor(self, successorAddress):
         self.successor = NeigboorInfo(successorAddress)
 
-
-
     def query(self, key):
         hashed_key = sha1(key)
         if hashed_key in range(self.predecessor, self.id): 
@@ -67,16 +64,17 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
             # existing RPCs to continue within the grace period.
             server.stop(0)
 
-    
     def createTopology(self):
+        print("Creating bootstrap node")
         self.predecessor = None  
         self.successor = NeigboorInfo(self.address)      
     
     def join(self, node_id):
-        with aio.insecure_channel('localhost:1024') as channel:
+        with grpc.insecure_channel('localhost:1024') as channel:
             stub = node_messages_pb2_grpc.ChordServiceStub(channel)
-            response = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=self.id))
-            print("Id of successor " , response.id)
+            response = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=self.id, ip=self.address.ip, port = self.address.port))
+            print("Id of successor " , response.port)
+            self.setSuccessor(Address(response.ip, response.port))
 
     def Insert(self, request, context):
         digest = sha1(request.song)
@@ -89,30 +87,38 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
         digest = sha1(request.song)
         with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
             stub = node_messages_pb2_grpc.ChordServiceStub(channel)
+            self.successor.id
             successorId = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=digest))
             self.deleteKey(key)
 
 
     # to request pou pairnei einai to id 
     def FindSuccessor(self, request, context):
+        print("Inside successor")
         if self.id == self.successor.id:
             print("Bootstrap node")
-
-            return node_messages_pb2.FindSuccessorResponse(id=self.successor.id)
+            self.setSuccessor(Address(request.ip, request.port))
+            return node_messages_pb2.FindSuccessorResponse(id=self.id, ip=self.address.ip, port=self.address.port)
         else:
-            if request.id > self.id and request.id<self.successor.id:
-                return node_messages_pb2.FindSuccessorResponse(id=self.successor.id)
+            if self.between(self.id, request.id, self.successor.id):
+                response = node_messages_pb2.FindSuccessorResponse(id=self.successor.id, ip=self.successor.ip, port=self.successor.port)
+                self.setSuccessor(Address(request.ip, request.port))
+                return response
             else:
                 with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
+                    print(f"Sending request with data {request.port} from {self.address.port} to {self.successor.port}")
                     stub = node_messages_pb2_grpc.ChordServiceStub(channel)
-                    response = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=request.id))
+                    response = stub.FindSuccessor(request)
                     return response
 
-
-
-
-
-
-
-if __name__ == "__main__":
-    chord_node = ChordNode(Address(21, 80))
+    def between(self, n1, n2, n3):
+        # TODO: added corner case when id == -1
+        if n2 == -1:
+            return False
+        if n1 == -1:
+            return True
+        # Since it's a circle if n1=n3 then n2 is between
+        if n1 < n3:
+            return n1 < n2 < n3
+        else:
+            return n1 < n2 or n2 < n3

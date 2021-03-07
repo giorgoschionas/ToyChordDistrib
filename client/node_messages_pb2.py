@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1dprotobufs/node_messages.proto\x12\x05\x63hord\"\x1d\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"+\n\rDeleteRequest\x12\x0b\n\x03key\x18\x01 \x02(\t\x12\r\n\x05value\x18\x02 \x02(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"\"\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x02(\t\"#\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x02(\t2\xce\x01\n\x0c\x43hordService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00'
+  serialized_pb=b'\n\x1dprotobufs/node_messages.proto\x12\x05\x63hord\"\x1d\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"<\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r2\xce\x01\n\x0c\x43hordService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00'
 )
 
 
@@ -98,15 +98,8 @@ _DELETEREQUEST = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='chord.DeleteRequest.key', index=0,
+      name='song', full_name='chord.DeleteRequest.song', index=0,
       number=1, type=9, cpp_type=9, label=2,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='value', full_name='chord.DeleteRequest.value', index=1,
-      number=2, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -124,7 +117,7 @@ _DELETEREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=107,
-  serialized_end=150,
+  serialized_end=136,
 )
 
 
@@ -155,8 +148,8 @@ _DELETERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=152,
-  serialized_end=186,
+  serialized_start=138,
+  serialized_end=172,
 )
 
 
@@ -170,8 +163,22 @@ _FINDSUCCESSORREQUEST = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='id', full_name='chord.FindSuccessorRequest.id', index=0,
-      number=1, type=9, cpp_type=9, label=2,
+      number=1, type=4, cpp_type=4, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ip', full_name='chord.FindSuccessorRequest.ip', index=1,
+      number=2, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='port', full_name='chord.FindSuccessorRequest.port', index=2,
+      number=3, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -187,8 +194,8 @@ _FINDSUCCESSORREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=188,
-  serialized_end=222,
+  serialized_start=174,
+  serialized_end=234,
 )
 
 
@@ -202,8 +209,22 @@ _FINDSUCCESSORRESPONSE = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='id', full_name='chord.FindSuccessorResponse.id', index=0,
-      number=1, type=9, cpp_type=9, label=2,
+      number=1, type=4, cpp_type=4, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ip', full_name='chord.FindSuccessorResponse.ip', index=1,
+      number=2, type=9, cpp_type=9, label=2,
       has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='port', full_name='chord.FindSuccessorResponse.port', index=2,
+      number=3, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -219,8 +240,8 @@ _FINDSUCCESSORRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=224,
-  serialized_end=259,
+  serialized_start=236,
+  serialized_end=297,
 )
 
 DESCRIPTOR.message_types_by_name['InsertRequest'] = _INSERTREQUEST
@@ -282,8 +303,8 @@ _CHORDSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=262,
-  serialized_end=468,
+  serialized_start=300,
+  serialized_end=506,
   methods=[
   _descriptor.MethodDescriptor(
     name='Insert',
