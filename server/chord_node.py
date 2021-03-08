@@ -24,6 +24,7 @@ class NeigboorInfo:
 class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
     def __init__(self, address):
         self.id = sha1(f'{address.ip}:{address.port}')
+        print('Id of node : ', self.id)
         self.address = address
         self.successor = None
         self.predecessor = None
@@ -31,18 +32,24 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
         self.log.info("Node server listening on %s.", address.ip)
         self.keys = []
     
-    def addKey(key):
+    def addKey(self,key):
         self.keys.append(key)
     
-    def deleteKey(key):
+    def deleteKey(self,key):
         self.keys.remove(key)
 
 
     def setPredecessor(self, predecessorAddress):
         self.predecessor = NeigboorInfo(predecessorAddress)
+    
+    def getPredecessor(self):
+        return self.predecessor
 
     def setSuccessor(self, successorAddress):
         self.successor = NeigboorInfo(successorAddress)
+    
+    def getSuccessor(self):
+        return self.successor
 
     def query(self, key):
         hashed_key = sha1(key)
@@ -66,30 +73,56 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
 
     def createTopology(self):
         print("Creating bootstrap node")
-        self.predecessor = None  
+        self.predecessor = NeigboorInfo(self.address)  
         self.successor = NeigboorInfo(self.address)      
     
     def join(self, node_id):
         with grpc.insecure_channel('localhost:1024') as channel:
             stub = node_messages_pb2_grpc.ChordServiceStub(channel)
             response = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=self.id, ip=self.address.ip, port = self.address.port))
-            print("Id of successor " , response.port)
+            print("Id of successor " , response.id)
             self.setSuccessor(Address(response.ip, response.port))
+        
+        
+
+        # Notify successor of new node that his predecessor changed and set the predecessor of new node
+        with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
+            stub = node_messages_pb2_grpc.ChordServiceStub(channel)
+            response = stub.Notify(node_messages_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port))
+            self.setPredecessor(Address(response.ip,response.port))
+            print("Id of predecessor : ", self.predecessor.id)
+
+    
+
+    
+    def Notify(self,request,context):
+        tempAddr = self.getPredecessor()
+        self.setPredecessor(Address(request.ip,request.port))
+        print("Id of predecessor : ", self.predecessor.id)
+        return node_messages_pb2.NotifyResponse(ip = tempAddr.ip, port=tempAddr.port)
+
+        
+ 
 
     def Insert(self, request, context):
         digest = sha1(request.song)
-        with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
-            stub = node_messages_pb2_grpc.ChordServiceStub(channel)
-            successorInfo = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=digest))
-            self.addKey(key)
+        if self.between(self.predecessor.id, digest, self.id):
+            response = node_messages_pb2.FindSuccessorResponse(id=self.successor.id, ip=self.successor.ip, port=self.successor.port)
+            self.addKey(digest)
+        else:
+            with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
+                stub = node_messages_pb2_grpc.ChordServiceStub(channel)
+                successorInfo = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=digest))
     
     def Delete(self, request, context):
         digest = sha1(request.song)
-        with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
-            stub = node_messages_pb2_grpc.ChordServiceStub(channel)
-            self.successor.id
-            successorId = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=digest))
-            self.deleteKey(key)
+        if self.between(self.predecessor.id, digest, self.id):
+            response = node_messages_pb2.FindSuccessorResponse(id=self.successor.id, ip=self.successor.ip, port=self.successor.port)
+            self.deleteKey(digest)
+        else:
+            with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
+                stub = node_messages_pb2_grpc.ChordServiceStub(channel)
+                successorInfo = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=digest))
 
 
     # to request pou pairnei einai to id 
@@ -103,6 +136,7 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
             if self.between(self.id, request.id, self.successor.id):
                 response = node_messages_pb2.FindSuccessorResponse(id=self.successor.id, ip=self.successor.ip, port=self.successor.port)
                 self.setSuccessor(Address(request.ip, request.port))
+                print("Id of successor : ", self.successor.id)
                 return response
             else:
                 with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:

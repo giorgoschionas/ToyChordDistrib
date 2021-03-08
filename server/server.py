@@ -6,7 +6,7 @@ from chord_node import ChordNode, Address
 
 def main():
     bootAddress = Address('localhost', 1024)
-    nodeAddress = Address('localhost', 1029)
+    nodeAddress = Address('localhost', 1049)
     newNode = ChordNode(nodeAddress)
 
     port = nodeAddress.port
@@ -17,6 +17,7 @@ def main():
     server.start()
 
     newNode.join(1)
+
     try:
         server.wait_for_termination()
     except KeyboardInterrupt:

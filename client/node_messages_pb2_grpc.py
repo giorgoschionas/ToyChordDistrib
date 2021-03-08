@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import node_messages_pb2 as protobufs_dot_node__messages__pb2
+from protobufs import node_messages_pb2 as protobufs_dot_node__messages__pb2
 
 
 class ChordServiceStub(object):
@@ -29,6 +29,11 @@ class ChordServiceStub(object):
                 request_serializer=protobufs_dot_node__messages__pb2.FindSuccessorRequest.SerializeToString,
                 response_deserializer=protobufs_dot_node__messages__pb2.FindSuccessorResponse.FromString,
                 )
+        self.Notify = channel.unary_unary(
+                '/chord.ChordService/Notify',
+                request_serializer=protobufs_dot_node__messages__pb2.NotifyRequest.SerializeToString,
+                response_deserializer=protobufs_dot_node__messages__pb2.NotifyResponse.FromString,
+                )
 
 
 class ChordServiceServicer(object):
@@ -52,6 +57,12 @@ class ChordServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Notify(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ChordServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -69,6 +80,11 @@ def add_ChordServiceServicer_to_server(servicer, server):
                     servicer.FindSuccessor,
                     request_deserializer=protobufs_dot_node__messages__pb2.FindSuccessorRequest.FromString,
                     response_serializer=protobufs_dot_node__messages__pb2.FindSuccessorResponse.SerializeToString,
+            ),
+            'Notify': grpc.unary_unary_rpc_method_handler(
+                    servicer.Notify,
+                    request_deserializer=protobufs_dot_node__messages__pb2.NotifyRequest.FromString,
+                    response_serializer=protobufs_dot_node__messages__pb2.NotifyResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -128,5 +144,22 @@ class ChordService(object):
         return grpc.experimental.unary_unary(request, target, '/chord.ChordService/FindSuccessor',
             protobufs_dot_node__messages__pb2.FindSuccessorRequest.SerializeToString,
             protobufs_dot_node__messages__pb2.FindSuccessorResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Notify(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.ChordService/Notify',
+            protobufs_dot_node__messages__pb2.NotifyRequest.SerializeToString,
+            protobufs_dot_node__messages__pb2.NotifyResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

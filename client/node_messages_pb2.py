@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1dprotobufs/node_messages.proto\x12\x05\x63hord\"\x1d\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"<\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r2\xce\x01\n\x0c\x43hordService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00'
+  serialized_pb=b'\n\x1dprotobufs/node_messages.proto\x12\x05\x63hord\"\x1d\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"<\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"5\n\rNotifyRequest\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"*\n\x0eNotifyResponse\x12\n\n\x02ip\x18\x01 \x02(\t\x12\x0c\n\x04port\x18\x02 \x02(\r2\x87\x02\n\x0c\x43hordService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00\x12\x37\n\x06Notify\x12\x14.chord.NotifyRequest\x1a\x15.chord.NotifyResponse\"\x00'
 )
 
 
@@ -244,12 +244,99 @@ _FINDSUCCESSORRESPONSE = _descriptor.Descriptor(
   serialized_end=297,
 )
 
+
+_NOTIFYREQUEST = _descriptor.Descriptor(
+  name='NotifyRequest',
+  full_name='chord.NotifyRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='chord.NotifyRequest.id', index=0,
+      number=1, type=4, cpp_type=4, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ip', full_name='chord.NotifyRequest.ip', index=1,
+      number=2, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='port', full_name='chord.NotifyRequest.port', index=2,
+      number=3, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=299,
+  serialized_end=352,
+)
+
+
+_NOTIFYRESPONSE = _descriptor.Descriptor(
+  name='NotifyResponse',
+  full_name='chord.NotifyResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ip', full_name='chord.NotifyResponse.ip', index=0,
+      number=1, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='port', full_name='chord.NotifyResponse.port', index=1,
+      number=2, type=13, cpp_type=3, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=354,
+  serialized_end=396,
+)
+
 DESCRIPTOR.message_types_by_name['InsertRequest'] = _INSERTREQUEST
 DESCRIPTOR.message_types_by_name['InsertResponse'] = _INSERTRESPONSE
 DESCRIPTOR.message_types_by_name['DeleteRequest'] = _DELETEREQUEST
 DESCRIPTOR.message_types_by_name['DeleteResponse'] = _DELETERESPONSE
 DESCRIPTOR.message_types_by_name['FindSuccessorRequest'] = _FINDSUCCESSORREQUEST
 DESCRIPTOR.message_types_by_name['FindSuccessorResponse'] = _FINDSUCCESSORRESPONSE
+DESCRIPTOR.message_types_by_name['NotifyRequest'] = _NOTIFYREQUEST
+DESCRIPTOR.message_types_by_name['NotifyResponse'] = _NOTIFYRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 InsertRequest = _reflection.GeneratedProtocolMessageType('InsertRequest', (_message.Message,), {
@@ -294,6 +381,20 @@ FindSuccessorResponse = _reflection.GeneratedProtocolMessageType('FindSuccessorR
   })
 _sym_db.RegisterMessage(FindSuccessorResponse)
 
+NotifyRequest = _reflection.GeneratedProtocolMessageType('NotifyRequest', (_message.Message,), {
+  'DESCRIPTOR' : _NOTIFYREQUEST,
+  '__module__' : 'protobufs.node_messages_pb2'
+  # @@protoc_insertion_point(class_scope:chord.NotifyRequest)
+  })
+_sym_db.RegisterMessage(NotifyRequest)
+
+NotifyResponse = _reflection.GeneratedProtocolMessageType('NotifyResponse', (_message.Message,), {
+  'DESCRIPTOR' : _NOTIFYRESPONSE,
+  '__module__' : 'protobufs.node_messages_pb2'
+  # @@protoc_insertion_point(class_scope:chord.NotifyResponse)
+  })
+_sym_db.RegisterMessage(NotifyResponse)
+
 
 
 _CHORDSERVICE = _descriptor.ServiceDescriptor(
@@ -303,8 +404,8 @@ _CHORDSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=300,
-  serialized_end=506,
+  serialized_start=399,
+  serialized_end=662,
   methods=[
   _descriptor.MethodDescriptor(
     name='Insert',
@@ -333,6 +434,16 @@ _CHORDSERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_FINDSUCCESSORREQUEST,
     output_type=_FINDSUCCESSORRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Notify',
+    full_name='chord.ChordService.Notify',
+    index=3,
+    containing_service=None,
+    input_type=_NOTIFYREQUEST,
+    output_type=_NOTIFYRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
