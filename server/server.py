@@ -6,7 +6,7 @@ from chord_node import ChordNode, Address
 
 def main():
     bootAddress = Address('localhost', 1024)
-    nodeAddress = Address('localhost', 1049)
+    nodeAddress = Address('localhost', 1055)
     newNode = ChordNode(nodeAddress)
 
     port = nodeAddress.port

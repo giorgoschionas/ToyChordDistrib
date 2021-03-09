@@ -24,6 +24,11 @@ class ChordServiceStub(object):
                 request_serializer=protobufs_dot_node__messages__pb2.DeleteRequest.SerializeToString,
                 response_deserializer=protobufs_dot_node__messages__pb2.DeleteResponse.FromString,
                 )
+        self.Query = channel.unary_unary(
+                '/chord.ChordService/Query',
+                request_serializer=protobufs_dot_node__messages__pb2.QueryRequest.SerializeToString,
+                response_deserializer=protobufs_dot_node__messages__pb2.QueryResponse.FromString,
+                )
         self.FindSuccessor = channel.unary_unary(
                 '/chord.ChordService/FindSuccessor',
                 request_serializer=protobufs_dot_node__messages__pb2.FindSuccessorRequest.SerializeToString,
@@ -33,6 +38,11 @@ class ChordServiceStub(object):
                 '/chord.ChordService/Notify',
                 request_serializer=protobufs_dot_node__messages__pb2.NotifyRequest.SerializeToString,
                 response_deserializer=protobufs_dot_node__messages__pb2.NotifyResponse.FromString,
+                )
+        self.LoadBalance = channel.unary_unary(
+                '/chord.ChordService/LoadBalance',
+                request_serializer=protobufs_dot_node__messages__pb2.LoadBalanceRequest.SerializeToString,
+                response_deserializer=protobufs_dot_node__messages__pb2.LoadBalanceResponse.FromString,
                 )
 
 
@@ -51,6 +61,12 @@ class ChordServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Query(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def FindSuccessor(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -58,6 +74,12 @@ class ChordServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def Notify(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def LoadBalance(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -76,6 +98,11 @@ def add_ChordServiceServicer_to_server(servicer, server):
                     request_deserializer=protobufs_dot_node__messages__pb2.DeleteRequest.FromString,
                     response_serializer=protobufs_dot_node__messages__pb2.DeleteResponse.SerializeToString,
             ),
+            'Query': grpc.unary_unary_rpc_method_handler(
+                    servicer.Query,
+                    request_deserializer=protobufs_dot_node__messages__pb2.QueryRequest.FromString,
+                    response_serializer=protobufs_dot_node__messages__pb2.QueryResponse.SerializeToString,
+            ),
             'FindSuccessor': grpc.unary_unary_rpc_method_handler(
                     servicer.FindSuccessor,
                     request_deserializer=protobufs_dot_node__messages__pb2.FindSuccessorRequest.FromString,
@@ -85,6 +112,11 @@ def add_ChordServiceServicer_to_server(servicer, server):
                     servicer.Notify,
                     request_deserializer=protobufs_dot_node__messages__pb2.NotifyRequest.FromString,
                     response_serializer=protobufs_dot_node__messages__pb2.NotifyResponse.SerializeToString,
+            ),
+            'LoadBalance': grpc.unary_unary_rpc_method_handler(
+                    servicer.LoadBalance,
+                    request_deserializer=protobufs_dot_node__messages__pb2.LoadBalanceRequest.FromString,
+                    response_serializer=protobufs_dot_node__messages__pb2.LoadBalanceResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -131,6 +163,23 @@ class ChordService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def Query(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.ChordService/Query',
+            protobufs_dot_node__messages__pb2.QueryRequest.SerializeToString,
+            protobufs_dot_node__messages__pb2.QueryResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def FindSuccessor(request,
             target,
             options=(),
@@ -161,5 +210,22 @@ class ChordService(object):
         return grpc.experimental.unary_unary(request, target, '/chord.ChordService/Notify',
             protobufs_dot_node__messages__pb2.NotifyRequest.SerializeToString,
             protobufs_dot_node__messages__pb2.NotifyResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def LoadBalance(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.ChordService/LoadBalance',
+            protobufs_dot_node__messages__pb2.LoadBalanceRequest.SerializeToString,
+            protobufs_dot_node__messages__pb2.LoadBalanceResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

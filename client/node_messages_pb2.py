@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1dprotobufs/node_messages.proto\x12\x05\x63hord\"\x1d\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"<\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"5\n\rNotifyRequest\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"*\n\x0eNotifyResponse\x12\n\n\x02ip\x18\x01 \x02(\t\x12\x0c\n\x04port\x18\x02 \x02(\r2\x87\x02\n\x0c\x43hordService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00\x12\x37\n\x06Notify\x12\x14.chord.NotifyRequest\x1a\x15.chord.NotifyResponse\"\x00'
+  serialized_pb=b'\n\x1dprotobufs/node_messages.proto\x12\x05\x63hord\"\x1d\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x02(\t\"\x1c\n\x0cQueryRequest\x12\x0c\n\x04song\x18\x01 \x02(\t\";\n\rQueryResponse\x12\x10\n\x08response\x18\x01 \x02(\t\x12\x0c\n\x04song\x18\x02 \x03(\t\x12\n\n\x02ip\x18\x03 \x03(\t\"<\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"5\n\rNotifyRequest\x12\n\n\x02id\x18\x01 \x02(\x04\x12\n\n\x02ip\x18\x02 \x02(\t\x12\x0c\n\x04port\x18\x03 \x02(\r\"*\n\x0eNotifyResponse\x12\n\n\x02ip\x18\x01 \x02(\t\x12\x0c\n\x04port\x18\x02 \x02(\r\" \n\x12LoadBalanceRequest\x12\n\n\x02id\x18\x01 \x02(\x04\"#\n\x13LoadBalanceResponse\x12\x0c\n\x04keys\x18\x01 \x03(\x04\x32\x85\x03\n\x0c\x43hordService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12\x34\n\x05Query\x12\x13.chord.QueryRequest\x1a\x14.chord.QueryResponse\"\x00\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00\x12\x37\n\x06Notify\x12\x14.chord.NotifyRequest\x1a\x15.chord.NotifyResponse\"\x00\x12\x46\n\x0bLoadBalance\x12\x19.chord.LoadBalanceRequest\x1a\x1a.chord.LoadBalanceResponse\"\x00'
 )
 
 
@@ -153,6 +153,84 @@ _DELETERESPONSE = _descriptor.Descriptor(
 )
 
 
+_QUERYREQUEST = _descriptor.Descriptor(
+  name='QueryRequest',
+  full_name='chord.QueryRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='song', full_name='chord.QueryRequest.song', index=0,
+      number=1, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=174,
+  serialized_end=202,
+)
+
+
+_QUERYRESPONSE = _descriptor.Descriptor(
+  name='QueryResponse',
+  full_name='chord.QueryResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='response', full_name='chord.QueryResponse.response', index=0,
+      number=1, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='song', full_name='chord.QueryResponse.song', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='ip', full_name='chord.QueryResponse.ip', index=2,
+      number=3, type=9, cpp_type=9, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=204,
+  serialized_end=263,
+)
+
+
 _FINDSUCCESSORREQUEST = _descriptor.Descriptor(
   name='FindSuccessorRequest',
   full_name='chord.FindSuccessorRequest',
@@ -194,8 +272,8 @@ _FINDSUCCESSORREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=174,
-  serialized_end=234,
+  serialized_start=265,
+  serialized_end=325,
 )
 
 
@@ -240,8 +318,8 @@ _FINDSUCCESSORRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=236,
-  serialized_end=297,
+  serialized_start=327,
+  serialized_end=388,
 )
 
 
@@ -286,8 +364,8 @@ _NOTIFYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=299,
-  serialized_end=352,
+  serialized_start=390,
+  serialized_end=443,
 )
 
 
@@ -325,18 +403,86 @@ _NOTIFYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=354,
-  serialized_end=396,
+  serialized_start=445,
+  serialized_end=487,
+)
+
+
+_LOADBALANCEREQUEST = _descriptor.Descriptor(
+  name='LoadBalanceRequest',
+  full_name='chord.LoadBalanceRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='chord.LoadBalanceRequest.id', index=0,
+      number=1, type=4, cpp_type=4, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=489,
+  serialized_end=521,
+)
+
+
+_LOADBALANCERESPONSE = _descriptor.Descriptor(
+  name='LoadBalanceResponse',
+  full_name='chord.LoadBalanceResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='keys', full_name='chord.LoadBalanceResponse.keys', index=0,
+      number=1, type=4, cpp_type=4, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=523,
+  serialized_end=558,
 )
 
 DESCRIPTOR.message_types_by_name['InsertRequest'] = _INSERTREQUEST
 DESCRIPTOR.message_types_by_name['InsertResponse'] = _INSERTRESPONSE
 DESCRIPTOR.message_types_by_name['DeleteRequest'] = _DELETEREQUEST
 DESCRIPTOR.message_types_by_name['DeleteResponse'] = _DELETERESPONSE
+DESCRIPTOR.message_types_by_name['QueryRequest'] = _QUERYREQUEST
+DESCRIPTOR.message_types_by_name['QueryResponse'] = _QUERYRESPONSE
 DESCRIPTOR.message_types_by_name['FindSuccessorRequest'] = _FINDSUCCESSORREQUEST
 DESCRIPTOR.message_types_by_name['FindSuccessorResponse'] = _FINDSUCCESSORRESPONSE
 DESCRIPTOR.message_types_by_name['NotifyRequest'] = _NOTIFYREQUEST
 DESCRIPTOR.message_types_by_name['NotifyResponse'] = _NOTIFYRESPONSE
+DESCRIPTOR.message_types_by_name['LoadBalanceRequest'] = _LOADBALANCEREQUEST
+DESCRIPTOR.message_types_by_name['LoadBalanceResponse'] = _LOADBALANCERESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 InsertRequest = _reflection.GeneratedProtocolMessageType('InsertRequest', (_message.Message,), {
@@ -367,6 +513,20 @@ DeleteResponse = _reflection.GeneratedProtocolMessageType('DeleteResponse', (_me
   })
 _sym_db.RegisterMessage(DeleteResponse)
 
+QueryRequest = _reflection.GeneratedProtocolMessageType('QueryRequest', (_message.Message,), {
+  'DESCRIPTOR' : _QUERYREQUEST,
+  '__module__' : 'protobufs.node_messages_pb2'
+  # @@protoc_insertion_point(class_scope:chord.QueryRequest)
+  })
+_sym_db.RegisterMessage(QueryRequest)
+
+QueryResponse = _reflection.GeneratedProtocolMessageType('QueryResponse', (_message.Message,), {
+  'DESCRIPTOR' : _QUERYRESPONSE,
+  '__module__' : 'protobufs.node_messages_pb2'
+  # @@protoc_insertion_point(class_scope:chord.QueryResponse)
+  })
+_sym_db.RegisterMessage(QueryResponse)
+
 FindSuccessorRequest = _reflection.GeneratedProtocolMessageType('FindSuccessorRequest', (_message.Message,), {
   'DESCRIPTOR' : _FINDSUCCESSORREQUEST,
   '__module__' : 'protobufs.node_messages_pb2'
@@ -395,6 +555,20 @@ NotifyResponse = _reflection.GeneratedProtocolMessageType('NotifyResponse', (_me
   })
 _sym_db.RegisterMessage(NotifyResponse)
 
+LoadBalanceRequest = _reflection.GeneratedProtocolMessageType('LoadBalanceRequest', (_message.Message,), {
+  'DESCRIPTOR' : _LOADBALANCEREQUEST,
+  '__module__' : 'protobufs.node_messages_pb2'
+  # @@protoc_insertion_point(class_scope:chord.LoadBalanceRequest)
+  })
+_sym_db.RegisterMessage(LoadBalanceRequest)
+
+LoadBalanceResponse = _reflection.GeneratedProtocolMessageType('LoadBalanceResponse', (_message.Message,), {
+  'DESCRIPTOR' : _LOADBALANCERESPONSE,
+  '__module__' : 'protobufs.node_messages_pb2'
+  # @@protoc_insertion_point(class_scope:chord.LoadBalanceResponse)
+  })
+_sym_db.RegisterMessage(LoadBalanceResponse)
+
 
 
 _CHORDSERVICE = _descriptor.ServiceDescriptor(
@@ -404,8 +578,8 @@ _CHORDSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=399,
-  serialized_end=662,
+  serialized_start=561,
+  serialized_end=950,
   methods=[
   _descriptor.MethodDescriptor(
     name='Insert',
@@ -428,9 +602,19 @@ _CHORDSERVICE = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='Query',
+    full_name='chord.ChordService.Query',
+    index=2,
+    containing_service=None,
+    input_type=_QUERYREQUEST,
+    output_type=_QUERYRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='FindSuccessor',
     full_name='chord.ChordService.FindSuccessor',
-    index=2,
+    index=3,
     containing_service=None,
     input_type=_FINDSUCCESSORREQUEST,
     output_type=_FINDSUCCESSORRESPONSE,
@@ -440,10 +624,20 @@ _CHORDSERVICE = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='Notify',
     full_name='chord.ChordService.Notify',
-    index=3,
+    index=4,
     containing_service=None,
     input_type=_NOTIFYREQUEST,
     output_type=_NOTIFYRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='LoadBalance',
+    full_name='chord.ChordService.LoadBalance',
+    index=5,
+    containing_service=None,
+    input_type=_LOADBALANCEREQUEST,
+    output_type=_LOADBALANCERESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

@@ -85,12 +85,18 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
         
         
 
-        # Notify successor of new node that his predecessor changed and set the predecessor of new node
+        
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
             stub = node_messages_pb2_grpc.ChordServiceStub(channel)
+
+            # Notify successor of new node that his predecessor changed and set the predecessor of new node
             response = stub.Notify(node_messages_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port))
             self.setPredecessor(Address(response.ip,response.port))
             print("Id of predecessor : ", self.predecessor.id)
+
+            # Transfer keys that have to be removed from successor of new node to new node
+            new_keys =stub.LoadBalance(node_messages_pb2.LoadBalanceRequest(id = self.id))
+            # self.keys = self.keys + new_keys
 
     
 
@@ -107,7 +113,7 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
     def Insert(self, request, context):
         digest = sha1(request.song)
         if self.between(self.predecessor.id, digest, self.id):
-            response = node_messages_pb2.FindSuccessorResponse(id=self.successor.id, ip=self.successor.ip, port=self.successor.port)
+            response = node_messages_pb2.InsertResponse(response = 'Added')
             self.addKey(digest)
         else:
             with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
@@ -117,12 +123,34 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
     def Delete(self, request, context):
         digest = sha1(request.song)
         if self.between(self.predecessor.id, digest, self.id):
-            response = node_messages_pb2.FindSuccessorResponse(id=self.successor.id, ip=self.successor.ip, port=self.successor.port)
+            response = node_messages_pb2.DeleteResponse(response ='Deleted')
             self.deleteKey(digest)
         else:
             with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
                 stub = node_messages_pb2_grpc.ChordServiceStub(channel)
                 successorInfo = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=digest))
+    
+    def Query(self, request, context):
+        digest = sha1(request.song)
+        if self.between(self.predecessor.id, digest, self.id):
+            if digest in self.keys:
+                return node_messages_pb2.QueryResponse(response = 'Found', ip = self.ip)
+            else:
+                return node_messages_pb2.QueryResponse(response= 'Not Found')
+        else:
+            with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
+                stub = node_messages_pb2_grpc.ChordServiceStub(channel)
+                successorInfo = stub.FindSuccessor(node_messages_pb2.FindSuccessorRequest(id=digest))
+    
+    
+    def LoadBalance(self, request, context):
+        removed_keys = [item for item in self.keys if item<=request.id]
+        self.keys = list(set(self.keys)- set(removed_keys))
+        foo = node_messages_pb2.LoadBalanceResponse()
+        foo.keys.extend(removed_keys)
+        return foo
+
+
 
 
     # to request pou pairnei einai to id 
@@ -131,6 +159,7 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
         if self.id == self.successor.id:
             print("Bootstrap node")
             self.setSuccessor(Address(request.ip, request.port))
+            print("Id of successor : ", self.successor.id)
             return node_messages_pb2.FindSuccessorResponse(id=self.id, ip=self.address.ip, port=self.address.port)
         else:
             if self.between(self.id, request.id, self.successor.id):

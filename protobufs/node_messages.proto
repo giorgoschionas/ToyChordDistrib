@@ -5,8 +5,10 @@ package chord;
 service ChordService {
   rpc Insert(InsertRequest) returns (InsertResponse) {}
   rpc Delete(DeleteRequest) returns(DeleteResponse)  {}
+  rpc Query(QueryRequest) returns(QueryResponse){}
   rpc FindSuccessor(FindSuccessorRequest)  returns(FindSuccessorResponse){}
   rpc Notify(NotifyRequest) returns(NotifyResponse){}
+  rpc LoadBalance(LoadBalanceRequest) returns (LoadBalanceResponse){}
 }
 
 message InsertRequest {
@@ -23,6 +25,16 @@ message DeleteRequest {
 
 message DeleteResponse{
   required string response =1;
+}
+
+message QueryRequest{
+  required string song =1;
+}
+
+message QueryResponse{
+  required string response=1;
+  repeated string song=2;
+  repeated string ip=3;
 }
 
 message FindSuccessorRequest{
@@ -47,3 +59,13 @@ message NotifyResponse{
   required string ip =1;
   required uint32 port = 2;
 }
+
+message LoadBalanceRequest{
+  required uint64 id = 1;
+}
+
+message LoadBalanceResponse{
+  repeated uint64 keys =1;
+}
+
+ 
