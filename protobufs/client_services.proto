@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package chord;
+
+service ClientService {
+    rpc Insert(InsertRequest) returns (InsertResponse) {}
+    rpc Delete(DeleteRequest) returns(DeleteResponse)  {}
+    rpc Query(QueryRequest) returns(QueryResponse){}
+}
+
+message InsertRequest {
+    string song = 1;
+}
+
+message InsertResponse {
+    string response = 1;
+}
+
+message DeleteRequest {
+    string song = 1;
+}
+
+message DeleteResponse{
+    string response =1;
+}
+
+message QueryRequest{
+    string song =1;
+}
+
+message QueryResponse{
+    string response=1;
+    string song=2;
+    string ip=3;
+}

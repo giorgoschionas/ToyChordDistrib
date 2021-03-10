@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package chord;
+
+service NodeService {
+  rpc FindSuccessor(FindSuccessorRequest)  returns(FindSuccessorResponse){}
+  rpc Notify(NotifyRequest) returns(NotifyResponse){}
+  rpc LoadBalance(LoadBalanceRequest) returns (LoadBalanceResponse){}
+}
+
+message FindSuccessorRequest{
+  uint64 id = 1;
+  string ip = 2;
+  uint32 port = 3;
+}
+
+message FindSuccessorResponse{
+  uint64 id = 1;
+  string ip = 2;
+  uint32 port = 3;
+}
+
+message NotifyRequest{
+  uint64 id = 1;
+  string ip = 2;
+  uint32 port = 3;
+}
+
+message NotifyResponse{
+  string ip =1;
+  uint32 port = 2;
+}
+
+message LoadBalanceRequest{
+  uint64 id = 1;
+}
+
+message LoadBalanceResponse{
+  uint64 keys =1;
+}
+
+ 

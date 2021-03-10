@@ -1,9 +1,16 @@
 #!/bin/sh
 
-python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. protobufs/node_messages.proto
+protofile=client_services
+python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. protobufs/${protofile}.proto
 
-cp protobufs/node_messages_pb2_grpc.py ./server
-mv protobufs/node_messages_pb2_grpc.py ./client
+cp protobufs/${protofile}_pb2.py ./server
+cp protobufs/${protofile}_pb2_grpc.py ./server
 
-cp protobufs/node_messages_pb2.py ./server
-mv protobufs/node_messages_pb2.py ./client
+mv protobufs/${protofile}_pb2.py ./client
+mv protobufs/${protofile}_pb2_grpc.py ./client
+
+protofile=node_services
+python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. protobufs/${protofile}.proto
+
+mv protobufs/${protofile}_pb2.py ./server
+mv protobufs/${protofile}_pb2_grpc.py ./server

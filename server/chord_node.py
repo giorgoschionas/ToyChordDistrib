@@ -5,6 +5,9 @@ import node_messages_pb2
 import node_messages_pb2_grpc
 import hashlib
 
+class Server:
+    def __init__(self, ip, port)
+
 def sha1(msg):
     digest = hashlib.sha1(msg.encode())
     hex_digest= digest.hexdigest()
