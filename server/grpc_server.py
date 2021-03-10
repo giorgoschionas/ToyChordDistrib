@@ -2,7 +2,7 @@ import logging
 import grpc  
 from concurrent import futures
 
-class Server:
+class _Server:
     def __init__(self, host, port):
         self.host = host
         self.port = port
@@ -10,7 +10,7 @@ class Server:
         self.logger = logging.getLogger('grpc_server')
         self.logger.setLevel(logging.INFO)
 
-class GrpcServer(Server):
+class GrpcServer(_Server):
     def __init__(self, host, port, maxWorkers):
         super().__init__(host, port)
         self.maxWorkers = maxWorkers

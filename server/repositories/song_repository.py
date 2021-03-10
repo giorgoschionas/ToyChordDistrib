@@ -1,9 +1,11 @@
 class SongRepository:
-    def __init__(self, database):
+    def __init__(self, database, hashFunction):
         self.database = database
+        self.hashFunction = hashFunction
     
     def addSong(self, song):
-        database.add(song)
+        hashedSong = self.hashFunction(song)
+        database.add(hashedSong)
 
     def delete(self, song):
         database.delete(song)

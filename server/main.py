@@ -1,6 +1,7 @@
 import sys
 import os
 import logging
+import hashlib
 
 from generated import node_services_pb2_grpc, client_services_pb2_grpc
 from repositories.song_repository import SongRepository
@@ -10,15 +11,19 @@ from grpc_server import GrpcServer
 
 log = logging.getLogger()
 
+def sha1(message):
+    digest = hashlib.sha1(message.encode())
+    hex_digest= digest.hexdigest()
+    return int(hex_digest, 16) % 65536
+
 def main(argv):
     # TODO: Find ip from os
-    # TODO: Get port from args DONE
+    # TODO: Get port from args DONE 
     ip = "localhost"
     port = argv[1]
-    log.debug("Hi")
 
     db = Database()
-    songRepository = SongRepository(db)
+    songRepository = SongRepository(db, hashFunction=sha1)
     songServicer = song_servicer.SongServicer(songRepository)
     
     # newNode = chord_node.ChordNode()

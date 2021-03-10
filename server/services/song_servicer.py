@@ -6,20 +6,20 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
         self.songRepository = songRepository
 
     def Insert(self, request, context):
-        digest = sha1(request.song)
         response = client_services_pb2.InsertResponse(response='Added')
         self.songRepository.add(digest)
         return response
 
     def Delete(self, request, context):
-        digest = sha1(request.song)
-        response = client_services_pb2.DeleteResponse(response='Deleted')
-        self.songRepository.delete(digest)
-        return response
+        domainResponse = self.songRepository.delete(digest)
+        if domainResponse == "Success":
+            serviceResponse = "Deleted"
+        else:
+        grpcResponse = client_services_pb2.DeleteResponse(response="An error has occurred")
+        return grpcResponse
 
     def Query(self, request, context):
-        digest = sha1(request.song)
-        if self.songRepository.get(digest) != None:
-            return client_services_pb2.QueryResponse(response = 'Found', ip = self.ip)
+        if self.songRepository.get(request.song) != None:
+            return client_services_pb2.QueryResponse(response='Found', ip=self.ip)
         else:
-            return client_services_pb2.QueryResponse(response= 'Not Found')
+            return client_services_pb2.QueryResponse(response='Not Found')

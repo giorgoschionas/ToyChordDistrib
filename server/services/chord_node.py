@@ -7,9 +7,6 @@ from generated import node_services_pb2
 from generated import node_services_pb2_grpc
 import hashlib
 
-# class Server:
-#     def __init__(self, ip, port)
-
 def sha1(msg):
     digest = hashlib.sha1(msg.encode())
     hex_digest= digest.hexdigest()
