@@ -27,13 +27,12 @@ class NeigboorInfo:
         self.id = sha1(f'{address.ip}:{address.port}')
 
 class ChordNode(node_services_pb2_grpc.NodeServiceServicer):
-    def __init__(self, address, client_servicer):
+    def __init__(self, address):
         self.id = sha1(f'{address.ip}:{address.port}')
         print('Id of node : ', self.id)
         self.address = address
         self.successor = None
         self.predecessor = None
-        self.client_services = client_servicer
         self.log = logging.getLogger(__name__)
         self.log.info("Node server listening on %s.", address.ip)
         self.keys = []

@@ -1,6 +1,6 @@
 import grpc
-import client_services_pb2
-import client_services_pb2_grpc
+from generated import client_services_pb2
+from generated import client_services_pb2_grpc
 
 def run():
   with grpc.insecure_channel('localhost:50051') as channel:

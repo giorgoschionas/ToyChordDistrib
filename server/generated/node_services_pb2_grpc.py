@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from generated import node_services_pb2 as protobufs_dot_node__services__pb2
+from . import node_services_pb2 as node__services__pb2
 
 
 class NodeServiceStub(object):
@@ -16,18 +16,18 @@ class NodeServiceStub(object):
         """
         self.FindSuccessor = channel.unary_unary(
                 '/chord.NodeService/FindSuccessor',
-                request_serializer=protobufs_dot_node__services__pb2.FindSuccessorRequest.SerializeToString,
-                response_deserializer=protobufs_dot_node__services__pb2.FindSuccessorResponse.FromString,
+                request_serializer=node__services__pb2.FindSuccessorRequest.SerializeToString,
+                response_deserializer=node__services__pb2.FindSuccessorResponse.FromString,
                 )
         self.Notify = channel.unary_unary(
                 '/chord.NodeService/Notify',
-                request_serializer=protobufs_dot_node__services__pb2.NotifyRequest.SerializeToString,
-                response_deserializer=protobufs_dot_node__services__pb2.NotifyResponse.FromString,
+                request_serializer=node__services__pb2.NotifyRequest.SerializeToString,
+                response_deserializer=node__services__pb2.NotifyResponse.FromString,
                 )
         self.LoadBalance = channel.unary_unary(
                 '/chord.NodeService/LoadBalance',
-                request_serializer=protobufs_dot_node__services__pb2.LoadBalanceRequest.SerializeToString,
-                response_deserializer=protobufs_dot_node__services__pb2.LoadBalanceResponse.FromString,
+                request_serializer=node__services__pb2.LoadBalanceRequest.SerializeToString,
+                response_deserializer=node__services__pb2.LoadBalanceResponse.FromString,
                 )
 
 
@@ -57,18 +57,18 @@ def add_NodeServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'FindSuccessor': grpc.unary_unary_rpc_method_handler(
                     servicer.FindSuccessor,
-                    request_deserializer=protobufs_dot_node__services__pb2.FindSuccessorRequest.FromString,
-                    response_serializer=protobufs_dot_node__services__pb2.FindSuccessorResponse.SerializeToString,
+                    request_deserializer=node__services__pb2.FindSuccessorRequest.FromString,
+                    response_serializer=node__services__pb2.FindSuccessorResponse.SerializeToString,
             ),
             'Notify': grpc.unary_unary_rpc_method_handler(
                     servicer.Notify,
-                    request_deserializer=protobufs_dot_node__services__pb2.NotifyRequest.FromString,
-                    response_serializer=protobufs_dot_node__services__pb2.NotifyResponse.SerializeToString,
+                    request_deserializer=node__services__pb2.NotifyRequest.FromString,
+                    response_serializer=node__services__pb2.NotifyResponse.SerializeToString,
             ),
             'LoadBalance': grpc.unary_unary_rpc_method_handler(
                     servicer.LoadBalance,
-                    request_deserializer=protobufs_dot_node__services__pb2.LoadBalanceRequest.FromString,
-                    response_serializer=protobufs_dot_node__services__pb2.LoadBalanceResponse.SerializeToString,
+                    request_deserializer=node__services__pb2.LoadBalanceRequest.FromString,
+                    response_serializer=node__services__pb2.LoadBalanceResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -92,8 +92,8 @@ class NodeService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/chord.NodeService/FindSuccessor',
-            protobufs_dot_node__services__pb2.FindSuccessorRequest.SerializeToString,
-            protobufs_dot_node__services__pb2.FindSuccessorResponse.FromString,
+            node__services__pb2.FindSuccessorRequest.SerializeToString,
+            node__services__pb2.FindSuccessorResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -109,8 +109,8 @@ class NodeService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/chord.NodeService/Notify',
-            protobufs_dot_node__services__pb2.NotifyRequest.SerializeToString,
-            protobufs_dot_node__services__pb2.NotifyResponse.FromString,
+            node__services__pb2.NotifyRequest.SerializeToString,
+            node__services__pb2.NotifyResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -126,7 +126,7 @@ class NodeService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/chord.NodeService/LoadBalance',
-            protobufs_dot_node__services__pb2.LoadBalanceRequest.SerializeToString,
-            protobufs_dot_node__services__pb2.LoadBalanceResponse.FromString,
+            node__services__pb2.LoadBalanceRequest.SerializeToString,
+            node__services__pb2.LoadBalanceResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

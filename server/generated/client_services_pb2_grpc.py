@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from generated import client_services_pb2 as protobufs_dot_client__services__pb2
+from . import client_services_pb2 as client__services__pb2
 
 
 class ClientServiceStub(object):
@@ -16,18 +16,18 @@ class ClientServiceStub(object):
         """
         self.Insert = channel.unary_unary(
                 '/chord.ClientService/Insert',
-                request_serializer=protobufs_dot_client__services__pb2.InsertRequest.SerializeToString,
-                response_deserializer=protobufs_dot_client__services__pb2.InsertResponse.FromString,
+                request_serializer=client__services__pb2.InsertRequest.SerializeToString,
+                response_deserializer=client__services__pb2.InsertResponse.FromString,
                 )
         self.Delete = channel.unary_unary(
                 '/chord.ClientService/Delete',
-                request_serializer=protobufs_dot_client__services__pb2.DeleteRequest.SerializeToString,
-                response_deserializer=protobufs_dot_client__services__pb2.DeleteResponse.FromString,
+                request_serializer=client__services__pb2.DeleteRequest.SerializeToString,
+                response_deserializer=client__services__pb2.DeleteResponse.FromString,
                 )
         self.Query = channel.unary_unary(
                 '/chord.ClientService/Query',
-                request_serializer=protobufs_dot_client__services__pb2.QueryRequest.SerializeToString,
-                response_deserializer=protobufs_dot_client__services__pb2.QueryResponse.FromString,
+                request_serializer=client__services__pb2.QueryRequest.SerializeToString,
+                response_deserializer=client__services__pb2.QueryResponse.FromString,
                 )
 
 
@@ -57,18 +57,18 @@ def add_ClientServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Insert': grpc.unary_unary_rpc_method_handler(
                     servicer.Insert,
-                    request_deserializer=protobufs_dot_client__services__pb2.InsertRequest.FromString,
-                    response_serializer=protobufs_dot_client__services__pb2.InsertResponse.SerializeToString,
+                    request_deserializer=client__services__pb2.InsertRequest.FromString,
+                    response_serializer=client__services__pb2.InsertResponse.SerializeToString,
             ),
             'Delete': grpc.unary_unary_rpc_method_handler(
                     servicer.Delete,
-                    request_deserializer=protobufs_dot_client__services__pb2.DeleteRequest.FromString,
-                    response_serializer=protobufs_dot_client__services__pb2.DeleteResponse.SerializeToString,
+                    request_deserializer=client__services__pb2.DeleteRequest.FromString,
+                    response_serializer=client__services__pb2.DeleteResponse.SerializeToString,
             ),
             'Query': grpc.unary_unary_rpc_method_handler(
                     servicer.Query,
-                    request_deserializer=protobufs_dot_client__services__pb2.QueryRequest.FromString,
-                    response_serializer=protobufs_dot_client__services__pb2.QueryResponse.SerializeToString,
+                    request_deserializer=client__services__pb2.QueryRequest.FromString,
+                    response_serializer=client__services__pb2.QueryResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -92,8 +92,8 @@ class ClientService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/chord.ClientService/Insert',
-            protobufs_dot_client__services__pb2.InsertRequest.SerializeToString,
-            protobufs_dot_client__services__pb2.InsertResponse.FromString,
+            client__services__pb2.InsertRequest.SerializeToString,
+            client__services__pb2.InsertResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -109,8 +109,8 @@ class ClientService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/chord.ClientService/Delete',
-            protobufs_dot_client__services__pb2.DeleteRequest.SerializeToString,
-            protobufs_dot_client__services__pb2.DeleteResponse.FromString,
+            client__services__pb2.DeleteRequest.SerializeToString,
+            client__services__pb2.DeleteResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -126,7 +126,7 @@ class ClientService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/chord.ClientService/Query',
-            protobufs_dot_client__services__pb2.QueryRequest.SerializeToString,
-            protobufs_dot_client__services__pb2.QueryResponse.FromString,
+            client__services__pb2.QueryRequest.SerializeToString,
+            client__services__pb2.QueryResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
