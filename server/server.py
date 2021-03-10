@@ -3,7 +3,6 @@ import grpc
 import node_services_pb2_grpc
 import client_services_pb2_grpc
 
-
 from chord_node import ChordNode, Address    
 
 def main():

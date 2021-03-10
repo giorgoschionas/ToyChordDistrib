@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from protobufs import node_services_pb2 as protobufs_dot_node__services__pb2
+from generated import node_services_pb2 as protobufs_dot_node__services__pb2
 
 
 class NodeServiceStub(object):

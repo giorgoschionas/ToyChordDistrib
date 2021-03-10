@@ -5,8 +5,8 @@ class SongRepository:
     def addSong(self, song):
         database.add(song)
 
-    def delete(self, songId):
+    def delete(self, song):
         database.delete(song)
 
     def getSong(self, songId):
-        database.get(song)
+        return database.get(songId)

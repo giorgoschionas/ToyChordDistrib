@@ -1,10 +1,10 @@
 import logging
 from concurrent import futures                                                             
 import grpc     
-import client_services_pb2
-import client_services_pb2_grpc
-import node_services_pb2_grpc
-import node_services_pb2
+from generated import client_services_pb2
+from generated import client_services_pb2_grpc
+from generated import node_services_pb2
+from generated import node_services_pb2_grpc
 import hashlib
 
 # class Server:
