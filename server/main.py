@@ -2,11 +2,13 @@ import sys
 import os
 import logging
 import hashlib
+import grpc  
+from concurrent import futures
 
 from generated import node_services_pb2_grpc, client_services_pb2_grpc
 from repositories.song_repository import SongRepository
 from database.database import Database
-from services import chord_node, song_servicer
+from services import chord_node, song_servicer, node_servicer
 from grpc_server import GrpcServer
 
 log = logging.getLogger()
@@ -20,24 +22,27 @@ def main(argv):
     # TODO: Find ip from os
     # TODO: Get port from args DONE 
     ip = "localhost"
-    port = argv[1]
+    port = int(argv[1])
 
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
-    songServicer = song_servicer.SongServicer(songRepository)
     
-    # newNode = chord_node.ChordNode()
+    addr = chord_node.Address(ip, port)
+    newNode = chord_node.ChordNode(addr)
+    nodeServicer = node_servicer.NodeServicer(songRepository, newNode)
+    songServicer = song_servicer.SongServicer(songRepository, newNode)
+
     nodeServer = GrpcServer(ip, port, 10)
+    nodeServer.addServicer(nodeServicer, node_services_pb2_grpc.add_NodeServiceServicer_to_server)
     nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
+
+    if port == 1024:
+        newNode.createTopology()
+    else:
+        newNode.join(1)
+
     nodeServer.run()
-
-    # Thread.run(nodeServer.run())
-
-    # server = Server()
-    # add_ClientServiceServicer_to_server(songServicer, server)
-    # add_NodeServiceServicer_to_server()
-    # Thread.run(server.run())
-
+    
 def setupLogging():
     # only cofnigure logger if script is main module
     # configuring logger in multiple places is bad

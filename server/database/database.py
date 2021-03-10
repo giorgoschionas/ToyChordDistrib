@@ -1,6 +1,6 @@
 class Database:
     def __init__(self):
-        self.data = []
+        self.data = {}
 
     def add(self, song):
         data[song.id] = song

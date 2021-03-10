@@ -5,7 +5,7 @@ package chord;
 service ClientService {
     rpc Insert(InsertRequest) returns (InsertResponse) {}
     rpc Delete(DeleteRequest) returns(DeleteResponse)  {}
-    rpc Query(QueryRequest) returns(QueryResponse){}
+    rpc Query(QueryRequest) returns(QueryResponse) {}
 }
 
 message InsertRequest {

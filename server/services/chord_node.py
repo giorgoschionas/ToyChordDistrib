@@ -23,7 +23,7 @@ class NeigboorInfo:
         self.port = address.port
         self.id = sha1(f'{address.ip}:{address.port}')
 
-class ChordNode(node_services_pb2_grpc.NodeServiceServicer):
+class ChordNode():
     def __init__(self, address):
         self.id = sha1(f'{address.ip}:{address.port}')
         print('Id of node : ', self.id)
@@ -33,7 +33,7 @@ class ChordNode(node_services_pb2_grpc.NodeServiceServicer):
         self.log = logging.getLogger(__name__)
         self.log.info("Node server listening on %s.", address.ip)
         self.keys = []
-    
+        
     def addKey(self,key):
         seplf.keys.append(key)
     
@@ -58,21 +58,6 @@ class ChordNode(node_services_pb2_grpc.NodeServiceServicer):
         if hashed_key in range(self.predecessor, self.id): 
             return database(hashed_key)
 
-    def serve(self):
-        port = self.address.port
-        server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-        node_services_pb2_grpc.add_NodeServiceServicer_to_server(self, server)
-        server.add_insecure_port(f'[::]:{port}')
-        print(f'gRPC server listening on port {port}')
-        server.start()
-        try:
-            server.wait_for_termination()
-        except KeyboardInterrupt:
-            # Shuts down the server with 0 seconds of grace period. During the
-            # grace period, the server won't accept new connections and allow
-            # existing RPCs to continue within the grace period.
-            server.stop(0)
-
     def createTopology(self):
         print("Creating bootstrap node")
         self.predecessor = NeigboorInfo(self.address)  
@@ -93,82 +78,16 @@ class ChordNode(node_services_pb2_grpc.NodeServiceServicer):
             self.setPredecessor(Address(response.ip,response.port))
             print("Id of predecessor : ", self.predecessor.id)
 
-            # Transfer keys that have to be removed from successor of new node to new node
-            new_keys =stub.LoadBalance(node_services_pb2.LoadBalanceRequest(id = self.id))
-            # self.keys = self.keys + new_keys
-    
-    def Notify(self,request,context):
-        tempAddr = self.getPredecessor()
-        self.setPredecessor(Address(request.ip,request.port))
-        print("Id of predecessor : ", self.predecessor.id)
-        return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port=tempAddr.port)
+            # # Transfer keys that have to be removed from successor of new node to new node
+            # new_keys =stub.LoadBalance(node_services_pb2.LoadBalanceRequest(id = self.id))
+            # # self.keys = self.keys + new_keys
 
-        
- 
-
-    def Insert(self, request, context):
-        digest = sha1(request.song)
-        if self.between(self.predecessor.id, digest, self.id):
-            response = client_services_pb2.InsertResponse(response = 'Added')
-            self.addKey(digest)
-        else:
-            with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
-                stub = node_services_pb2_grpc.NodeServiceStub(channel)
-                successorInfo = stub.FindSuccessor(node_services_pb2.FindSuccessorRequest(id=digest))
-    
-    def Delete(self, request, context):
-        digest = sha1(request.song)
-        if self.between(self.predecessor.id, digest, self.id):
-            response = client_services_pb2.DeleteResponse(response ='Deleted')
-            self.deleteKey(digest)
-        else:
-            with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
-                stub = node_services_pb2_grpc.NodeServiceStub(channel)
-                successorInfo = stub.FindSuccessor(node_services_pb2.FindSuccessorRequest(id=digest))
-    
-    def Query(self, request, context):
-        digest = sha1(request.song)
-        if self.between(self.predecessor.id, digest, self.id):
-            if digest in self.keys:
-                return client_services_pb2.QueryResponse(response = 'Found', ip = self.ip)
-            else:
-                return client_services_pb2.QueryResponse(response= 'Not Found')
-        else:
-            with grpc.insecure_channel(f'{successor.ip}:{successor.port}') as channel:
-                stub = node_services_pb2_grpc.NodeServiceStub(channel)
-                successorInfo = stub.FindSuccessor(node_services_pb2.FindSuccessorRequest(id=digest))
-    
-    
-    def LoadBalance(self, request, context):
-        removed_keys = [item for item in self.keys if item<=request.id]
-        self.keys = list(set(self.keys)- set(removed_keys))
-        foo = node_services_pb2.LoadBalanceResponse()
-        foo.keys.extend(removed_keys)
-        return foo
-
-
-
-
-    # to request pou pairnei einai to id 
-    def FindSuccessor(self, request, context):
-        print("Inside successor")
-        if self.id == self.successor.id:
-            print("Bootstrap node")
-            self.setSuccessor(Address(request.ip, request.port))
-            print("Id of successor : ", self.successor.id)
-            return node_services_pb2.FindSuccessorResponse(id=self.id, ip=self.address.ip, port=self.address.port)
-        else:
-            if self.between(self.id, request.id, self.successor.id):
-                response = node_services_pb2.FindSuccessorResponse(id=self.successor.id, ip=self.successor.ip, port=self.successor.port)
-                self.setSuccessor(Address(request.ip, request.port))
-                print("Id of successor : ", self.successor.id)
-                return response
-            else:
-                with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
-                    print(f"Sending request with data {request.port} from {self.address.port} to {self.successor.port}")
-                    stub = node_services_pb2_grpc.NodeServiceStub(channel)
-                    response = stub.FindSuccessor(request)
-                    return response
+    def requestSuccessor(self, request):
+        with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
+            print(f"Sending request with data {request.port} from {self.address.port} to {self.successor.port}")
+            stub = node_services_pb2_grpc.NodeServiceStub(channel)
+            successorInfo = stub.FindSuccessor(request)
+            return successorInfo
 
     def between(self, n1, n2, n3):
         # TODO: added corner case when id == -1

@@ -5,10 +5,10 @@ class SongRepository:
     
     def addSong(self, song):
         hashedSong = self.hashFunction(song)
-        database.add(hashedSong)
+        self.database.add(hashedSong)
 
-    def delete(self, song):
-        database.delete(song)
+    def deleteSong(self, song):
+        self.database.delete(song)
 
     def getSong(self, songId):
-        return database.get(songId)
+        return self.database.get(songId)
