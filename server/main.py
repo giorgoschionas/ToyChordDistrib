@@ -6,7 +6,7 @@ from generated import node_services_pb2_grpc, client_services_pb2_grpc
 from repositories.song_repository import SongRepository
 from database.database import Database
 from services import chord_node, song_servicer
-import grpc_server
+from grpc_server import GrpcServer
 
 log = logging.getLogger()
 
@@ -16,15 +16,15 @@ def main(argv):
     ip = "localhost"
     port = argv[1]
     log.debug("Hi")
-    
+
     db = Database()
     songRepository = SongRepository(db)
     songServicer = song_servicer.SongServicer(songRepository)
     
-    # newNode = ChordNode()
-    nodeServer = grpc_server.Server(ip, port)
+    # newNode = chord_node.ChordNode()
+    nodeServer = GrpcServer(ip, port, 10)
+    nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
     nodeServer.run()
-    # add_NodeServiceServicer_to_server(newNode, nodeServer)
 
     # Thread.run(nodeServer.run())
 
@@ -33,7 +33,7 @@ def main(argv):
     # add_NodeServiceServicer_to_server()
     # Thread.run(server.run())
 
-if __name__ == "__main__":
+def setupLogging():
     # only cofnigure logger if script is main module
     # configuring logger in multiple places is bad
     # only top-level module should configure logger
@@ -45,4 +45,7 @@ if __name__ == "__main__":
         formatter = logging.Formatter('%(levelname)s: %(asctime)s %(funcName)s(%(lineno)d) -- %(message)s', datefmt = '%Y-%m-%d %H:%M:%S')
         ch.setFormatter(formatter)
         log.addHandler(ch)
+
+if __name__ == "__main__":
+    setupLogging()
     main(sys.argv)

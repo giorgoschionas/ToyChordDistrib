@@ -1,11 +1,29 @@
 import logging
+import grpc  
+from concurrent import futures
 
 class Server:
-    def __init__(self, ip, port):
-        self.ip = ip
+    def __init__(self, host, port):
+        self.host = host
         self.port = port
+        self.address = host + ":" + str(port)
         self.logger = logging.getLogger('grpc_server')
         self.logger.setLevel(logging.INFO)
 
+class GrpcServer(Server):
+    def __init__(self, host, port, maxWorkers):
+        super().__init__(host, port)
+        self.maxWorkers = maxWorkers
+        self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=self.maxWorkers))
+    
     def run(self):
-        self.logger.info(f"Server is now listening on address {self.ip}:{self.port}")
+        self.server.add_insecure_port(self.address)
+        self.server.start()
+        self.logger.info('grpc server is now listening on ' + self.address)
+        try:
+            self.server.wait_for_termination()
+        except KeyboardInterrupt:
+            self.server.stop(0)
+
+    def addServicer(self, servicer, addServicerCallback):
+        addServicerCallback(servicer, self.server)
