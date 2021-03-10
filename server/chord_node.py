@@ -86,9 +86,6 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
             print("Id of successor " , response.id)
             self.setSuccessor(Address(response.ip, response.port))
         
-        
-
-        
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
             stub = node_messages_pb2_grpc.ChordServiceStub(channel)
 
@@ -100,9 +97,6 @@ class ChordNode(node_messages_pb2_grpc.ChordServiceServicer):
             # Transfer keys that have to be removed from successor of new node to new node
             new_keys =stub.LoadBalance(node_messages_pb2.LoadBalanceRequest(id = self.id))
             # self.keys = self.keys + new_keys
-
-    
-
     
     def Notify(self,request,context):
         tempAddr = self.getPredecessor()
