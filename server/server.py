@@ -1,6 +1,8 @@
 from concurrent import futures
 import grpc
-import node_messages_pb2_grpc
+import node_services_pb2_grpc
+import client_services_pb2_grpc
+
 
 from chord_node import ChordNode, Address    
 
@@ -11,7 +13,7 @@ def main():
 
     port = nodeAddress.port
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    node_messages_pb2_grpc.add_ChordServiceServicer_to_server(newNode, server)
+    node_services_pb2_grpc.add_NodeServiceServicer_to_server(newNode, server)
     server.add_insecure_port(f'[::]:{port}')
     print(f'gRPC server listening on port {port}')
     server.start()
