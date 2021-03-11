@@ -25,5 +25,5 @@ class Database:
         if key in self.data:
             resp = self.data[key]
         else:
-            resp = 0
+            resp = ''
         return resp

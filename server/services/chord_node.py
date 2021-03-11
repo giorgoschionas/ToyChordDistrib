@@ -72,8 +72,8 @@ class ChordNode():
 
             # # Transfer keys that have to be removed from successor of new node to new node
             retrieved_pairs =stub.LoadBalance(node_services_pb2.LoadBalanceRequest(id = self.id))
-            for item  in retrieved_pairs:
-                print(item.s
+            for item  in retrieved_pairs.pairs:
+                print(item)
 
     def requestSuccessor(self, request):
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:

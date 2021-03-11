@@ -41,8 +41,6 @@ def main(argv):
     else:
         newNode.join(1)
 
-
-    
     # songServicer.Insert(client_services_pb2.InsertRequest(song ='fdsdfs', value ='2'))
     nodeServer.run()
 

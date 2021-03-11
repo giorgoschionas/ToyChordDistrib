@@ -20,7 +20,7 @@ class SongRepository:
         return self.database.get(hashedSong)
     
     def retrieveSongsLessThan(self, id):
-        removed_keys = {key : value for key,value in self.database.items() if key<=id}
-        for key in removed_keys:
+        removed_keys = {key : value for key,value in self.database.data.items() if key<=id}
+        for key,_ in removed_keys.items():
             self.deleteSong(key)
         return removed_keys

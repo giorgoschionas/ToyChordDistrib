@@ -46,7 +46,6 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
             if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
                 response = self.songRepository.getValue(request.song)
                 return client_services_pb2.QueryResponse(value = response)
-
             else:
                 chordResponse = self.chordNode.requestSuccessor(digest)
                 return chordResponse
