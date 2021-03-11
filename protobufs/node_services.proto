@@ -35,8 +35,13 @@ message LoadBalanceRequest{
   uint64 id = 1;
 }
 
+message Pair{
+  uint64 key_entry=1;
+  string value_entry=2;
+}
+
 message LoadBalanceResponse{
-  uint64 keys =1;
+  repeated Pair pairs =1;
 }
 
  

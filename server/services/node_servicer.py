@@ -1,5 +1,6 @@
 from generated import node_services_pb2_grpc, node_services_pb2
 from services import chord_node
+from repositories import song_repository
 
 class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
     def __init__(self, songRepository, chordNode):
@@ -13,11 +14,10 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
         return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port=tempAddr.port)
     
     def LoadBalance(self, request, context):
-        # removed_keys = [item for item in self.keys if item<=request.id]
         removed_keys = self.songRepository.retrieveSongsLessThan(request.id)
-        self.keys = list(set(self.keys)- set(removed_keys))
         foo = node_services_pb2.LoadBalanceResponse()
-        foo.keys.extend(removed_keys)
+        for key,value in removed_keys.items():
+            foo.append(node_services_pb2_grpc.Pair(key_entry = key, value_entry=value))
         return foo
 
     # to request pou pairnei einai to id 

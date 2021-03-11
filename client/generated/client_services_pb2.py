@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15\x63lient_services.proto\x12\x05\x63hord\"\x1d\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1c\n\x0cQueryRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\";\n\rQueryResponse\x12\x10\n\x08response\x18\x01 \x01(\t\x12\x0c\n\x04song\x18\x02 \x01(\t\x12\n\n\x02ip\x18\x03 \x01(\t2\xb7\x01\n\rClientService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12\x34\n\x05Query\x12\x13.chord.QueryRequest\x1a\x14.chord.QueryResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x15\x63lient_services.proto\x12\x05\x63hord\",\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1c\n\x0cQueryRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\x1e\n\rQueryResponse\x12\r\n\x05value\x18\x01 \x01(\t2\xb7\x01\n\rClientService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12\x34\n\x05Query\x12\x13.chord.QueryRequest\x1a\x14.chord.QueryResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -40,6 +40,13 @@ _INSERTREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='chord.InsertRequest.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -53,7 +60,7 @@ _INSERTREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=32,
-  serialized_end=61,
+  serialized_end=76,
 )
 
 
@@ -84,8 +91,8 @@ _INSERTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=63,
-  serialized_end=97,
+  serialized_start=78,
+  serialized_end=112,
 )
 
 
@@ -116,8 +123,8 @@ _DELETEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=99,
-  serialized_end=128,
+  serialized_start=114,
+  serialized_end=143,
 )
 
 
@@ -148,8 +155,8 @@ _DELETERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=130,
-  serialized_end=164,
+  serialized_start=145,
+  serialized_end=179,
 )
 
 
@@ -180,8 +187,8 @@ _QUERYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=166,
-  serialized_end=194,
+  serialized_start=181,
+  serialized_end=209,
 )
 
 
@@ -194,22 +201,8 @@ _QUERYRESPONSE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='response', full_name='chord.QueryResponse.response', index=0,
+      name='value', full_name='chord.QueryResponse.value', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='song', full_name='chord.QueryResponse.song', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ip', full_name='chord.QueryResponse.ip', index=2,
-      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -226,8 +219,8 @@ _QUERYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=196,
-  serialized_end=255,
+  serialized_start=211,
+  serialized_end=241,
 )
 
 DESCRIPTOR.message_types_by_name['InsertRequest'] = _INSERTREQUEST
@@ -289,8 +282,8 @@ _CLIENTSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=258,
-  serialized_end=441,
+  serialized_start=244,
+  serialized_end=427,
   methods=[
   _descriptor.MethodDescriptor(
     name='Insert',

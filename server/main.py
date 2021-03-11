@@ -5,7 +5,7 @@ import hashlib
 import grpc  
 from concurrent import futures
 
-from generated import node_services_pb2_grpc, client_services_pb2_grpc
+from generated import node_services_pb2_grpc, node_services_pb2, client_services_pb2_grpc, client_services_pb2
 from repositories.song_repository import SongRepository
 from database.database import Database
 from services import chord_node, song_servicer, node_servicer
@@ -28,7 +28,7 @@ def main(argv):
     songRepository = SongRepository(db, hashFunction=sha1)
     
     addr = chord_node.Address(ip, port)
-    newNode = chord_node.ChordNode(addr)
+    newNode = chord_node.ChordNode(addr, songRepository)
     nodeServicer = node_servicer.NodeServicer(songRepository, newNode)
     songServicer = song_servicer.SongServicer(songRepository, newNode)
 
@@ -41,7 +41,16 @@ def main(argv):
     else:
         newNode.join(1)
 
+
+    
+    # songServicer.Insert(client_services_pb2.InsertRequest(song ='fdsdfs', value ='2'))
     nodeServer.run()
+
+    # if port != 1024:
+    #     with grpc.insecure_channel('localhost:1024') as channel:
+    #         stub = client_services_pb2_grpc.ClientServiceStub(channel)
+    #         response = stub.Insert(client_services_pb2.InsertRequest(song='sada', value='2'))
+
     
 def setupLogging():
     # only cofnigure logger if script is main module
