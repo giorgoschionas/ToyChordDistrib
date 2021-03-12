@@ -5,8 +5,8 @@ class SongRepository:
         self.database = database
         self.hashFunction = hashFunction
     
-    def addSong(self, key,value):
-        response = self.database.add(key,value)
+    def addSong(self, key, value):
+        response = self.database.add(key, value)
         return response
 
     def deleteSong(self, key):

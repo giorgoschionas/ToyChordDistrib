@@ -23,7 +23,7 @@ class NeigboorInfo:
         self.ip = address.ip
         self.port = address.port
 
-class ChordNode():
+class ChordNode:
     def __init__(self, address, songRepository):
         self.id = sha1(f'{address.ip}:{address.port}')
         print('Id of node : ', self.id)
@@ -49,7 +49,7 @@ class ChordNode():
             response = stub.FindSuccessor(node_services_pb2.FindSuccessorRequest(id=self.id, ip=self.address.ip, port = self.address.port))
             print("Id of successor " , response.id)
             self.setSuccessor(Address(response.ip, response.port))
-        
+                
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
 
@@ -59,13 +59,13 @@ class ChordNode():
             print("Id of predecessor : ", self.predecessor.id)
 
             # Transfer keys that have to be removed from successor of new node to new node
-            retrieved_pairs =stub.LoadBalance(node_services_pb2.LoadBalanceRequest(id = self.id))
+            retrieved_pairs = stub.LoadBalance(node_services_pb2.LoadBalanceRequest(id = self.id))
             for item  in retrieved_pairs.pairs:
                 self.songRepository.addSong(item.key_entry,item.value_entry)
 
     def requestSuccessor(self, request):
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
-            print(f"Sending request  from {self.address.port} to {self.successor.port}")
+            print(f"Sending request from {self.address.port} to {self.successor.port}")
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
             successorInfo = stub.FindSuccessor(request)
             return successorInfo

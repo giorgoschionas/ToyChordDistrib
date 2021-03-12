@@ -27,20 +27,19 @@ def main(argv):
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
     
-    addr = chord_node.Address(ip, port)
-    newNode = chord_node.ChordNode(addr, songRepository)
-    nodeServicer = node_servicer.NodeServicer(songRepository, newNode)
-    songServicer = song_servicer.SongServicer(songRepository, newNode)
+    address = chord_node.Address(ip, port)
+    newNode = chord_node.ChordNode(address, songRepository)
+    nodeServicer = node_servicer.NodeServicer(newNode)
+    songServicer = song_servicer.SongServicer(newNode)
 
     if port == 1024:
         newNode.createTopology()
     else:
         newNode.join(1)
 
-    nodeServer = GrpcServer(ip, port, 10)
+    nodeServer = GrpcServer(ip, port, maxWorkers=10)
     nodeServer.addServicer(nodeServicer, node_services_pb2_grpc.add_NodeServiceServicer_to_server)
     nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
-
     nodeServer.run()
 
     

@@ -24,4 +24,4 @@ class Database:
             databaseResponse = self.data[key]
         else:
             databaseResponse = ''
-        return resp
+        return databaseResponse

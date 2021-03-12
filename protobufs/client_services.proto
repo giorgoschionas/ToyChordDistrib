@@ -4,8 +4,8 @@ package chord;
 
 service ClientService {
     rpc Insert(InsertRequest) returns (InsertResponse) {}
-    rpc Delete(DeleteRequest) returns(DeleteResponse)  {}
-    rpc Query(QueryRequest) returns(QueryResponse) {}
+    rpc Delete(DeleteRequest) returns (DeleteResponse)  {}
+    rpc Query(QueryRequest) returns (QueryResponse) {}
 }
 
 message InsertRequest {
@@ -29,7 +29,7 @@ message QueryRequest{
     string song = 1;
 }
 
-message PairClient{
+message PairClient {
     uint64 key_entry = 1;
     string value_entry = 2;
 }

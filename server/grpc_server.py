@@ -7,7 +7,7 @@ class _Server:
         self.host = host
         self.port = port
         self.address = host + ":" + str(port)
-        self.logger = logging.getLogger('grpc_server')
+        self.logger = logging.getLogger('server')
 
 class GrpcServer(_Server):
     def __init__(self, host, port, maxWorkers):
