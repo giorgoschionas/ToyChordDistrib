@@ -5,7 +5,7 @@ import hashlib
 import grpc  
 from concurrent import futures
 
-from generated import node_services_pb2_grpc, client_services_pb2_grpc
+from generated import node_services_pb2_grpc, node_services_pb2, client_services_pb2_grpc, client_services_pb2
 from repositories.song_repository import SongRepository
 from database.database import Database
 from services import chord_node, song_servicer, node_servicer
@@ -27,21 +27,21 @@ def main(argv):
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
     
-    addr = chord_node.Address(ip, port)
-    newNode = chord_node.ChordNode(addr)
-    nodeServicer = node_servicer.NodeServicer(songRepository, newNode)
-    songServicer = song_servicer.SongServicer(songRepository, newNode)
-
-    nodeServer = GrpcServer(ip, port, 10)
-    nodeServer.addServicer(nodeServicer, node_services_pb2_grpc.add_NodeServiceServicer_to_server)
-    nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
+    address = chord_node.Address(ip, port)
+    newNode = chord_node.ChordNode(address, songRepository)
+    nodeServicer = node_servicer.NodeServicer(newNode)
+    songServicer = song_servicer.SongServicer(newNode)
 
     if port == 1024:
         newNode.createTopology()
     else:
         newNode.join(1)
 
+    nodeServer = GrpcServer(ip, port, maxWorkers=10)
+    nodeServer.addServicer(nodeServicer, node_services_pb2_grpc.add_NodeServiceServicer_to_server)
+    nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
     nodeServer.run()
+
     
 def setupLogging():
     # only cofnigure logger if script is main module
@@ -55,6 +55,7 @@ def setupLogging():
         formatter = logging.Formatter('%(levelname)s: %(asctime)s %(funcName)s(%(lineno)d) -- %(message)s', datefmt = '%Y-%m-%d %H:%M:%S')
         ch.setFormatter(formatter)
         log.addHandler(ch)
+
 
 if __name__ == "__main__":
     setupLogging()

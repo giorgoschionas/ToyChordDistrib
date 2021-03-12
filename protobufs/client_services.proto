@@ -4,12 +4,13 @@ package chord;
 
 service ClientService {
     rpc Insert(InsertRequest) returns (InsertResponse) {}
-    rpc Delete(DeleteRequest) returns(DeleteResponse)  {}
-    rpc Query(QueryRequest) returns(QueryResponse) {}
+    rpc Delete(DeleteRequest) returns (DeleteResponse)  {}
+    rpc Query(QueryRequest) returns (QueryResponse) {}
 }
 
 message InsertRequest {
     string song = 1;
+    string value = 2;
 }
 
 message InsertResponse {
@@ -21,15 +22,18 @@ message DeleteRequest {
 }
 
 message DeleteResponse{
-    string response =1;
+    string response = 1;
 }
 
 message QueryRequest{
-    string song =1;
+    string song = 1;
+}
+
+message PairClient {
+    uint64 key_entry = 1;
+    string value_entry = 2;
 }
 
 message QueryResponse{
-    string response=1;
-    string song=2;
-    string ip=3;
+    repeated PairClient pairs = 1;
 }

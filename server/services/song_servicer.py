@@ -1,41 +1,69 @@
 from generated import client_services_pb2_grpc
 from generated import client_services_pb2
+from generated import node_services_pb2_grpc
+from generated import node_services_pb2
+
+import grpc
+import hashlib
+
+def sha1(msg):
+    digest = hashlib.sha1(msg.encode())
+    hex_digest= digest.hexdigest()
+    return int(hex_digest, 16) % 65536
 
 class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
-    def __init__(self, songRepository, chordNode):
-        self.songRepository = songRepository
+    def __init__(self, chordNode):
         self.chordNode = chordNode
-
 
     def Insert(self, request, context):
         digest = sha1(request.song)
-        if self.between(self.predecessor.id, digest, self.id):
-            response = client_services_pb2.InsertResponse(response = 'Added')
-            self.addKey(digest)
+        if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
+            digest = sha1(request.song)
+            domainResponse = self.chordNode.songRepository.addSong(digest, request.value)
+            return client_services_pb2.InsertResponse(response = domainResponse)
         else:
-            chordResponse = self.chordNode.requestSuccessor(digest)
-            return chordResponse
+            with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                stub = client_services_pb2_grpc.ClientServiceStub(channel)
+                response = stub.Insert(request)
+                return response
     
     def Delete(self, request, context):
         digest = sha1(request.song)
         if self.chordNode.between(self.predecessor.id, digest, self.id):
-            self.songRepository.delete(request)
-            response = client_services_pb2.DeleteResponse(response ='Deleted')
-            self.deleteKey(digest)
+            domainResponse = self.chordNode.songRepository.deleteSong(digest)
+            return client_services_pb2.DeleteResponse(response = domainResponse)
         else:
-            chordResponse = self.chordNode.requestSuccessor(digest)
-            return chordResponse
+            with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                stub = client_services_pb2_grpc.ClientServiceStub(channel)
+                response = stub.Delete(request)
+                return response
 
-    
     def Query(self, request, context):
-        digest = sha1(request.song)
-        if self.between(self.predecessor.id, digest, self.id):
-            if digest in self.keys:
-                return client_services_pb2.QueryResponse(response = 'Found', ip = self.ip)
+        if request.song != '*':
+            digest = sha1(request.song)
+            if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
+                domainResponse = self.chordNode.songRepository.getValue(digest)
+                foo = client_services_pb2.QueryResponse()
+                pair = client_services_pb2.PairClient(key_entry = digest, value_entry = domainResponse)
+                foo.pairs.append(pair)
+                return foo
             else:
-                return client_services_pb2.QueryResponse(response= 'Not Found')
+                with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                    stub = client_services_pb2_grpc.ClientServiceStub(channel)
+                    response = stub.Query(request)
+                    return response
         else:
-            chordResponse = self.chordNode.requestSuccessor(digest)
-            return chordResponse
+            with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                stub = node_services_pb2_grpc.NodeServiceStub(channel)
+                response = stub.QueryAll(node_services_pb2.QueryAllRequest(id = self.chordNode.id))
+                foo = client_services_pb2.QueryResponse()
+                for item in response.pairs:
+                    foo.pairs.append(client_services_pb2.PairClient(key_entry = item.key_entry, value_entry = item.value_entry))
+                return foo
+        
+    def Depart(self, request, context):
+        pass
+
+
 
     
