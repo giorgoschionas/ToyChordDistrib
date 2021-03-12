@@ -32,22 +32,16 @@ def main(argv):
     nodeServicer = node_servicer.NodeServicer(songRepository, newNode)
     songServicer = song_servicer.SongServicer(songRepository, newNode)
 
-    nodeServer = GrpcServer(ip, port, 10)
-    nodeServer.addServicer(nodeServicer, node_services_pb2_grpc.add_NodeServiceServicer_to_server)
-    nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
-
     if port == 1024:
         newNode.createTopology()
     else:
         newNode.join(1)
 
-    # songServicer.Insert(client_services_pb2.InsertRequest(song ='fdsdfs', value ='2'))
-    nodeServer.run()
+    nodeServer = GrpcServer(ip, port, 10)
+    nodeServer.addServicer(nodeServicer, node_services_pb2_grpc.add_NodeServiceServicer_to_server)
+    nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
 
-    # if port != 1024:
-    #     with grpc.insecure_channel('localhost:1024') as channel:
-    #         stub = client_services_pb2_grpc.ClientServiceStub(channel)
-    #         response = stub.Insert(client_services_pb2.InsertRequest(song='sada', value='2'))
+    nodeServer.run()
 
     
 def setupLogging():
@@ -62,6 +56,7 @@ def setupLogging():
         formatter = logging.Formatter('%(levelname)s: %(asctime)s %(funcName)s(%(lineno)d) -- %(message)s', datefmt = '%Y-%m-%d %H:%M:%S')
         ch.setFormatter(formatter)
         log.addHandler(ch)
+
 
 if __name__ == "__main__":
     setupLogging()

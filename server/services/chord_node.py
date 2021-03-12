@@ -18,10 +18,10 @@ class Address:
         self.port = port
 
 class NeigboorInfo:
-    def __init__(self,address):
+    def __init__(self, address):
+        self.id = sha1(f'{address.ip}:{address.port}')
         self.ip = address.ip
         self.port = address.port
-        self.id = sha1(f'{address.ip}:{address.port}')
 
 class ChordNode():
     def __init__(self, address, songRepository):
@@ -32,25 +32,18 @@ class ChordNode():
         self.predecessor = None
         self.songRepository = songRepository
 
-
     def setPredecessor(self, predecessorAddress):
         self.predecessor = NeigboorInfo(predecessorAddress)
-    
-    def getPredecessor(self):
-        return self.predecessor
 
     def setSuccessor(self, successorAddress):
         self.successor = NeigboorInfo(successorAddress)
-    
-    def getSuccessor(self):
-        return self.successor
 
     def createTopology(self):
         print("Creating bootstrap node")
         self.predecessor = NeigboorInfo(self.address)  
         self.successor = NeigboorInfo(self.address)      
     
-    def join(self, node_id):
+    def join(self, nodeId):
         with grpc.insecure_channel('localhost:1024') as channel:
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
             response = stub.FindSuccessor(node_services_pb2.FindSuccessorRequest(id=self.id, ip=self.address.ip, port = self.address.port))
@@ -65,7 +58,7 @@ class ChordNode():
             self.setPredecessor(Address(response.ip,response.port))
             print("Id of predecessor : ", self.predecessor.id)
 
-            # # Transfer keys that have to be removed from successor of new node to new node
+            # Transfer keys that have to be removed from successor of new node to new node
             retrieved_pairs =stub.LoadBalance(node_services_pb2.LoadBalanceRequest(id = self.id))
             for item  in retrieved_pairs.pairs:
                 self.songRepository.addSong(item.key_entry,item.value_entry)

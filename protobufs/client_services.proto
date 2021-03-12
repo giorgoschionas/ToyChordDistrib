@@ -10,7 +10,7 @@ service ClientService {
 
 message InsertRequest {
     string song = 1;
-    string value=2;
+    string value = 2;
 }
 
 message InsertResponse {
@@ -22,19 +22,18 @@ message DeleteRequest {
 }
 
 message DeleteResponse{
-    string response =1;
+    string response = 1;
 }
 
 message QueryRequest{
-    string song =1;
+    string song = 1;
 }
 
 message PairClient{
-    uint64 key_entry =1;
-    string value_entry =2;
+    uint64 key_entry = 1;
+    string value_entry = 2;
 }
 
 message QueryResponse{
-    repeated PairClient pairs =1;
-  
+    repeated PairClient pairs = 1;
 }

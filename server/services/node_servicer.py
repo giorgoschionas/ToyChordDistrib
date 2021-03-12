@@ -42,18 +42,16 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
 
     def QueryAll(self, request, context):
         if request.id == self.chordNode.id:
-            last_data = self.songRepository.getDHT()
-            foo = node_services_pb2.QueryAllResponse()
-            for key,value in last_data.items():
-                foo.pairs.append(node_services_pb2.Pair(key_entry = key, value_entry=value))
-            return foo
+            lastData = self.songRepository.getDHT()
+            return self._concatData(node_services_pb2.QueryAllResponse(), lastData)
         else:
             with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
                 stub = node_services_pb2_grpc.NodeServiceStub(channel)
                 response = stub.QueryAll(request)
                 data = self.songRepository.getDHT()
-                for key,value in data.items():
-                    response.pairs.append(node_services_pb2.Pair(key_entry = key, value_entry=value))
-                return response
+                return self._concatData(response, data)
 
-
+    def _concatData(self, data, newData):
+        for key, value in newData.items():
+            data.pairs.append(node_services_pb2.Pair(key_entry = key, value_entry = value))
+        return data

@@ -5,25 +5,23 @@ class Database:
 
     def add(self, key,value):
         if key in self.data:
-            str = 'Updated'
+            databaseResponse = 'Updated'
         else:
-            str = 'Added'
-        print(str)
+            databaseResponse = 'Added'
         self.data[key] = value
-        return str
+        return databaseResponse
 
     def delete(self, key):
         if key in self.data:
             del self.data[key]
-            str ='Deleted'
+            databaseResponse ='Deleted'
         else:
-            str = 'Key not found'
-        
-        return str
+            databaseResponse = 'Key not found'
+        return databaseResponse
     
     def get(self, key):
         if key in self.data:
-            resp = self.data[key]
+            databaseResponse = self.data[key]
         else:
-            resp = ''
+            databaseResponse = ''
         return resp

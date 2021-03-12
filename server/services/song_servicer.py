@@ -4,13 +4,13 @@ from generated import node_services_pb2_grpc
 from generated import node_services_pb2
 
 import grpc
-
 import hashlib
 
 def sha1(msg):
     digest = hashlib.sha1(msg.encode())
     hex_digest= digest.hexdigest()
     return int(hex_digest, 16) % 65536
+
 
 class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
     def __init__(self, songRepository, chordNode):
@@ -21,10 +21,9 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
     def Insert(self, request, context):
         digest = sha1(request.song)
         if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
-            msg = self.songRepository.addSong(digest, request.value)
-            return client_services_pb2.InsertResponse(response = msg)
+            domainResponse = self.songRepository.addSong(digest, request.value)
+            return client_services_pb2.InsertResponse(response = domainResponse)
         else:
-            # print(sha1(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}'))
             with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
                 stub = client_services_pb2_grpc.ClientServiceStub(channel)
                 response = stub.Insert(request)
@@ -42,14 +41,13 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
                 response = stub.Delete(request)
                 return response
 
-    
     def Query(self, request, context):
-        digest = sha1(request.song)
-        if digest != sha1('*'):
+        if request.song != '*':
             if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
-                response = self.songRepository.getValue(digest)
+                digest = sha1(request.song)
+                domainResponse = self.songRepository.getValue(digest)
                 foo = client_services_pb2.QueryResponse()
-                pair = client_services_pb2.PairClient(key_entry = digest, value_entry =response)
+                pair = client_services_pb2.PairClient(key_entry = digest, value_entry = domainResponse)
                 foo.pairs.append(pair)
                 return foo
             else:
@@ -65,11 +63,9 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
                 for item in response.pairs:
                     foo.pairs.append(client_services_pb2.PairClient(key_entry = item.key_entry, value_entry = item.value_entry))
                 return foo
-                
-
-    
-
-    # def Depart(self, request, context):
+        
+    def Depart(self, request, context):
+        pass
 
 
 
