@@ -6,6 +6,7 @@ service NodeService {
   rpc FindSuccessor(FindSuccessorRequest)  returns(FindSuccessorResponse){}
   rpc Notify(NotifyRequest) returns(NotifyResponse){}
   rpc LoadBalance(LoadBalanceRequest) returns (LoadBalanceResponse){}
+  rpc QueryAll(QueryAllRequest) returns(QueryAllResponse){}
 }
 
 message FindSuccessorRequest{
@@ -41,6 +42,14 @@ message Pair{
 }
 
 message LoadBalanceResponse{
+  repeated Pair pairs =1;
+}
+
+message QueryAllRequest{
+  uint64 id =1;
+}
+
+message QueryAllResponse{
   repeated Pair pairs =1;
 }
 

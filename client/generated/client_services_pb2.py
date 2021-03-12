@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15\x63lient_services.proto\x12\x05\x63hord\",\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1c\n\x0cQueryRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\x1e\n\rQueryResponse\x12\r\n\x05value\x18\x01 \x01(\t2\xb7\x01\n\rClientService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12\x34\n\x05Query\x12\x13.chord.QueryRequest\x1a\x14.chord.QueryResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x15\x63lient_services.proto\x12\x05\x63hord\",\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1c\n\x0cQueryRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"4\n\nPairClient\x12\x11\n\tkey_entry\x18\x01 \x01(\x04\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\"1\n\rQueryResponse\x12 \n\x05pairs\x18\x01 \x03(\x0b\x32\x11.chord.PairClient2\xb7\x01\n\rClientService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12\x34\n\x05Query\x12\x13.chord.QueryRequest\x1a\x14.chord.QueryResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -192,17 +192,24 @@ _QUERYREQUEST = _descriptor.Descriptor(
 )
 
 
-_QUERYRESPONSE = _descriptor.Descriptor(
-  name='QueryResponse',
-  full_name='chord.QueryResponse',
+_PAIRCLIENT = _descriptor.Descriptor(
+  name='PairClient',
+  full_name='chord.PairClient',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='value', full_name='chord.QueryResponse.value', index=0,
-      number=1, type=9, cpp_type=9, label=1,
+      name='key_entry', full_name='chord.PairClient.key_entry', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value_entry', full_name='chord.PairClient.value_entry', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -220,14 +227,48 @@ _QUERYRESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=211,
-  serialized_end=241,
+  serialized_end=263,
 )
 
+
+_QUERYRESPONSE = _descriptor.Descriptor(
+  name='QueryResponse',
+  full_name='chord.QueryResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pairs', full_name='chord.QueryResponse.pairs', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=265,
+  serialized_end=314,
+)
+
+_QUERYRESPONSE.fields_by_name['pairs'].message_type = _PAIRCLIENT
 DESCRIPTOR.message_types_by_name['InsertRequest'] = _INSERTREQUEST
 DESCRIPTOR.message_types_by_name['InsertResponse'] = _INSERTRESPONSE
 DESCRIPTOR.message_types_by_name['DeleteRequest'] = _DELETEREQUEST
 DESCRIPTOR.message_types_by_name['DeleteResponse'] = _DELETERESPONSE
 DESCRIPTOR.message_types_by_name['QueryRequest'] = _QUERYREQUEST
+DESCRIPTOR.message_types_by_name['PairClient'] = _PAIRCLIENT
 DESCRIPTOR.message_types_by_name['QueryResponse'] = _QUERYRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -266,6 +307,13 @@ QueryRequest = _reflection.GeneratedProtocolMessageType('QueryRequest', (_messag
   })
 _sym_db.RegisterMessage(QueryRequest)
 
+PairClient = _reflection.GeneratedProtocolMessageType('PairClient', (_message.Message,), {
+  'DESCRIPTOR' : _PAIRCLIENT,
+  '__module__' : 'client_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.PairClient)
+  })
+_sym_db.RegisterMessage(PairClient)
+
 QueryResponse = _reflection.GeneratedProtocolMessageType('QueryResponse', (_message.Message,), {
   'DESCRIPTOR' : _QUERYRESPONSE,
   '__module__' : 'client_services_pb2'
@@ -282,8 +330,8 @@ _CLIENTSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=244,
-  serialized_end=427,
+  serialized_start=317,
+  serialized_end=500,
   methods=[
   _descriptor.MethodDescriptor(
     name='Insert',

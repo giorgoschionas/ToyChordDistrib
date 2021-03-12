@@ -45,11 +45,6 @@ class ChordNode():
     def getSuccessor(self):
         return self.successor
 
-    def query(self, key):
-        hashed_key = sha1(key)
-        if hashed_key in range(self.predecessor, self.id): 
-            return database(hashed_key)
-
     def createTopology(self):
         print("Creating bootstrap node")
         self.predecessor = NeigboorInfo(self.address)  
@@ -73,7 +68,7 @@ class ChordNode():
             # # Transfer keys that have to be removed from successor of new node to new node
             retrieved_pairs =stub.LoadBalance(node_services_pb2.LoadBalanceRequest(id = self.id))
             for item  in retrieved_pairs.pairs:
-                print(item)
+                self.songRepository.addSong(item.key_entry,item.value_entry)
 
     def requestSuccessor(self, request):
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:

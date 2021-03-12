@@ -29,6 +29,11 @@ class NodeServiceStub(object):
                 request_serializer=node__services__pb2.LoadBalanceRequest.SerializeToString,
                 response_deserializer=node__services__pb2.LoadBalanceResponse.FromString,
                 )
+        self.QueryAll = channel.unary_unary(
+                '/chord.NodeService/QueryAll',
+                request_serializer=node__services__pb2.QueryAllRequest.SerializeToString,
+                response_deserializer=node__services__pb2.QueryAllResponse.FromString,
+                )
 
 
 class NodeServiceServicer(object):
@@ -52,6 +57,12 @@ class NodeServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def QueryAll(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_NodeServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -69,6 +80,11 @@ def add_NodeServiceServicer_to_server(servicer, server):
                     servicer.LoadBalance,
                     request_deserializer=node__services__pb2.LoadBalanceRequest.FromString,
                     response_serializer=node__services__pb2.LoadBalanceResponse.SerializeToString,
+            ),
+            'QueryAll': grpc.unary_unary_rpc_method_handler(
+                    servicer.QueryAll,
+                    request_deserializer=node__services__pb2.QueryAllRequest.FromString,
+                    response_serializer=node__services__pb2.QueryAllResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -128,5 +144,22 @@ class NodeService(object):
         return grpc.experimental.unary_unary(request, target, '/chord.NodeService/LoadBalance',
             node__services__pb2.LoadBalanceRequest.SerializeToString,
             node__services__pb2.LoadBalanceResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def QueryAll(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.NodeService/QueryAll',
+            node__services__pb2.QueryAllRequest.SerializeToString,
+            node__services__pb2.QueryAllResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

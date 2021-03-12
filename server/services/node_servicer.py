@@ -2,6 +2,8 @@ from generated import node_services_pb2_grpc, node_services_pb2
 from services import chord_node
 from repositories import song_repository
 
+import grpc
+
 class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
     def __init__(self, songRepository, chordNode):
         self.songRepository = songRepository
@@ -17,7 +19,7 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
         removed_keys = self.songRepository.retrieveSongsLessThan(request.id)
         foo = node_services_pb2.LoadBalanceResponse()
         for key,value in removed_keys.items():
-            foo.append(node_services_pb2_grpc.Pair(key_entry = key, value_entry=value))
+            foo.pairs.append(node_services_pb2.Pair(key_entry = key, value_entry=value))
         return foo
 
     # to request pou pairnei einai to id 
@@ -36,3 +38,22 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
                 return response
             else:
                 return self.chordNode.requestSuccessor(request)
+    
+
+    def QueryAll(self, request, context):
+        if request.id == self.chordNode.id:
+            last_data = self.songRepository.getDHT()
+            foo = node_services_pb2.QueryAllResponse()
+            for key,value in last_data.items():
+                foo.pairs.append(node_services_pb2.Pair(key_entry = key, value_entry=value))
+            return foo
+        else:
+            with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                stub = node_services_pb2_grpc.NodeServiceStub(channel)
+                response = stub.QueryAll(request)
+                data = self.songRepository.getDHT()
+                for key,value in data.items():
+                    response.pairs.append(node_services_pb2.Pair(key_entry = key, value_entry=value))
+                return response
+
+

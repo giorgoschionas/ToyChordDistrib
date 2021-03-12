@@ -5,22 +5,22 @@ class SongRepository:
         self.database = database
         self.hashFunction = hashFunction
     
-    def addSong(self, song,value):
-        hashedSong = self.hashFunction(song)
-        response = self.database.add(hashedSong,value)
+    def addSong(self, key,value):
+        response = self.database.add(key,value)
         return response
 
-    def deleteSong(self, song):
-        hashedSong = self.hashFunction(song)
-        response = self.database.delete(hashedSong)
+    def deleteSong(self, key):
+        response = self.database.delete(key)
         return response
 
-    def getValue(self, song):
-        hashedSong = self.hashFunction(song)
-        return self.database.get(hashedSong)
+    def getValue(self, key):
+        return self.database.get(key)
+    
+    def getDHT(self):
+        return self.database.data
     
     def retrieveSongsLessThan(self, id):
         removed_keys = {key : value for key,value in self.database.data.items() if key<=id}
         for key,_ in removed_keys.items():
-            self.deleteSong(key)
+            self.database.delete(key)
         return removed_keys

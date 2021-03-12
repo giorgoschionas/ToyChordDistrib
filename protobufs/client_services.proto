@@ -29,7 +29,12 @@ message QueryRequest{
     string song =1;
 }
 
+message PairClient{
+    uint64 key_entry =1;
+    string value_entry =2;
+}
+
 message QueryResponse{
-    string value =1;
+    repeated PairClient pairs =1;
   
 }
