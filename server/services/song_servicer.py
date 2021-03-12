@@ -62,7 +62,32 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
                 return foo
         
     def Depart(self, request, context):
-        pass
+        # Notify successor of the node that his predecessor changed 
+        with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
+            stub = node_services_pb2_grpc.NodeServiceStub(channel)
+            response = stub.Notify(node_services_pb2.NotifyRequest(id=self.chordNode.predecessor.id, ip=self.ChordNode.predecessor.ip, port = self.ChordNode.predecessor.port, neighboor='successor'))
+
+            #Load Balance: Transfer entries from current node (which is going to depart) to its successor 
+            foo = node_services_pb2.LoadBalanceAfterDepartRequest()
+            for key,value in self.chordNode.songRepository.database.data.items():
+                foo.pairs.append(node_services_pb2.Pair(key_entry = key, value_entry = value))
+            msg = stub.LoadBalanceAfterDepart(foo)
+
+        # Notify predecessor of the node that his successor changed 
+        with grpc.insecure_channel(f'{self.predecessor.ip}:{self.predecessor.port}') as channel:
+            stub = node_services_pb2_grpc.NodeServiceStub(channel)
+            response = stub.Notify(node_services_pb2.NotifyRequest(id=self.chordNode.predecessor.id, ip=self.ChordNode.predecessor.ip, port = self.ChordNode.predecessor.port, neighboor ='predecessor')) 
+
+
+    def Overlay(self, request, context):
+        with grpc.insecure_channel(f'{self.chordNode.predecessor.ip}:{self.chordNode.predecessor.port}') as channel:
+            stub = node_services_pb2_grpc.NodeServiceStub(channel)
+            response = stub.OverlayAll(node_services_pb2.OverlayAllRequest(id = self.chordNode.id))
+            foo = client_services_pb2.OverlayResponse()
+            for item in response.ids:
+                foo.ids.append(item)
+            return foo
+
 
 
 

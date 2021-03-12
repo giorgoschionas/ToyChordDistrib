@@ -5,8 +5,10 @@ package chord;
 service NodeService {
   rpc FindSuccessor(FindSuccessorRequest) returns (FindSuccessorResponse){}
   rpc Notify(NotifyRequest) returns (NotifyResponse){}
-  rpc LoadBalance(LoadBalanceRequest) returns (LoadBalanceResponse){}
+  rpc LoadBalanceAfterJoin(LoadBalanceAfterJoinRequest) returns (LoadBalanceAfterJoinResponse){}
+  rpc LoadBalanceAfterDepart(LoadBalanceAfterDepartRequest) returns(LoadBalanceAfterDepartResponse){}
   rpc QueryAll(QueryAllRequest) returns (QueryAllResponse) {}
+  rpc OverlayAll(OverlayAllRequest) returns (OverlayAllResponse){}
 }
 
 message FindSuccessorRequest {
@@ -25,6 +27,7 @@ message NotifyRequest {
   uint64 id = 1;
   string ip = 2;
   uint32 port = 3;
+  string neighboor =4;
 }
 
 message NotifyResponse {
@@ -32,18 +35,27 @@ message NotifyResponse {
   uint32 port = 2;
 }
 
-message LoadBalanceRequest {
-  uint64 id = 1;
-}
-
 message Pair {
   uint64 key_entry=1;
   string value_entry=2;
 }
 
-message LoadBalanceResponse {
+message LoadBalanceAfterJoinRequest {
+  uint64 id = 1;
+}
+
+message LoadBalanceAfterJoinResponse {
   repeated Pair pairs =1;
 }
+
+message LoadBalanceAfterDepartRequest{
+  repeated Pair pairs=1;
+}
+
+message LoadBalanceAfterDepartResponse{
+  string msg =1;
+}
+
 
 message QueryAllRequest {
   uint64 id =1;
@@ -51,4 +63,12 @@ message QueryAllRequest {
 
 message QueryAllResponse {
   repeated Pair pairs = 1;
+}
+
+message OverlayAllRequest{
+  uint64 id =1;
+}
+
+message OverlayAllResponse{
+  repeated uint64 ids = 1;
 }

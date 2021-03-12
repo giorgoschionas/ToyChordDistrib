@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15\x63lient_services.proto\x12\x05\x63hord\",\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1c\n\x0cQueryRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"4\n\nPairClient\x12\x11\n\tkey_entry\x18\x01 \x01(\x04\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\"1\n\rQueryResponse\x12 \n\x05pairs\x18\x01 \x03(\x0b\x32\x11.chord.PairClient2\xb7\x01\n\rClientService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12\x34\n\x05Query\x12\x13.chord.QueryRequest\x1a\x14.chord.QueryResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x15\x63lient_services.proto\x12\x05\x63hord\",\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1c\n\x0cQueryRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"4\n\nPairClient\x12\x11\n\tkey_entry\x18\x01 \x01(\x04\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\"1\n\rQueryResponse\x12 \n\x05pairs\x18\x01 \x03(\x0b\x32\x11.chord.PairClient\"\x1c\n\rDepartRequest\x12\x0b\n\x03req\x18\x01 \x01(\t\"\"\n\x0e\x44\x65partResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\x0eOverlayRequest\x12\x0b\n\x03req\x18\x01 \x01(\t\"\x1e\n\x0fOverlayResponse\x12\x0b\n\x03ids\x18\x01 \x03(\x04\x32\xac\x02\n\rClientService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12\x34\n\x05Query\x12\x13.chord.QueryRequest\x1a\x14.chord.QueryResponse\"\x00\x12\x37\n\x06\x44\x65part\x12\x14.chord.DepartRequest\x1a\x15.chord.DepartResponse\"\x00\x12:\n\x07Overlay\x12\x15.chord.OverlayRequest\x1a\x16.chord.OverlayResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -262,6 +262,134 @@ _QUERYRESPONSE = _descriptor.Descriptor(
   serialized_end=314,
 )
 
+
+_DEPARTREQUEST = _descriptor.Descriptor(
+  name='DepartRequest',
+  full_name='chord.DepartRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='req', full_name='chord.DepartRequest.req', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=316,
+  serialized_end=344,
+)
+
+
+_DEPARTRESPONSE = _descriptor.Descriptor(
+  name='DepartResponse',
+  full_name='chord.DepartResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='response', full_name='chord.DepartResponse.response', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=346,
+  serialized_end=380,
+)
+
+
+_OVERLAYREQUEST = _descriptor.Descriptor(
+  name='OverlayRequest',
+  full_name='chord.OverlayRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='req', full_name='chord.OverlayRequest.req', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=382,
+  serialized_end=411,
+)
+
+
+_OVERLAYRESPONSE = _descriptor.Descriptor(
+  name='OverlayResponse',
+  full_name='chord.OverlayResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ids', full_name='chord.OverlayResponse.ids', index=0,
+      number=1, type=4, cpp_type=4, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=413,
+  serialized_end=443,
+)
+
 _QUERYRESPONSE.fields_by_name['pairs'].message_type = _PAIRCLIENT
 DESCRIPTOR.message_types_by_name['InsertRequest'] = _INSERTREQUEST
 DESCRIPTOR.message_types_by_name['InsertResponse'] = _INSERTRESPONSE
@@ -270,6 +398,10 @@ DESCRIPTOR.message_types_by_name['DeleteResponse'] = _DELETERESPONSE
 DESCRIPTOR.message_types_by_name['QueryRequest'] = _QUERYREQUEST
 DESCRIPTOR.message_types_by_name['PairClient'] = _PAIRCLIENT
 DESCRIPTOR.message_types_by_name['QueryResponse'] = _QUERYRESPONSE
+DESCRIPTOR.message_types_by_name['DepartRequest'] = _DEPARTREQUEST
+DESCRIPTOR.message_types_by_name['DepartResponse'] = _DEPARTRESPONSE
+DESCRIPTOR.message_types_by_name['OverlayRequest'] = _OVERLAYREQUEST
+DESCRIPTOR.message_types_by_name['OverlayResponse'] = _OVERLAYRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 InsertRequest = _reflection.GeneratedProtocolMessageType('InsertRequest', (_message.Message,), {
@@ -321,6 +453,34 @@ QueryResponse = _reflection.GeneratedProtocolMessageType('QueryResponse', (_mess
   })
 _sym_db.RegisterMessage(QueryResponse)
 
+DepartRequest = _reflection.GeneratedProtocolMessageType('DepartRequest', (_message.Message,), {
+  'DESCRIPTOR' : _DEPARTREQUEST,
+  '__module__' : 'client_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.DepartRequest)
+  })
+_sym_db.RegisterMessage(DepartRequest)
+
+DepartResponse = _reflection.GeneratedProtocolMessageType('DepartResponse', (_message.Message,), {
+  'DESCRIPTOR' : _DEPARTRESPONSE,
+  '__module__' : 'client_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.DepartResponse)
+  })
+_sym_db.RegisterMessage(DepartResponse)
+
+OverlayRequest = _reflection.GeneratedProtocolMessageType('OverlayRequest', (_message.Message,), {
+  'DESCRIPTOR' : _OVERLAYREQUEST,
+  '__module__' : 'client_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.OverlayRequest)
+  })
+_sym_db.RegisterMessage(OverlayRequest)
+
+OverlayResponse = _reflection.GeneratedProtocolMessageType('OverlayResponse', (_message.Message,), {
+  'DESCRIPTOR' : _OVERLAYRESPONSE,
+  '__module__' : 'client_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.OverlayResponse)
+  })
+_sym_db.RegisterMessage(OverlayResponse)
+
 
 
 _CLIENTSERVICE = _descriptor.ServiceDescriptor(
@@ -330,8 +490,8 @@ _CLIENTSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=317,
-  serialized_end=500,
+  serialized_start=446,
+  serialized_end=746,
   methods=[
   _descriptor.MethodDescriptor(
     name='Insert',
@@ -360,6 +520,26 @@ _CLIENTSERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_QUERYREQUEST,
     output_type=_QUERYRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Depart',
+    full_name='chord.ClientService.Depart',
+    index=3,
+    containing_service=None,
+    input_type=_DEPARTREQUEST,
+    output_type=_DEPARTRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Overlay',
+    full_name='chord.ClientService.Overlay',
+    index=4,
+    containing_service=None,
+    input_type=_OVERLAYREQUEST,
+    output_type=_OVERLAYRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

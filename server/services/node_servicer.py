@@ -9,17 +9,30 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
         self.chordNode = chordNode
 
     def Notify(self, request, context):
-        tempAddr = self.chordNode.predecessor
-        self.chordNode.setPredecessor(chord_node.Address(request.ip,request.port))
-        print("Id of predecessor : ", self.chordNode.predecessor.id)
-        return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
+        if request.neighboor == 'successor':
+            tempAddr = self.chordNode.predecessor
+            self.chordNode.setPredecessor(chord_node.Address(request.ip,request.port))
+            print("Id of predecessor : ", self.chordNode.predecessor.id)
+            return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
+        else:
+            tempAddr = self.chordNode.successor
+            self.chordNode.setSuccessor(chord_node.Address(request.ip,request.port))
+            print("Id of successor : ", self.chordNode.successor.id)
+            return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
     
-    def LoadBalance(self, request, context):
+    def LoadBalanceAfterJoin(self, request, context):
         removedKeys = self.chordNode.songRepository.retrieveSongsLessThan(request.id)
-        foo = node_services_pb2.LoadBalanceResponse()
+        foo = node_services_pb2.LoadBalanceAfterJoinResponse()
         for key, value in removedKeys.items():
             foo.pairs.append(node_services_pb2.Pair(key_entry = key, value_entry = value))
         return foo
+    
+    def LoadBalanceAfterDepart(self, request, context):
+        for item in request.pairs:
+            self.chordNode.songRepository.addSong(item.key_entry, item.value_entry)
+        return node_services_pb2.LoadBalanceAfterDepartResponse(msg ='Done')
+
+
 
     # to request pou pairnei einai to id 
     def FindSuccessor(self, request, context):
@@ -53,3 +66,15 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
         for key, value in newData.items():
             data.pairs.append(node_services_pb2.Pair(key_entry = key, value_entry = value))
         return data
+    
+    def OverlayAll(self, request, context):
+        if request.id == self.chordNode.id:
+            foo = node_services_pb2.OverlayAllResponse()
+            foo.ids.append(self.chordNode.id)
+            return foo
+        else:
+            with grpc.insecure_channel(f'{self.chordNode.predecessor.ip}:{self.chordNode.predecessor.port}') as channel:
+                stub = node_services_pb2_grpc.NodeServiceStub(channel)
+                response = stub.OverlayAll(request)
+                response.ids.append(self.chordNode.id)
+                return response

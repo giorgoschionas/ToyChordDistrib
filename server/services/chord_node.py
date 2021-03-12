@@ -54,12 +54,12 @@ class ChordNode:
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
 
             # Notify successor of new node that his predecessor changed and set the predecessor of new node
-            response = stub.Notify(node_services_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port))
+            response = stub.Notify(node_services_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port, neighboor='successor'))
             self.setPredecessor(Address(response.ip,response.port))
             print("Id of predecessor : ", self.predecessor.id)
 
-            # Transfer keys that have to be removed from successor of new node to new node
-            retrieved_pairs = stub.LoadBalance(node_services_pb2.LoadBalanceRequest(id = self.id))
+            # Load Balance: transfer entries from successor of new node to new node
+            retrieved_pairs = stub.LoadBalanceAfterJoin(node_services_pb2.LoadBalanceAfterJoinRequest(id = self.id))
             for item  in retrieved_pairs.pairs:
                 self.songRepository.addSong(item.key_entry,item.value_entry)
 
