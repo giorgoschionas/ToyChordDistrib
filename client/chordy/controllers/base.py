@@ -81,10 +81,10 @@ class Base(Controller):
         key = self.app.pargs.key
         value = self.app.pargs.value
         # print(self.app.pargs)
-        with grpc.insecure_channel('localhost:1024') as channel:
+        with grpc.insecure_channel('83.212.73.124:1024') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Insert(client_services_pb2.InsertRequest(song=key, value=value))
-            print(response)
+            print(response.response)
 
     @ex(help='Query a song from the network',
         # sub-command level arguments. ex: 'chordy command1 --foo bar'
@@ -97,7 +97,7 @@ class Base(Controller):
     )
     def query(self):
         key = self.app.pargs.key
-        with grpc.insecure_channel('localhost:1024') as channel:
+        with grpc.insecure_channel('83.212.73.124:1024') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Query(client_services_pb2.QueryRequest(song=key))
             print(response)
@@ -112,16 +112,23 @@ class Base(Controller):
         ],
     )
     def delete(self):
-        print('Inside query')
-    
+        key = self.app.pargs.key
+        with grpc.insecure_channel('83.212.73.124:1024') as channel:
+            stub = client_services_pb2_grpc.ClientServiceStub(channel)
+            response = stub.Delete(client_services_pb2.DeleteRequest(song=key))
+            print(response.response)
+
     @ex(help='Display the topology of the network')
     def overlay(self):
-        with grpc.insecure_channel('localhost:1024') as channel:
+        with grpc.insecure_channel('83.212.73.124:1024') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
-            response = stub.overlay(client_services_pb2.OverlayRequest())
-            print(response)
-        print('I')
+            response = stub.Overlay(client_services_pb2.OverlayRequest())
+            print('Chord Network topology')
+            for item in response.ids:
+                print(f'Node id: {item}')
 
     @ex(help='Leave the chord network')
     def depart(self):
-        print('K')
+        with grpc.insecure_channel('83.212.73.124:1024') as channel:
+            stub = client_services_pb2_grpc.ClientServiceStub(channel)
+            response = stub.Depart(client_services_pb2.DepartRequest())
