@@ -6,6 +6,8 @@ service ClientService {
     rpc Insert(InsertRequest) returns (InsertResponse) {}
     rpc Delete(DeleteRequest) returns (DeleteResponse)  {}
     rpc Query(QueryRequest) returns (QueryResponse) {}
+    rpc Depart(DepartRequest) returns(DepartResponse){}
+    rpc Overlay(OverlayRequest) returns(OverlayResponse){}
 }
 
 message InsertRequest {
@@ -36,4 +38,20 @@ message PairClient {
 
 message QueryResponse{
     repeated PairClient pairs = 1;
+}
+
+message DepartRequest{
+    string req=1;
+}
+
+message DepartResponse{
+    string response=1;
+}
+
+message OverlayRequest{
+    string req=1;
+}
+
+message OverlayResponse{
+    repeated uint64 ids =1;
 }

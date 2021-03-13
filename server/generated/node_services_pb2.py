@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x13node_services.proto\x12\x05\x63hord\"<\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"5\n\rNotifyRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"*\n\x0eNotifyResponse\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\r\" \n\x12LoadBalanceRequest\x12\n\n\x02id\x18\x01 \x01(\x04\".\n\x04Pair\x12\x11\n\tkey_entry\x18\x01 \x01(\x04\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\"1\n\x13LoadBalanceResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"\x1d\n\x0fQueryAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\".\n\x10QueryAllResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair2\x9b\x02\n\x0bNodeService\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00\x12\x37\n\x06Notify\x12\x14.chord.NotifyRequest\x1a\x15.chord.NotifyResponse\"\x00\x12\x46\n\x0bLoadBalance\x12\x19.chord.LoadBalanceRequest\x1a\x1a.chord.LoadBalanceResponse\"\x00\x12=\n\x08QueryAll\x12\x16.chord.QueryAllRequest\x1a\x17.chord.QueryAllResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x13node_services.proto\x12\x05\x63hord\"<\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"H\n\rNotifyRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\x12\x11\n\tneighboor\x18\x04 \x01(\t\"*\n\x0eNotifyResponse\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\r\".\n\x04Pair\x12\x11\n\tkey_entry\x18\x01 \x01(\x04\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\")\n\x1bLoadBalanceAfterJoinRequest\x12\n\n\x02id\x18\x01 \x01(\x04\":\n\x1cLoadBalanceAfterJoinResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\";\n\x1dLoadBalanceAfterDepartRequest\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"-\n\x1eLoadBalanceAfterDepartResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\x1d\n\x0fQueryAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\".\n\x10QueryAllResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"\x1f\n\x11OverlayAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\"!\n\x12OverlayAllResponse\x12\x0b\n\x03ids\x18\x01 \x03(\x04\x32\xe4\x03\n\x0bNodeService\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00\x12\x37\n\x06Notify\x12\x14.chord.NotifyRequest\x1a\x15.chord.NotifyResponse\"\x00\x12\x61\n\x14LoadBalanceAfterJoin\x12\".chord.LoadBalanceAfterJoinRequest\x1a#.chord.LoadBalanceAfterJoinResponse\"\x00\x12g\n\x16LoadBalanceAfterDepart\x12$.chord.LoadBalanceAfterDepartRequest\x1a%.chord.LoadBalanceAfterDepartResponse\"\x00\x12=\n\x08QueryAll\x12\x16.chord.QueryAllRequest\x1a\x17.chord.QueryAllResponse\"\x00\x12\x43\n\nOverlayAll\x12\x18.chord.OverlayAllRequest\x1a\x19.chord.OverlayAllResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -146,6 +146,13 @@ _NOTIFYREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='neighboor', full_name='chord.NotifyRequest.neighboor', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -159,7 +166,7 @@ _NOTIFYREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=155,
-  serialized_end=208,
+  serialized_end=227,
 )
 
 
@@ -197,40 +204,8 @@ _NOTIFYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=210,
-  serialized_end=252,
-)
-
-
-_LOADBALANCEREQUEST = _descriptor.Descriptor(
-  name='LoadBalanceRequest',
-  full_name='chord.LoadBalanceRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  create_key=_descriptor._internal_create_key,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='id', full_name='chord.LoadBalanceRequest.id', index=0,
-      number=1, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=254,
-  serialized_end=286,
+  serialized_start=229,
+  serialized_end=271,
 )
 
 
@@ -268,21 +243,53 @@ _PAIR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=288,
-  serialized_end=334,
+  serialized_start=273,
+  serialized_end=319,
 )
 
 
-_LOADBALANCERESPONSE = _descriptor.Descriptor(
-  name='LoadBalanceResponse',
-  full_name='chord.LoadBalanceResponse',
+_LOADBALANCEAFTERJOINREQUEST = _descriptor.Descriptor(
+  name='LoadBalanceAfterJoinRequest',
+  full_name='chord.LoadBalanceAfterJoinRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pairs', full_name='chord.LoadBalanceResponse.pairs', index=0,
+      name='id', full_name='chord.LoadBalanceAfterJoinRequest.id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=321,
+  serialized_end=362,
+)
+
+
+_LOADBALANCEAFTERJOINRESPONSE = _descriptor.Descriptor(
+  name='LoadBalanceAfterJoinResponse',
+  full_name='chord.LoadBalanceAfterJoinResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pairs', full_name='chord.LoadBalanceAfterJoinResponse.pairs', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -300,8 +307,72 @@ _LOADBALANCERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=336,
-  serialized_end=385,
+  serialized_start=364,
+  serialized_end=422,
+)
+
+
+_LOADBALANCEAFTERDEPARTREQUEST = _descriptor.Descriptor(
+  name='LoadBalanceAfterDepartRequest',
+  full_name='chord.LoadBalanceAfterDepartRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pairs', full_name='chord.LoadBalanceAfterDepartRequest.pairs', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=424,
+  serialized_end=483,
+)
+
+
+_LOADBALANCEAFTERDEPARTRESPONSE = _descriptor.Descriptor(
+  name='LoadBalanceAfterDepartResponse',
+  full_name='chord.LoadBalanceAfterDepartResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='msg', full_name='chord.LoadBalanceAfterDepartResponse.msg', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=485,
+  serialized_end=530,
 )
 
 
@@ -332,8 +403,8 @@ _QUERYALLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=387,
-  serialized_end=416,
+  serialized_start=532,
+  serialized_end=561,
 )
 
 
@@ -364,21 +435,90 @@ _QUERYALLRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=418,
-  serialized_end=464,
+  serialized_start=563,
+  serialized_end=609,
 )
 
-_LOADBALANCERESPONSE.fields_by_name['pairs'].message_type = _PAIR
+
+_OVERLAYALLREQUEST = _descriptor.Descriptor(
+  name='OverlayAllRequest',
+  full_name='chord.OverlayAllRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='chord.OverlayAllRequest.id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=611,
+  serialized_end=642,
+)
+
+
+_OVERLAYALLRESPONSE = _descriptor.Descriptor(
+  name='OverlayAllResponse',
+  full_name='chord.OverlayAllResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ids', full_name='chord.OverlayAllResponse.ids', index=0,
+      number=1, type=4, cpp_type=4, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=644,
+  serialized_end=677,
+)
+
+_LOADBALANCEAFTERJOINRESPONSE.fields_by_name['pairs'].message_type = _PAIR
+_LOADBALANCEAFTERDEPARTREQUEST.fields_by_name['pairs'].message_type = _PAIR
 _QUERYALLRESPONSE.fields_by_name['pairs'].message_type = _PAIR
 DESCRIPTOR.message_types_by_name['FindSuccessorRequest'] = _FINDSUCCESSORREQUEST
 DESCRIPTOR.message_types_by_name['FindSuccessorResponse'] = _FINDSUCCESSORRESPONSE
 DESCRIPTOR.message_types_by_name['NotifyRequest'] = _NOTIFYREQUEST
 DESCRIPTOR.message_types_by_name['NotifyResponse'] = _NOTIFYRESPONSE
-DESCRIPTOR.message_types_by_name['LoadBalanceRequest'] = _LOADBALANCEREQUEST
 DESCRIPTOR.message_types_by_name['Pair'] = _PAIR
-DESCRIPTOR.message_types_by_name['LoadBalanceResponse'] = _LOADBALANCERESPONSE
+DESCRIPTOR.message_types_by_name['LoadBalanceAfterJoinRequest'] = _LOADBALANCEAFTERJOINREQUEST
+DESCRIPTOR.message_types_by_name['LoadBalanceAfterJoinResponse'] = _LOADBALANCEAFTERJOINRESPONSE
+DESCRIPTOR.message_types_by_name['LoadBalanceAfterDepartRequest'] = _LOADBALANCEAFTERDEPARTREQUEST
+DESCRIPTOR.message_types_by_name['LoadBalanceAfterDepartResponse'] = _LOADBALANCEAFTERDEPARTRESPONSE
 DESCRIPTOR.message_types_by_name['QueryAllRequest'] = _QUERYALLREQUEST
 DESCRIPTOR.message_types_by_name['QueryAllResponse'] = _QUERYALLRESPONSE
+DESCRIPTOR.message_types_by_name['OverlayAllRequest'] = _OVERLAYALLREQUEST
+DESCRIPTOR.message_types_by_name['OverlayAllResponse'] = _OVERLAYALLRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 FindSuccessorRequest = _reflection.GeneratedProtocolMessageType('FindSuccessorRequest', (_message.Message,), {
@@ -409,13 +549,6 @@ NotifyResponse = _reflection.GeneratedProtocolMessageType('NotifyResponse', (_me
   })
 _sym_db.RegisterMessage(NotifyResponse)
 
-LoadBalanceRequest = _reflection.GeneratedProtocolMessageType('LoadBalanceRequest', (_message.Message,), {
-  'DESCRIPTOR' : _LOADBALANCEREQUEST,
-  '__module__' : 'node_services_pb2'
-  # @@protoc_insertion_point(class_scope:chord.LoadBalanceRequest)
-  })
-_sym_db.RegisterMessage(LoadBalanceRequest)
-
 Pair = _reflection.GeneratedProtocolMessageType('Pair', (_message.Message,), {
   'DESCRIPTOR' : _PAIR,
   '__module__' : 'node_services_pb2'
@@ -423,12 +556,33 @@ Pair = _reflection.GeneratedProtocolMessageType('Pair', (_message.Message,), {
   })
 _sym_db.RegisterMessage(Pair)
 
-LoadBalanceResponse = _reflection.GeneratedProtocolMessageType('LoadBalanceResponse', (_message.Message,), {
-  'DESCRIPTOR' : _LOADBALANCERESPONSE,
+LoadBalanceAfterJoinRequest = _reflection.GeneratedProtocolMessageType('LoadBalanceAfterJoinRequest', (_message.Message,), {
+  'DESCRIPTOR' : _LOADBALANCEAFTERJOINREQUEST,
   '__module__' : 'node_services_pb2'
-  # @@protoc_insertion_point(class_scope:chord.LoadBalanceResponse)
+  # @@protoc_insertion_point(class_scope:chord.LoadBalanceAfterJoinRequest)
   })
-_sym_db.RegisterMessage(LoadBalanceResponse)
+_sym_db.RegisterMessage(LoadBalanceAfterJoinRequest)
+
+LoadBalanceAfterJoinResponse = _reflection.GeneratedProtocolMessageType('LoadBalanceAfterJoinResponse', (_message.Message,), {
+  'DESCRIPTOR' : _LOADBALANCEAFTERJOINRESPONSE,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.LoadBalanceAfterJoinResponse)
+  })
+_sym_db.RegisterMessage(LoadBalanceAfterJoinResponse)
+
+LoadBalanceAfterDepartRequest = _reflection.GeneratedProtocolMessageType('LoadBalanceAfterDepartRequest', (_message.Message,), {
+  'DESCRIPTOR' : _LOADBALANCEAFTERDEPARTREQUEST,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.LoadBalanceAfterDepartRequest)
+  })
+_sym_db.RegisterMessage(LoadBalanceAfterDepartRequest)
+
+LoadBalanceAfterDepartResponse = _reflection.GeneratedProtocolMessageType('LoadBalanceAfterDepartResponse', (_message.Message,), {
+  'DESCRIPTOR' : _LOADBALANCEAFTERDEPARTRESPONSE,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.LoadBalanceAfterDepartResponse)
+  })
+_sym_db.RegisterMessage(LoadBalanceAfterDepartResponse)
 
 QueryAllRequest = _reflection.GeneratedProtocolMessageType('QueryAllRequest', (_message.Message,), {
   'DESCRIPTOR' : _QUERYALLREQUEST,
@@ -444,6 +598,20 @@ QueryAllResponse = _reflection.GeneratedProtocolMessageType('QueryAllResponse', 
   })
 _sym_db.RegisterMessage(QueryAllResponse)
 
+OverlayAllRequest = _reflection.GeneratedProtocolMessageType('OverlayAllRequest', (_message.Message,), {
+  'DESCRIPTOR' : _OVERLAYALLREQUEST,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.OverlayAllRequest)
+  })
+_sym_db.RegisterMessage(OverlayAllRequest)
+
+OverlayAllResponse = _reflection.GeneratedProtocolMessageType('OverlayAllResponse', (_message.Message,), {
+  'DESCRIPTOR' : _OVERLAYALLRESPONSE,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.OverlayAllResponse)
+  })
+_sym_db.RegisterMessage(OverlayAllResponse)
+
 
 
 _NODESERVICE = _descriptor.ServiceDescriptor(
@@ -453,8 +621,8 @@ _NODESERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=467,
-  serialized_end=750,
+  serialized_start=680,
+  serialized_end=1164,
   methods=[
   _descriptor.MethodDescriptor(
     name='FindSuccessor',
@@ -477,22 +645,42 @@ _NODESERVICE = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
-    name='LoadBalance',
-    full_name='chord.NodeService.LoadBalance',
+    name='LoadBalanceAfterJoin',
+    full_name='chord.NodeService.LoadBalanceAfterJoin',
     index=2,
     containing_service=None,
-    input_type=_LOADBALANCEREQUEST,
-    output_type=_LOADBALANCERESPONSE,
+    input_type=_LOADBALANCEAFTERJOINREQUEST,
+    output_type=_LOADBALANCEAFTERJOINRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='LoadBalanceAfterDepart',
+    full_name='chord.NodeService.LoadBalanceAfterDepart',
+    index=3,
+    containing_service=None,
+    input_type=_LOADBALANCEAFTERDEPARTREQUEST,
+    output_type=_LOADBALANCEAFTERDEPARTRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
     name='QueryAll',
     full_name='chord.NodeService.QueryAll',
-    index=3,
+    index=4,
     containing_service=None,
     input_type=_QUERYALLREQUEST,
     output_type=_QUERYALLRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='OverlayAll',
+    full_name='chord.NodeService.OverlayAll',
+    index=5,
+    containing_service=None,
+    input_type=_OVERLAYALLREQUEST,
+    output_type=_OVERLAYALLRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

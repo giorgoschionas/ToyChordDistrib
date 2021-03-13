@@ -24,15 +24,25 @@ class NodeServiceStub(object):
                 request_serializer=node__services__pb2.NotifyRequest.SerializeToString,
                 response_deserializer=node__services__pb2.NotifyResponse.FromString,
                 )
-        self.LoadBalance = channel.unary_unary(
-                '/chord.NodeService/LoadBalance',
-                request_serializer=node__services__pb2.LoadBalanceRequest.SerializeToString,
-                response_deserializer=node__services__pb2.LoadBalanceResponse.FromString,
+        self.LoadBalanceAfterJoin = channel.unary_unary(
+                '/chord.NodeService/LoadBalanceAfterJoin',
+                request_serializer=node__services__pb2.LoadBalanceAfterJoinRequest.SerializeToString,
+                response_deserializer=node__services__pb2.LoadBalanceAfterJoinResponse.FromString,
+                )
+        self.LoadBalanceAfterDepart = channel.unary_unary(
+                '/chord.NodeService/LoadBalanceAfterDepart',
+                request_serializer=node__services__pb2.LoadBalanceAfterDepartRequest.SerializeToString,
+                response_deserializer=node__services__pb2.LoadBalanceAfterDepartResponse.FromString,
                 )
         self.QueryAll = channel.unary_unary(
                 '/chord.NodeService/QueryAll',
                 request_serializer=node__services__pb2.QueryAllRequest.SerializeToString,
                 response_deserializer=node__services__pb2.QueryAllResponse.FromString,
+                )
+        self.OverlayAll = channel.unary_unary(
+                '/chord.NodeService/OverlayAll',
+                request_serializer=node__services__pb2.OverlayAllRequest.SerializeToString,
+                response_deserializer=node__services__pb2.OverlayAllResponse.FromString,
                 )
 
 
@@ -51,13 +61,25 @@ class NodeServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def LoadBalance(self, request, context):
+    def LoadBalanceAfterJoin(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def LoadBalanceAfterDepart(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def QueryAll(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def OverlayAll(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -76,15 +98,25 @@ def add_NodeServiceServicer_to_server(servicer, server):
                     request_deserializer=node__services__pb2.NotifyRequest.FromString,
                     response_serializer=node__services__pb2.NotifyResponse.SerializeToString,
             ),
-            'LoadBalance': grpc.unary_unary_rpc_method_handler(
-                    servicer.LoadBalance,
-                    request_deserializer=node__services__pb2.LoadBalanceRequest.FromString,
-                    response_serializer=node__services__pb2.LoadBalanceResponse.SerializeToString,
+            'LoadBalanceAfterJoin': grpc.unary_unary_rpc_method_handler(
+                    servicer.LoadBalanceAfterJoin,
+                    request_deserializer=node__services__pb2.LoadBalanceAfterJoinRequest.FromString,
+                    response_serializer=node__services__pb2.LoadBalanceAfterJoinResponse.SerializeToString,
+            ),
+            'LoadBalanceAfterDepart': grpc.unary_unary_rpc_method_handler(
+                    servicer.LoadBalanceAfterDepart,
+                    request_deserializer=node__services__pb2.LoadBalanceAfterDepartRequest.FromString,
+                    response_serializer=node__services__pb2.LoadBalanceAfterDepartResponse.SerializeToString,
             ),
             'QueryAll': grpc.unary_unary_rpc_method_handler(
                     servicer.QueryAll,
                     request_deserializer=node__services__pb2.QueryAllRequest.FromString,
                     response_serializer=node__services__pb2.QueryAllResponse.SerializeToString,
+            ),
+            'OverlayAll': grpc.unary_unary_rpc_method_handler(
+                    servicer.OverlayAll,
+                    request_deserializer=node__services__pb2.OverlayAllRequest.FromString,
+                    response_serializer=node__services__pb2.OverlayAllResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -131,7 +163,7 @@ class NodeService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def LoadBalance(request,
+    def LoadBalanceAfterJoin(request,
             target,
             options=(),
             channel_credentials=None,
@@ -141,9 +173,26 @@ class NodeService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/chord.NodeService/LoadBalance',
-            node__services__pb2.LoadBalanceRequest.SerializeToString,
-            node__services__pb2.LoadBalanceResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/chord.NodeService/LoadBalanceAfterJoin',
+            node__services__pb2.LoadBalanceAfterJoinRequest.SerializeToString,
+            node__services__pb2.LoadBalanceAfterJoinResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def LoadBalanceAfterDepart(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.NodeService/LoadBalanceAfterDepart',
+            node__services__pb2.LoadBalanceAfterDepartRequest.SerializeToString,
+            node__services__pb2.LoadBalanceAfterDepartResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -161,5 +210,22 @@ class NodeService(object):
         return grpc.experimental.unary_unary(request, target, '/chord.NodeService/QueryAll',
             node__services__pb2.QueryAllRequest.SerializeToString,
             node__services__pb2.QueryAllResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def OverlayAll(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.NodeService/OverlayAll',
+            node__services__pb2.OverlayAllRequest.SerializeToString,
+            node__services__pb2.OverlayAllResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
