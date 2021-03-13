@@ -6,7 +6,7 @@ from .controllers.base import Base
 
 # configuration defaults
 CONFIG = init_defaults('chordy')
-CONFIG['chordy']['foo'] = 'bar'
+CONFIG['chordy']['foo'] = 'barh'
 
 
 class ChordyApplication(App):

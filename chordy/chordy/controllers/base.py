@@ -3,6 +3,9 @@ from cement import Controller, ex
 from cement.utils.version import get_version_banner
 from ..core.version import get_version
 
+from ..generated import client_services_pb2
+from ..generated import client_services_pb2_grpc
+
 VERSION_BANNER = """
 CLI application that gives access to a distributed song database based on Chord protocol %s
 %s
@@ -46,7 +49,7 @@ class Base(Controller):
                 'dest' : 'foo' } ),
         ],
     )
-    def command1(self):
+    def show(self):
         """Example sub-command."""
 
         data = {
@@ -58,3 +61,25 @@ class Base(Controller):
             data['foo'] = self.app.pargs.foo
 
         self.app.render(data, 'command1.jinja2')
+
+    @ex(help='Inserts a new song to the chord dht')
+    def insert(self, song):
+        with grpc.insecure_channel('localhost:1024') as channel:
+            stub = client_services_pb2_grpc.ClientServiceStub(channel)
+            response = stub.Insert(client_services_pb2.InsertRequest(song="mplas"))
+
+    @ex(help='Query a song from the network')
+    def query(self):
+        print('Inside query')
+
+    @ex(help='Delete a song from the network')
+    def delete(self):
+        print('Inside query')
+    
+    @ex(help='Display the topology of the network')
+    def overlay(self):
+        print('I')
+
+    @ex(help='Leave the chord network')
+    def depart(self, id):
+        print('K')
