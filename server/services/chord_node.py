@@ -75,13 +75,13 @@ class ChordNode:
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
             print(f"Sending request from {self.address.port} to {self.successor.port}")
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
-            ReplicateRequest = node_services_pb2.ReplicateRequest(k = self.replicationFactor, song = request.song, value = request.value)
-            stub.Replicate(ReplicateRequest)
+            replicateRequest = node_services_pb2.ReplicateRequest(k = self.replicationFactor, song = request.song, value = request.value)
+            stub.Replicate(replicateRequest)
 
     def put(self, key, value):
         if value == None:
             domainResponse = self.songRepository.deleteSong(key)
-        else:
+        else:m,
             domainResponse = self.songRepository.addSong(key, value)
     
     def get(self, key):

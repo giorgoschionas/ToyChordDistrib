@@ -9,7 +9,8 @@ service NodeService {
   rpc LoadBalanceAfterDepart(LoadBalanceAfterDepartRequest) returns(LoadBalanceAfterDepartResponse){}
   rpc QueryAll(QueryAllRequest) returns (QueryAllResponse) {}
   rpc OverlayAll(OverlayAllRequest) returns (OverlayAllResponse){}
-  rpc Replicate(ReplicateRequest) returns (ReplicateResponse){}
+  rpc Replicate(ReplicateRequest) returns (ReplicateResponse) {}
+  rpc QueryLinearizability(QueryLinearizabilityRequest) returns (QueryLinearizabilityResponse) {}
 }
 
 message FindSuccessorRequest {
@@ -37,7 +38,7 @@ message NotifyResponse {
 }
 
 message Pair {
-  uint64 key_entry=1;
+  string key_entry=1;
   string value_entry=2;
 }
 
@@ -82,4 +83,12 @@ message ReplicateRequest {
 
 message ReplicateResponse {
   string msg = 1;
+}
+
+message QueryLinearizabilityRequest {
+  string key = 1;
+}
+
+message QueryLinearizabilityResponse {
+  repeated Pair pairs = 1;
 }

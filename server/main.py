@@ -22,12 +22,19 @@ def main(argv):
     # TODO: Find ip from os
     # TODO: Get port from args DONE 
 
-    if len(argv) != 4:
-        print('Usage: main.py [ip] [port] [k]')
+    if len(argv) < 4 or len(argv) > 5:
+        print('Usage: main.py [ip] [port] [k] {strategy}')
+        exit(0)
 
     ip = argv[1]
     port = int(argv[2])
     k = int(argv[3])
+
+    if len(argv) == 5:
+        strategy = argv[4]
+    else:
+        strategy = 'E'
+
 
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
@@ -35,7 +42,7 @@ def main(argv):
     address = chord_node.Address(ip, port)
     newNode = chord_node.ChordNode(address, k, songRepository)
     nodeServicer = node_servicer.NodeServicer(newNode)
-    songServicer = song_servicer.SongServicer(newNode)
+    songServicer = song_servicer.SongServicer(newNode, strategy)
 
     if port == 1024:
         newNode.createTopology()

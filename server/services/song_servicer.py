@@ -12,8 +12,9 @@ def sha1(msg):
     return int(hex_digest, 16) % 65536
 
 class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
-    def __init__(self, chordNode):
+    def __init__(self, chordNode, strategy):
         self.chordNode = chordNode
+        self.strategy = strategy
 
     def Insert(self, request, context):
         digest = sha1(request.song)
@@ -44,18 +45,32 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
     def Query(self, request, context):
         if request.song != '*':
             digest = sha1(request.song)
-            if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
-                domainResponse = self.chordNode.songRepository.getValue(request.song)
-                foo = client_services_pb2.QueryResponse()
-                print(f"QUERY: {domainResponse}")
-                pair = client_services_pb2.PairClient(key_entry = request.song, value_entry = domainResponse)
-                foo.pairs.append(pair)
-                return foo
-            else:
-                with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
-                    stub = client_services_pb2_grpc.ClientServiceStub(channel)
-                    response = stub.Query(request)
-                    return response
+            if self.strategy == 'L':
+                if self.chordNode.songRepository.contains(request.song) or self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
+                    with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                        stub = node_services_pb2_grpc.NodeServiceStub(channel)
+                        newRequest = node_services_pb2.QueryLinearizabilityRequest(key = request.song) 
+                        response = stub.QueryLinearizability(newRequest)
+                        newResponse = client_services_pb2.QueryResponse(pairs=response.pairs)
+                        return newResponse
+                else:
+                    with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                        stub = client_services_pb2_grpc.ClientServiceStub(channel)
+                        response = stub.Query(request)
+                        return response
+            elif self.strategy == 'E':
+                if self.chordNode.songRepository.contains(request.song) or self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
+                    domainResponse = self.chordNode.songRepository.getValue(request.song)
+                    foo = client_services_pb2.QueryResponse()
+                    print(f"QUERY: {domainResponse}")
+                    pair = client_services_pb2.PairClient(key_entry = request.song, value_entry = domainResponse)
+                    foo.pairs.append(pair)
+                    return foo
+                else:
+                    with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                        stub = client_services_pb2_grpc.ClientServiceStub(channel)
+                        response = stub.Query(request)
+                        return response
         else:
             with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
                 stub = node_services_pb2_grpc.NodeServiceStub(channel)

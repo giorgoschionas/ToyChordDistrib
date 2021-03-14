@@ -80,7 +80,7 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
                 return response
 
     def Replicate(self, request, context):
-        if request.k == 1:
+        if request.k == 2:
             self.chordNode.put(request.song, request.value)
             return node_services_pb2.ReplicateResponse(msg='Successfully replicated entry')
         else:
@@ -90,5 +90,18 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
                 newRequest = node_services_pb2.ReplicateRequest(k = request.k - 1, song = request.song, value = request.value)
                 response = stub.Replicate(newRequest)
                 return response
-                # if request.strategy == 'eventual_consistency':
-                #     retur
+
+    def QueryLinearizability(self, request, context):
+        if not self.chordNode.songRepository.contains(request.key):
+            return node_services_pb2.QueryLinearizabilityResponse(pairs=[])
+        else:
+            with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                print(f'Calling {self.chordNode.successor.id}')
+                stub = node_services_pb2_grpc.NodeServiceStub(channel)
+                newRequest = node_services_pb2.QueryLinearizabilityRequest(key = request.key)
+                response = stub.QueryLinearizability(newRequest)
+                if len(response.pairs) == 0:
+                    songValue = self.chordNode.songRepository.getValue(request.key)
+                    returnPair = node_services_pb2.Pair(key_entry = request.key, value_entry = songValue)
+                    response.pairs.append(returnPair)
+                return response

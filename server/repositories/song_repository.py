@@ -17,11 +17,11 @@ class SongRepository:
         self.database = database
     
     def addSong(self, key, value):
-        response = self.database.add(key, value)
         if self.contains(key):
             response = 'Updated'
         else:
             response = 'Added'
+        self.database.add(key, value)
         return response
 
     def deleteSong(self, key):

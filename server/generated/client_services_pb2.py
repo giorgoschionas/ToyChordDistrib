@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15\x63lient_services.proto\x12\x05\x63hord\",\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1c\n\x0cQueryRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"4\n\nPairClient\x12\x11\n\tkey_entry\x18\x01 \x01(\x04\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\"1\n\rQueryResponse\x12 \n\x05pairs\x18\x01 \x03(\x0b\x32\x11.chord.PairClient\"\x1c\n\rDepartRequest\x12\x0b\n\x03req\x18\x01 \x01(\t\"\"\n\x0e\x44\x65partResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\x0eOverlayRequest\x12\x0b\n\x03req\x18\x01 \x01(\t\"\x1e\n\x0fOverlayResponse\x12\x0b\n\x03ids\x18\x01 \x03(\x04\x32\xac\x02\n\rClientService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12\x34\n\x05Query\x12\x13.chord.QueryRequest\x1a\x14.chord.QueryResponse\"\x00\x12\x37\n\x06\x44\x65part\x12\x14.chord.DepartRequest\x1a\x15.chord.DepartResponse\"\x00\x12:\n\x07Overlay\x12\x15.chord.OverlayRequest\x1a\x16.chord.OverlayResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x15\x63lient_services.proto\x12\x05\x63hord\",\n\rInsertRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\"\n\x0eInsertResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\rDeleteRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"\"\n\x0e\x44\x65leteResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1c\n\x0cQueryRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"4\n\nPairClient\x12\x11\n\tkey_entry\x18\x01 \x01(\t\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\"1\n\rQueryResponse\x12 \n\x05pairs\x18\x01 \x03(\x0b\x32\x11.chord.PairClient\"\x1c\n\rDepartRequest\x12\x0b\n\x03req\x18\x01 \x01(\t\"\"\n\x0e\x44\x65partResponse\x12\x10\n\x08response\x18\x01 \x01(\t\"\x1d\n\x0eOverlayRequest\x12\x0b\n\x03req\x18\x01 \x01(\t\"\x1e\n\x0fOverlayResponse\x12\x0b\n\x03ids\x18\x01 \x03(\x04\x32\xac\x02\n\rClientService\x12\x37\n\x06Insert\x12\x14.chord.InsertRequest\x1a\x15.chord.InsertResponse\"\x00\x12\x37\n\x06\x44\x65lete\x12\x14.chord.DeleteRequest\x1a\x15.chord.DeleteResponse\"\x00\x12\x34\n\x05Query\x12\x13.chord.QueryRequest\x1a\x14.chord.QueryResponse\"\x00\x12\x37\n\x06\x44\x65part\x12\x14.chord.DepartRequest\x1a\x15.chord.DepartResponse\"\x00\x12:\n\x07Overlay\x12\x15.chord.OverlayRequest\x1a\x16.chord.OverlayResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -202,8 +202,8 @@ _PAIRCLIENT = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='key_entry', full_name='chord.PairClient.key_entry', index=0,
-      number=1, type=4, cpp_type=4, label=1,
-      has_default_value=False, default_value=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),

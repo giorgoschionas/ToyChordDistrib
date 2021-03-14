@@ -49,6 +49,11 @@ class NodeServiceStub(object):
                 request_serializer=node__services__pb2.ReplicateRequest.SerializeToString,
                 response_deserializer=node__services__pb2.ReplicateResponse.FromString,
                 )
+        self.QueryLinearizability = channel.unary_unary(
+                '/chord.NodeService/QueryLinearizability',
+                request_serializer=node__services__pb2.QueryLinearizabilityRequest.SerializeToString,
+                response_deserializer=node__services__pb2.QueryLinearizabilityResponse.FromString,
+                )
 
 
 class NodeServiceServicer(object):
@@ -96,6 +101,12 @@ class NodeServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def QueryLinearizability(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_NodeServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -133,6 +144,11 @@ def add_NodeServiceServicer_to_server(servicer, server):
                     servicer.Replicate,
                     request_deserializer=node__services__pb2.ReplicateRequest.FromString,
                     response_serializer=node__services__pb2.ReplicateResponse.SerializeToString,
+            ),
+            'QueryLinearizability': grpc.unary_unary_rpc_method_handler(
+                    servicer.QueryLinearizability,
+                    request_deserializer=node__services__pb2.QueryLinearizabilityRequest.FromString,
+                    response_serializer=node__services__pb2.QueryLinearizabilityResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -260,5 +276,22 @@ class NodeService(object):
         return grpc.experimental.unary_unary(request, target, '/chord.NodeService/Replicate',
             node__services__pb2.ReplicateRequest.SerializeToString,
             node__services__pb2.ReplicateResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def QueryLinearizability(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.NodeService/QueryLinearizability',
+            node__services__pb2.QueryLinearizabilityRequest.SerializeToString,
+            node__services__pb2.QueryLinearizabilityResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
