@@ -18,8 +18,9 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
     def Insert(self, request, context):
         digest = sha1(request.song)
         if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
-            digest = sha1(request.song)
-            domainResponse = self.chordNode.songRepository.addSong(digest, request.value)
+            domainResponse = self.chordNode.songRepository.addSong(request.song, request.value)
+            self.chordNode.replicate(request)
+            print(f"INSERT: {domainResponse}")
             return client_services_pb2.InsertResponse(response = domainResponse)
         else:
             with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
@@ -29,8 +30,10 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
     
     def Delete(self, request, context):
         digest = sha1(request.song)
-        if self.chordNode.between(self.predecessor.id, digest, self.id):
-            domainResponse = self.chordNode.songRepository.deleteSong(digest)
+        if self.chordNode.between(self.chordNode.predecessor.id, digest, self.id):
+            domainResponse = self.chordNode.songRepository.deleteSong(request.song)
+            self.chordNode.replicate(request)
+            print(f"DELETE: {domainResponse}")
             return client_services_pb2.DeleteResponse(response = domainResponse)
         else:
             with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
@@ -42,8 +45,9 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
         if request.song != '*':
             digest = sha1(request.song)
             if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
-                domainResponse = self.chordNode.songRepository.getValue(digest)
+                domainResponse = self.chordNode.songRepository.getValue(request.song)
                 foo = client_services_pb2.QueryResponse()
+                print(f"QUERY: {domainResponse}")
                 pair = client_services_pb2.PairClient(key_entry = digest, value_entry = domainResponse)
                 foo.pairs.append(pair)
                 return foo
@@ -59,6 +63,7 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
                 foo = client_services_pb2.QueryResponse()
                 for item in response.pairs:
                     foo.pairs.append(client_services_pb2.PairClient(key_entry = item.key_entry, value_entry = item.value_entry))
+                print(f"QUERY ALL: {foo.pairs}")
                 return foo
         
     def Depart(self, request, context):

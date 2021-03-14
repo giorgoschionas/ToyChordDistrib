@@ -21,14 +21,19 @@ def sha1(message):
 def main(argv):
     # TODO: Find ip from os
     # TODO: Get port from args DONE 
-    ip = "localhost"
-    port = int(argv[1])
+
+    if len(argv) != 4:
+        print('Usage: main.py [ip] [port] [k]')
+
+    ip = argv[1]
+    port = int(argv[2])
+    k = int(argv[3])
 
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
     
     address = chord_node.Address(ip, port)
-    newNode = chord_node.ChordNode(address, songRepository)
+    newNode = chord_node.ChordNode(address, k, songRepository)
     nodeServicer = node_servicer.NodeServicer(newNode)
     songServicer = song_servicer.SongServicer(newNode)
 

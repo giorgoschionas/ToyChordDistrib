@@ -21,7 +21,7 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
             return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
     
     def LoadBalanceAfterJoin(self, request, context):
-        removedKeys = self.chordNode.songRepository.retrieveSongsLessThan(request.id)
+        removedKeys = self.chordNode.songRepository.retrieveSongsLessThan(request.id, self.chordNode.id)
         foo = node_services_pb2.LoadBalanceAfterJoinResponse()
         for key, value in removedKeys.items():
             foo.pairs.append(node_services_pb2.Pair(key_entry = key, value_entry = value))
@@ -78,3 +78,17 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
                 response = stub.OverlayAll(request)
                 response.ids.append(self.chordNode.id)
                 return response
+
+    def Replicate(self, request, context):
+        if request.k == 1:
+            self.chordNode.put(request.song, request.value)
+            return node_services_pb2.ReplicateResponse(msg='Successfully replicated entry')
+        else:
+            self.chordNode.put(request.song, request.value)
+            with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                stub = node_services_pb2_grpc.NodeServiceStub(channel)
+                newRequest = node_services_pb2.ReplicateRequest(k = request.k - 1, song = request.song, value = request.value)
+                response = stub.Replicate(newRequest)
+                return response
+                # if request.strategy == 'eventual_consistency':
+                #     retur

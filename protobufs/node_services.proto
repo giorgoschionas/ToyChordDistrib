@@ -9,6 +9,7 @@ service NodeService {
   rpc LoadBalanceAfterDepart(LoadBalanceAfterDepartRequest) returns(LoadBalanceAfterDepartResponse){}
   rpc QueryAll(QueryAllRequest) returns (QueryAllResponse) {}
   rpc OverlayAll(OverlayAllRequest) returns (OverlayAllResponse){}
+  rpc Replicate(ReplicateRequest) returns (ReplicateResponse){}
 }
 
 message FindSuccessorRequest {
@@ -71,4 +72,14 @@ message OverlayAllRequest{
 
 message OverlayAllResponse{
   repeated uint64 ids = 1;
+}
+
+message ReplicateRequest {
+  uint32 k = 1;
+  string song = 2;
+  string value = 3;
+}
+
+message ReplicateResponse {
+  string msg = 1;
 }

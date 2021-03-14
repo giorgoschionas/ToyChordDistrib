@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x13node_services.proto\x12\x05\x63hord\"<\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"H\n\rNotifyRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\x12\x11\n\tneighboor\x18\x04 \x01(\t\"*\n\x0eNotifyResponse\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\r\".\n\x04Pair\x12\x11\n\tkey_entry\x18\x01 \x01(\x04\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\")\n\x1bLoadBalanceAfterJoinRequest\x12\n\n\x02id\x18\x01 \x01(\x04\":\n\x1cLoadBalanceAfterJoinResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\";\n\x1dLoadBalanceAfterDepartRequest\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"-\n\x1eLoadBalanceAfterDepartResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\x1d\n\x0fQueryAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\".\n\x10QueryAllResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"\x1f\n\x11OverlayAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\"!\n\x12OverlayAllResponse\x12\x0b\n\x03ids\x18\x01 \x03(\x04\x32\xe4\x03\n\x0bNodeService\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00\x12\x37\n\x06Notify\x12\x14.chord.NotifyRequest\x1a\x15.chord.NotifyResponse\"\x00\x12\x61\n\x14LoadBalanceAfterJoin\x12\".chord.LoadBalanceAfterJoinRequest\x1a#.chord.LoadBalanceAfterJoinResponse\"\x00\x12g\n\x16LoadBalanceAfterDepart\x12$.chord.LoadBalanceAfterDepartRequest\x1a%.chord.LoadBalanceAfterDepartResponse\"\x00\x12=\n\x08QueryAll\x12\x16.chord.QueryAllRequest\x1a\x17.chord.QueryAllResponse\"\x00\x12\x43\n\nOverlayAll\x12\x18.chord.OverlayAllRequest\x1a\x19.chord.OverlayAllResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x13node_services.proto\x12\x05\x63hord\"<\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"H\n\rNotifyRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\x12\x11\n\tneighboor\x18\x04 \x01(\t\"*\n\x0eNotifyResponse\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\r\".\n\x04Pair\x12\x11\n\tkey_entry\x18\x01 \x01(\x04\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\")\n\x1bLoadBalanceAfterJoinRequest\x12\n\n\x02id\x18\x01 \x01(\x04\":\n\x1cLoadBalanceAfterJoinResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\";\n\x1dLoadBalanceAfterDepartRequest\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"-\n\x1eLoadBalanceAfterDepartResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\x1d\n\x0fQueryAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\".\n\x10QueryAllResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"\x1f\n\x11OverlayAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\"!\n\x12OverlayAllResponse\x12\x0b\n\x03ids\x18\x01 \x03(\x04\":\n\x10ReplicateRequest\x12\t\n\x01k\x18\x01 \x01(\r\x12\x0c\n\x04song\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\t\" \n\x11ReplicateResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t2\xa6\x04\n\x0bNodeService\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00\x12\x37\n\x06Notify\x12\x14.chord.NotifyRequest\x1a\x15.chord.NotifyResponse\"\x00\x12\x61\n\x14LoadBalanceAfterJoin\x12\".chord.LoadBalanceAfterJoinRequest\x1a#.chord.LoadBalanceAfterJoinResponse\"\x00\x12g\n\x16LoadBalanceAfterDepart\x12$.chord.LoadBalanceAfterDepartRequest\x1a%.chord.LoadBalanceAfterDepartResponse\"\x00\x12=\n\x08QueryAll\x12\x16.chord.QueryAllRequest\x1a\x17.chord.QueryAllResponse\"\x00\x12\x43\n\nOverlayAll\x12\x18.chord.OverlayAllRequest\x1a\x19.chord.OverlayAllResponse\"\x00\x12@\n\tReplicate\x12\x17.chord.ReplicateRequest\x1a\x18.chord.ReplicateResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -503,6 +503,84 @@ _OVERLAYALLRESPONSE = _descriptor.Descriptor(
   serialized_end=677,
 )
 
+
+_REPLICATEREQUEST = _descriptor.Descriptor(
+  name='ReplicateRequest',
+  full_name='chord.ReplicateRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='k', full_name='chord.ReplicateRequest.k', index=0,
+      number=1, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='song', full_name='chord.ReplicateRequest.song', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='chord.ReplicateRequest.value', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=679,
+  serialized_end=737,
+)
+
+
+_REPLICATERESPONSE = _descriptor.Descriptor(
+  name='ReplicateResponse',
+  full_name='chord.ReplicateResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='msg', full_name='chord.ReplicateResponse.msg', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=739,
+  serialized_end=771,
+)
+
 _LOADBALANCEAFTERJOINRESPONSE.fields_by_name['pairs'].message_type = _PAIR
 _LOADBALANCEAFTERDEPARTREQUEST.fields_by_name['pairs'].message_type = _PAIR
 _QUERYALLRESPONSE.fields_by_name['pairs'].message_type = _PAIR
@@ -519,6 +597,8 @@ DESCRIPTOR.message_types_by_name['QueryAllRequest'] = _QUERYALLREQUEST
 DESCRIPTOR.message_types_by_name['QueryAllResponse'] = _QUERYALLRESPONSE
 DESCRIPTOR.message_types_by_name['OverlayAllRequest'] = _OVERLAYALLREQUEST
 DESCRIPTOR.message_types_by_name['OverlayAllResponse'] = _OVERLAYALLRESPONSE
+DESCRIPTOR.message_types_by_name['ReplicateRequest'] = _REPLICATEREQUEST
+DESCRIPTOR.message_types_by_name['ReplicateResponse'] = _REPLICATERESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 FindSuccessorRequest = _reflection.GeneratedProtocolMessageType('FindSuccessorRequest', (_message.Message,), {
@@ -612,6 +692,20 @@ OverlayAllResponse = _reflection.GeneratedProtocolMessageType('OverlayAllRespons
   })
 _sym_db.RegisterMessage(OverlayAllResponse)
 
+ReplicateRequest = _reflection.GeneratedProtocolMessageType('ReplicateRequest', (_message.Message,), {
+  'DESCRIPTOR' : _REPLICATEREQUEST,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.ReplicateRequest)
+  })
+_sym_db.RegisterMessage(ReplicateRequest)
+
+ReplicateResponse = _reflection.GeneratedProtocolMessageType('ReplicateResponse', (_message.Message,), {
+  'DESCRIPTOR' : _REPLICATERESPONSE,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.ReplicateResponse)
+  })
+_sym_db.RegisterMessage(ReplicateResponse)
+
 
 
 _NODESERVICE = _descriptor.ServiceDescriptor(
@@ -621,8 +715,8 @@ _NODESERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=680,
-  serialized_end=1164,
+  serialized_start=774,
+  serialized_end=1324,
   methods=[
   _descriptor.MethodDescriptor(
     name='FindSuccessor',
@@ -681,6 +775,16 @@ _NODESERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_OVERLAYALLREQUEST,
     output_type=_OVERLAYALLRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Replicate',
+    full_name='chord.NodeService.Replicate',
+    index=6,
+    containing_service=None,
+    input_type=_REPLICATEREQUEST,
+    output_type=_REPLICATERESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

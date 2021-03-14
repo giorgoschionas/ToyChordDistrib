@@ -24,12 +24,13 @@ class NeigboorInfo:
         self.port = address.port
 
 class ChordNode:
-    def __init__(self, address, songRepository):
+    def __init__(self, address, replicationFactor, songRepository):
         self.id = sha1(f'{address.ip}:{address.port}')
         print('Id of node : ', self.id)
         self.address = address
         self.successor = None
         self.predecessor = None
+        self.replicationFactor = replicationFactor
         self.songRepository = songRepository
 
     def setPredecessor(self, predecessorAddress):
@@ -69,6 +70,22 @@ class ChordNode:
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
             successorInfo = stub.FindSuccessor(request)
             return successorInfo
+
+    def replicate(self, request):
+        with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
+            print(f"Sending request from {self.address.port} to {self.successor.port}")
+            stub = node_services_pb2_grpc.NodeServiceStub(channel)
+            ReplicateRequest = node_servicer_pb2.ReplicateRequest(k = self.replicationFactor, song = request.song, value = request.value)
+            stub.Replicate(ReplicateRequest)
+
+    def put(self, key, value):
+        if value == None:
+            domainResponse = self.songRepository.deleteSong(key)
+        else:
+            domainResponse = self.songRepository.addSong(key, value)
+    
+    def get(self, key):
+        return self.songRepository.getValue(key)
 
     def between(self, n1, n2, n3):
         # TODO: added corner case when id == -1
