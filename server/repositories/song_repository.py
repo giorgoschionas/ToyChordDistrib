@@ -18,18 +18,33 @@ class SongRepository:
     
     def addSong(self, key, value):
         response = self.database.add(key, value)
+        if self.contains(key):
+            response = 'Updated'
+        else:
+            response = 'Added'
         return response
 
     def deleteSong(self, key):
-        response = self.database.delete(key)
+        if self.contains(key):
+            self.database.delete(key)
+            response ='Deleted'
+        else:
+            response = 'Key not found'
         return response
 
     def getValue(self, key):
-        return self.database.get(key)
+        if self.contains(key):
+            response = self.database.get(key)
+        else:
+            response = ''
+        return response
     
     def getDHT(self):
         return self.database.data
     
+    def contains(self, key):
+        return key in self.database.data
+
     def retrieveSongsLessThan(self, newId, successorId):
         removed_keys = {key : value for key,value in self.database.data.items() if between(hashFunction(key), newId, successorId)}
         for key,_ in removed_keys.items():
