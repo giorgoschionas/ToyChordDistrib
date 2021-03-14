@@ -81,7 +81,7 @@ class Base(Controller):
         key = self.app.pargs.key
         value = self.app.pargs.value
         # print(self.app.pargs)
-        with grpc.insecure_channel('83.212.73.124:1024') as channel:
+        with grpc.insecure_channel('[2001:648:2ffe:501:cc00:10ff:fead:aa9c]:1024') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Insert(client_services_pb2.InsertRequest(song=key, value=value))
             print(response.response)
@@ -97,7 +97,7 @@ class Base(Controller):
     )
     def query(self):
         key = self.app.pargs.key
-        with grpc.insecure_channel('83.212.73.124:1024') as channel:
+        with grpc.insecure_channel('[2001:648:2ffe:501:cc00:10ff:fead:aa9c]:1024') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Query(client_services_pb2.QueryRequest(song=key))
             print(response)
@@ -113,14 +113,14 @@ class Base(Controller):
     )
     def delete(self):
         key = self.app.pargs.key
-        with grpc.insecure_channel('83.212.73.124:1024') as channel:
+        with grpc.insecure_channel('[2001:648:2ffe:501:cc00:10ff:fead:aa9c]:1024') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Delete(client_services_pb2.DeleteRequest(song=key))
             print(response.response)
 
     @ex(help='Display the topology of the network')
     def overlay(self):
-        with grpc.insecure_channel('83.212.73.124:1024') as channel:
+        with grpc.insecure_channel('[2001:648:2ffe:501:cc00:10ff:fead:aa9c]:1024') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Overlay(client_services_pb2.OverlayRequest())
             print('Chord Network topology')
@@ -129,6 +129,6 @@ class Base(Controller):
 
     @ex(help='Leave the chord network')
     def depart(self):
-        with grpc.insecure_channel('83.212.73.124:1024') as channel:
+        with grpc.insecure_channel('[2001:648:2ffe:501:cc00:10ff:fead:aa9c]:1024') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Depart(client_services_pb2.DepartRequest())
