@@ -30,7 +30,7 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
     
     def Delete(self, request, context):
         digest = sha1(request.song)
-        if self.chordNode.between(self.chordNode.predecessor.id, digest, self.id):
+        if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
             domainResponse = self.chordNode.songRepository.deleteSong(request.song)
             self.chordNode.replicate(request)
             print(f"DELETE: {domainResponse}")
@@ -48,7 +48,7 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
                 domainResponse = self.chordNode.songRepository.getValue(request.song)
                 foo = client_services_pb2.QueryResponse()
                 print(f"QUERY: {domainResponse}")
-                pair = client_services_pb2.PairClient(key_entry = digest, value_entry = domainResponse)
+                pair = client_services_pb2.PairClient(key_entry = request.song, value_entry = domainResponse)
                 foo.pairs.append(pair)
                 return foo
             else:
