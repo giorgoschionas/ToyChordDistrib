@@ -21,6 +21,7 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
         digest = sha1(request.song)
         if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
             domainResponse = self.chordNode.put(request.song, request.value)
+            self.chordNode.logger.debug(f'INSERTING song({request.song}) to node({self.chordNode.id})')
             if self.chordNode.replicationFactor > 1:
                 self.chordNode.replicate(request)
             return client_services_pb2.InsertResponse(response = domainResponse)
@@ -33,6 +34,7 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
     def Delete(self, request, context):
         digest = sha1(request.song)
         if self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
+            self.chordNode.logger.debug(f'DELETING song({request.song}) from node({self.chordNode.id})')
             domainResponse = self.chordNode.put(request.song, '')
             if self.chordNode.replicationFactor > 1:
                 self.chordNode.replicate(request)
@@ -48,12 +50,16 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
             digest = sha1(request.song)
             if self.strategy == 'L':
                 if self.chordNode.songRepository.contains(request.song) or self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
-                    with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                    with grpc.insecure_channel(f'{self.chordNode.address.ip}:{self.chordNode.address.port}') as channel:
                         stub = node_services_pb2_grpc.NodeServiceStub(channel)
-                        newRequest = node_services_pb2.QueryLinearizabilityRequest(key = request.song) 
+                        newRequest = node_services_pb2.QueryLinearizabilityRequest(key=request.song) 
                         response = stub.QueryLinearizability(newRequest)
-                        newResponse = client_services_pb2.QueryResponse(pairs=response.pairs)
-                        return newResponse
+
+                        foo = client_services_pb2.QueryResponse()
+                        for item in response.pairs:
+                            pair = client_services_pb2.PairClient(key_entry = item.key_entry, value_entry = item.value_entry)
+                            foo.pairs.append(pair)
+                        return foo
                 else:
                     with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
                         stub = client_services_pb2_grpc.ClientServiceStub(channel)
@@ -62,26 +68,29 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
             elif self.strategy == 'E':
                 if self.chordNode.songRepository.contains(request.song) or self.chordNode.between(self.chordNode.predecessor.id, digest, self.chordNode.id):
                     domainResponse = self.chordNode.songRepository.getValue(request.song)
-                    print(f"Node {self.chordNode.id}: query result {domainResponse}")
-                    foo = client_services_pb2.QueryResponse()
-                    pair = client_services_pb2.PairClient(key_entry = request.song, value_entry = domainResponse)
-                    foo.pairs.append(pair)
-                    return foo
+                    self.chordNode.logger.debug(f"Node {self.chordNode.id}: query result {domainResponse}")
+                    if domainResponse == '':
+                        return client_services_pb2.QueryResponse(pairs=[]) 
+                    else:
+                        foo = client_services_pb2.QueryResponse()
+                        pair = client_services_pb2.PairClient(key_entry = request.song, value_entry = domainResponse)
+                        foo.pairs.append(pair)
+                        return foo
                 else:
                     with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
-                        print(f"Node {self.chordNode.id}: sending query request to {self.chordNode.successor.id}")
+                        self.chordNode.logger.debug(f"Node {self.chordNode.id}: sending query request to {self.chordNode.successor.id}")
                         stub = client_services_pb2_grpc.ClientServiceStub(channel)
                         response = stub.Query(request)
                         return response
         else:
             with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
-                print(f"Node {self.chordNode.id}: sending query-all request to {self.chordNode.successor.id}")
+                self.chordNode.logger.debug(f"Node {self.chordNode.id}: sending query-all request to {self.chordNode.successor.id}")
                 stub = node_services_pb2_grpc.NodeServiceStub(channel)
                 response = stub.QueryAll(node_services_pb2.QueryAllRequest(id = self.chordNode.id))
                 foo = client_services_pb2.QueryResponse()
                 for item in response.pairs:
                     foo.pairs.append(client_services_pb2.PairClient(key_entry = item.key_entry, value_entry = item.value_entry))
-                print(f"Node {self.chordNode.id}: query-all results {foo.pairs}")
+                self.chordNode.logger.debug(f"Node {self.chordNode.id}: query-all results {foo.pairs}")
                 return foo
         
     def Depart(self, request, context):
@@ -99,14 +108,14 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
         # Notify predecessor of the node that his successor changed 
         with grpc.insecure_channel(f'{self.chordNode.predecessor.ip}:{self.chordNode.predecessor.port}') as channel:
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
-            response = stub.Notify(node_services_pb2.NotifyRequest(id=self.chordNode.predecessor.id, ip=self.chordNode.predecessor.ip, port = self.chordNode.predecessor.port, neighboor ='predecessor')) 
+            response = stub.Notify(node_services_pb2.NotifyRequest(id=self.chordNode.successor.id, ip=self.chordNode.successor.ip, port = self.chordNode.successor.port, neighboor ='predecessor')) 
         
         self._shutdownServerEvent.set()
         return client_services_pb2.DepartResponse(response='Node {self.chordNode.id} left chord successfully')
 
     def Overlay(self, request, context):
         with grpc.insecure_channel(f'{self.chordNode.predecessor.ip}:{self.chordNode.predecessor.port}') as channel:
-            print(f"Node {self.chordNode.id}: sending overlay request to {self.chordNode.successor.id}")
+            self.chordNode.logger.debug(f"Node {self.chordNode.id}: sending overlay request to {self.chordNode.successor.id}")
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
             response = stub.OverlayAll(node_services_pb2.OverlayAllRequest(id = self.chordNode.id))
             foo = client_services_pb2.OverlayResponse()

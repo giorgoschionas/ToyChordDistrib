@@ -64,7 +64,7 @@ def setupLogging():
         # create console handler with a higher log level
         ch = logging.StreamHandler()
         ch.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('%(levelname)s: %(asctime)s %(funcName)s(%(lineno)d) -- %(message)s', datefmt = '%Y-%m-%d %H:%M:%S')
+        formatter = logging.Formatter('%(levelname)s: %(asctime)s -- %(message)s', datefmt = '%Y-%m-%d %H:%M:%S')
         ch.setFormatter(formatter)
         log.addHandler(ch)
 

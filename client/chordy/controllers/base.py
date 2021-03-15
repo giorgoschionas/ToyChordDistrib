@@ -103,18 +103,19 @@ class Base(Controller):
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Query(client_services_pb2.QueryRequest(song=key))
 
-            output = []
-            headers = ['KEY', 'VALUE']
-            for item in response.pairs:
-                if not item.value_entry:
-                    print(f'Result: song {key} not found')
-                    break
-                item_list = []
-                item_list.append(item.key_entry)
-                item_list.append(item.value_entry)
-                output.append(item_list)
+            if len(response.pairs) == 0:
+                print(f'Result: song {key} not found')
+            else:
+                output = []
+                headers = ['KEY', 'VALUE']
+                for item in response.pairs:
+                    
+                    item_list = []
+                    item_list.append(item.key_entry)
+                    item_list.append(item.value_entry)
+                    output.append(item_list)
 
-            self.app.render(output, headers=headers)
+                self.app.render(output, headers=headers)
 
     @ex(help='Delete a song from the network',
         # sub-command level arguments. ex: 'chordy command1 --foo bar'
