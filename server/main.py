@@ -42,7 +42,6 @@ def main(argv):
     address = chord_node.Address(ip, port)
     newNode = chord_node.ChordNode(address, k, songRepository)
     nodeServicer = node_servicer.NodeServicer(newNode)
-    songServicer = song_servicer.SongServicer(newNode, strategy)
 
     if port == 1024:
         newNode.createTopology()
@@ -50,6 +49,7 @@ def main(argv):
         newNode.join(1)
 
     nodeServer = GrpcServer(ip, port, maxWorkers=10)
+    songServicer = song_servicer.SongServicer(newNode, strategy, nodeServer.shutdownServerEvent)
     nodeServer.addServicer(nodeServicer, node_services_pb2_grpc.add_NodeServiceServicer_to_server)
     nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
     nodeServer.run()

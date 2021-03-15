@@ -12,12 +12,12 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
         if request.neighboor == 'successor':
             tempAddr = self.chordNode.predecessor
             self.chordNode.setPredecessor(chord_node.Address(request.ip,request.port))
-            print("Id of predecessor : ", self.chordNode.predecessor.id)
+            print(f"Node {self.chordNode.id}: predecessor id {self.chordNode.predecessor.id}")
             return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
         else:
             tempAddr = self.chordNode.successor
             self.chordNode.setSuccessor(chord_node.Address(request.ip,request.port))
-            print("Id of successor : ", self.chordNode.successor.id)
+            print(f"Node {self.chordNode.id}: successor id {self.chordNode.successor.id}")
             return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
     
     def LoadBalanceAfterJoin(self, request, context):
@@ -33,19 +33,19 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
         return node_services_pb2.LoadBalanceAfterDepartResponse(msg ='Done')
 
 
-
     # to request pou pairnei einai to id 
     def FindSuccessor(self, request, context):
         if self.chordNode.id == self.chordNode.successor.id:
             print("Bootstrap node")
             self.chordNode.setSuccessor(chord_node.Address(request.ip, request.port))
-            print("Id of successor : ", self.chordNode.successor.id)
+            print(f"Node {self.chordNode.id}: successor id {self.chordNode.successor.id}")
             return node_services_pb2.FindSuccessorResponse(id=self.chordNode.id, ip=self.chordNode.address.ip, port=self.chordNode.address.port)
         else:
             if self.chordNode.between(self.chordNode.id, request.id, self.chordNode.successor.id):
+                print(f"Node {self.chordNode.id}: sending find-successor request to {self.chordNode.successor.id}")
                 response = node_services_pb2.FindSuccessorResponse(id=self.chordNode.successor.id, ip=self.chordNode.successor.ip, port=self.chordNode.successor.port)
                 self.chordNode.setSuccessor(chord_node.Address(request.ip, request.port))
-                print("Id of successor : ", self.chordNode.successor.id)
+                print(f"Node {self.chordNode.id}: successor id {self.chordNode.successor.id}")
                 return response
             else:
                 return self.chordNode.requestSuccessor(request)
@@ -57,6 +57,7 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
             return self._concatData(node_services_pb2.QueryAllResponse(), lastData)
         else:
             with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                print(f"Node {self.chordNode.id}: sending query-all request to {self.chordNode.successor.id}")
                 stub = node_services_pb2_grpc.NodeServiceStub(channel)
                 response = stub.QueryAll(request)
                 data = self.chordNode.songRepository.getDHT()
@@ -74,18 +75,20 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
             return foo
         else:
             with grpc.insecure_channel(f'{self.chordNode.predecessor.ip}:{self.chordNode.predecessor.port}') as channel:
+                print(f"Node {self.chordNode.id}: sending overlay request to {self.chordNode.successor.id}")
                 stub = node_services_pb2_grpc.NodeServiceStub(channel)
                 response = stub.OverlayAll(request)
                 response.ids.append(self.chordNode.id)
                 return response
 
     def Replicate(self, request, context):
-        if request.k == 2:
+        if request.k <= 2:
             self.chordNode.put(request.song, request.value)
             return node_services_pb2.ReplicateResponse(msg='Successfully replicated entry')
         else:
             self.chordNode.put(request.song, request.value)
             with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+                print(f"Node {self.chordNode.id}: sending replicate request to {self.chordNode.successor.id}")
                 stub = node_services_pb2_grpc.NodeServiceStub(channel)
                 newRequest = node_services_pb2.ReplicateRequest(k = request.k - 1, song = request.song, value = request.value)
                 response = stub.Replicate(newRequest)
@@ -96,7 +99,7 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
             return node_services_pb2.QueryLinearizabilityResponse(pairs=[])
         else:
             with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
-                print(f'Calling {self.chordNode.successor.id}')
+                print(f"Node {self.chordNode.id}: sending query-linearizability request to {self.chordNode.successor.id}")
                 stub = node_services_pb2_grpc.NodeServiceStub(channel)
                 newRequest = node_services_pb2.QueryLinearizabilityRequest(key = request.key)
                 response = stub.QueryLinearizability(newRequest)

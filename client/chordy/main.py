@@ -26,6 +26,7 @@ class ChordyApplication(App):
             'yaml',
             'colorlog',
             'jinja2',
+            'tabulate'
         ]
 
         # configuration handler
@@ -38,7 +39,7 @@ class ChordyApplication(App):
         log_handler = 'colorlog'
 
         # set the output handler
-        output_handler = 'jinja2'
+        output_handler = 'tabulate'
 
         # register handlers
         handlers = [
@@ -56,6 +57,8 @@ class ChordyApplicationTest(TestApp,ChordyApplication):
 def main():
     with ChordyApplication() as app:
         try:
+            app.args.add_argument('--ip', required=True, action='store', dest='ip', help='Server IP address')  
+            app.args.add_argument('-p', '--port', required=True, action='store', type=int, dest='port', help='Server port number')  
             app.run()
 
         except AssertionError as e:

@@ -1,5 +1,7 @@
+import signal
 import logging
 import grpc  
+import threading
 from concurrent import futures
 
 class _Server:
@@ -8,6 +10,7 @@ class _Server:
         self.port = port
         self.address = host + ":" + str(port)
         self.logger = logging.getLogger('server')
+        self.shutdownServerEvent = threading.Event()
 
 class GrpcServer(_Server):
     def __init__(self, host, port, maxWorkers):
@@ -20,7 +23,9 @@ class GrpcServer(_Server):
         self.server.start()
         self.logger.info('grpc server is now listening on ' + self.address)
         try:
-            self.server.wait_for_termination()
+            signal.signal(signal.SIGINT, signal.SIG_DFL)
+            self.shutdownServerEvent.wait()
+            self.server.stop(1)
         except KeyboardInterrupt:
             self.server.stop(0)
 

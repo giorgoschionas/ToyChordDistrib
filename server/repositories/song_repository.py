@@ -15,6 +15,7 @@ def between(n1, n2, n3):
 class SongRepository:
     def __init__(self, database, hashFunction):
         self.database = database
+        self.hashFunction = hashFunction
     
     def addSong(self, key, value):
         if self.contains(key):
@@ -46,7 +47,7 @@ class SongRepository:
         return key in self.database.data
 
     def retrieveSongsLessThan(self, newId, successorId):
-        removed_keys = {key : value for key,value in self.database.data.items() if between(hashFunction(key), newId, successorId)}
+        removed_keys = {key : value for key,value in self.database.data.items() if between(self.hashFunction(key), newId, successorId)}
         for key,_ in removed_keys.items():
             self.database.delete(key)
         return removed_keys

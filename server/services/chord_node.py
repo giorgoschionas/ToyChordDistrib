@@ -26,7 +26,7 @@ class NeigboorInfo:
 class ChordNode:
     def __init__(self, address, replicationFactor, songRepository):
         self.id = sha1(f'{address.ip}:{address.port}')
-        print('Id of node : ', self.id)
+        print('Node id: ', self.id)
         self.address = address
         self.successor = None
         self.predecessor = None
@@ -48,7 +48,7 @@ class ChordNode:
         with grpc.insecure_channel('localhost:1024') as channel:
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
             response = stub.FindSuccessor(node_services_pb2.FindSuccessorRequest(id=self.id, ip=self.address.ip, port = self.address.port))
-            print("Id of successor " , response.id)
+            print(f"Node {self.id}: successor id {response.id}")
             self.setSuccessor(Address(response.ip, response.port))
                 
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
@@ -57,7 +57,7 @@ class ChordNode:
             # Notify successor of new node that his predecessor changed and set the predecessor of new node
             response = stub.Notify(node_services_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port, neighboor='successor'))
             self.setPredecessor(Address(response.ip,response.port))
-            print("Id of predecessor : ", self.predecessor.id)
+            print(f"Node {self.id}: predecessor id {self.predecessor.id}")
 
             # Load Balance: transfer entries from successor of new node to new node
             retrieved_pairs = stub.LoadBalanceAfterJoin(node_services_pb2.LoadBalanceAfterJoinRequest(id = self.id))
@@ -66,25 +66,32 @@ class ChordNode:
 
     def requestSuccessor(self, request):
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
-            print(f"Sending request from {self.address.port} to {self.successor.port}")
+            print(f"Node {self.id}: sending find-successor request from {self.address.port} to {self.successor.port}")
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
             successorInfo = stub.FindSuccessor(request)
             return successorInfo
 
     def replicate(self, request):
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
-            print(f"Sending request from {self.address.port} to {self.successor.port}")
+            print(f"Node {self.id}: sending replicate request from {self.address.port} to {self.successor.port}")
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
-            replicateRequest = node_services_pb2.ReplicateRequest(k = self.replicationFactor, song = request.song, value = request.value)
+            if type(request) is client_services_pb2.InsertRequest :
+                replicateRequest = node_services_pb2.ReplicateRequest(k = self.replicationFactor, song = request.song, value = request.value)
+            else:
+                replicateRequest = node_services_pb2.ReplicateRequest(k = self.replicationFactor, song = request.song, value = None)
             stub.Replicate(replicateRequest)
 
     def put(self, key, value):
-        if value == None:
+        if value == '':
+            print(f'Node {self.id}: deleting song {key}')
             domainResponse = self.songRepository.deleteSong(key)
-        else:m,
+        else:
+            print(f'Node {self.id}: adding song {key}')
             domainResponse = self.songRepository.addSong(key, value)
+        return domainResponse
     
     def get(self, key):
+        print(f"Node {self.id}: getting song {key}")
         return self.songRepository.getValue(key)
 
     def between(self, n1, n2, n3):

@@ -21,7 +21,7 @@ class Base(Controller):
         description = 'CLI application that gives access to a distributed song database based on Chord protocol'
 
         # text displayed at the bottom of --help output
-        epilog = 'Usage: chordy command1 --foo bar'
+        # epilog = 'Usage: chordy command1 --foo bar'
 
         # controller level arguments. ex: 'chordy --version'
         arguments = [
@@ -69,10 +69,12 @@ class Base(Controller):
             ### add a sample foo option under subcommand namespace
             ( [ '-k', '--key' ],
               { 'help' : 'song name',
+                'required' : 'True',
                 'dest' : 'key' } ),
             ( [ '-v', '--value'],
               {
                 'help' : 'song value',
+                'required' : 'True',
                 'dest' : 'value'
               })
         ],
@@ -80,11 +82,10 @@ class Base(Controller):
     def insert(self):
         key = self.app.pargs.key
         value = self.app.pargs.value
-        # print(self.app.pargs)
-        with grpc.insecure_channel('localhost:1024') as channel:
+        with grpc.insecure_channel(f'{self.app.pargs.ip}:{self.app.pargs.port}') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Insert(client_services_pb2.InsertRequest(song=key, value=value))
-            print(response.response)
+            print(f'Result: song {key} with value {value} was {response.response}')
 
     @ex(help='Query a song from the network',
         # sub-command level arguments. ex: 'chordy command1 --foo bar'
@@ -92,15 +93,28 @@ class Base(Controller):
             ### add a sample foo option under subcommand namespace
             ( [ '-k', '--key' ],
               { 'help' : 'song name',
+                'required' : 'True',
                 'dest' : 'key' } )
         ],
     )
     def query(self):
         key = self.app.pargs.key
-        with grpc.insecure_channel('localhost:1024') as channel:
+        with grpc.insecure_channel(f'{self.app.pargs.ip}:{self.app.pargs.port}') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Query(client_services_pb2.QueryRequest(song=key))
-            print(response)
+
+            output = []
+            headers = ['KEY', 'VALUE']
+            for item in response.pairs:
+                if not item.value_entry:
+                    print(f'Result: song {key} not found')
+                    break
+                item_list = []
+                item_list.append(item.key_entry)
+                item_list.append(item.value_entry)
+                output.append(item_list)
+
+            self.app.render(output, headers=headers)
 
     @ex(help='Delete a song from the network',
         # sub-command level arguments. ex: 'chordy command1 --foo bar'
@@ -108,19 +122,20 @@ class Base(Controller):
             ### add a sample foo option under subcommand namespace
             ( [ '-k', '--key' ],
               { 'help' : 'song name',
+                'required' : 'True',
                 'dest' : 'key' } )
         ],
     )
     def delete(self):
         key = self.app.pargs.key
-        with grpc.insecure_channel('localhost:1024') as channel:
+        with grpc.insecure_channel(f'{self.app.pargs.ip}:{self.app.pargs.port}') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Delete(client_services_pb2.DeleteRequest(song=key))
-            print(response.response)
+            print(f'Result: song {key} {response.response}')
 
     @ex(help='Display the topology of the network')
     def overlay(self):
-        with grpc.insecure_channel('localhost:1024') as channel:
+        with grpc.insecure_channel(f'{self.app.pargs.ip}:{self.app.pargs.port}') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Overlay(client_services_pb2.OverlayRequest())
             print('Chord Network topology')
@@ -129,6 +144,7 @@ class Base(Controller):
 
     @ex(help='Leave the chord network')
     def depart(self):
-        with grpc.insecure_channel('localhost:1024') as channel:
+        with grpc.insecure_channel(f'{self.app.pargs.ip}:{self.app.pargs.port}') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Depart(client_services_pb2.DepartRequest())
+            print(f'Result: node departed from chord network')
