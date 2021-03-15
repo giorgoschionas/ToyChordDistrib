@@ -37,15 +37,11 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
     def FindSuccessor(self, request, context):
         if self.chordNode.id == self.chordNode.successor.id:
             self.chordNode.logger.debug("Bootstrap node")
-            self.chordNode.setSuccessor(chord_node.Address(request.ip, request.port))
-            self.chordNode.logger.debug(f"Node {self.chordNode.id}: successor id {self.chordNode.successor.id}")
             return node_services_pb2.FindSuccessorResponse(id=self.chordNode.id, ip=self.chordNode.address.ip, port=self.chordNode.address.port)
         else:
             if self.chordNode.between(self.chordNode.id, request.id, self.chordNode.successor.id):
                 self.chordNode.logger.debug(f"Node {self.chordNode.id}: sending find-successor request to {self.chordNode.successor.id}")
                 response = node_services_pb2.FindSuccessorResponse(id=self.chordNode.successor.id, ip=self.chordNode.successor.ip, port=self.chordNode.successor.port)
-                self.chordNode.setSuccessor(chord_node.Address(request.ip, request.port))
-                self.chordNode.logger.debug(f"Node {self.chordNode.id}: successor id {self.chordNode.successor.id}")
                 return response
             else:
                 return self.chordNode.requestSuccessor(request)

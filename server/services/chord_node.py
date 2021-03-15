@@ -51,22 +51,28 @@ class ChordNode:
         with grpc.insecure_channel('localhost:1024') as channel:
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
             response = stub.FindSuccessor(node_services_pb2.FindSuccessorRequest(id=self.id, ip=self.address.ip, port = self.address.port))
-            self.logger.debug(f"Node {self.id}: successor id {response.id}")
             self.setSuccessor(Address(response.ip, response.port))
-                
+
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
             stub = node_services_pb2_grpc.NodeServiceStub(channel)
 
             # Notify successor of new node that his predecessor changed and set the predecessor of new node
             response = stub.Notify(node_services_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port, neighboor='successor'))
             self.setPredecessor(Address(response.ip,response.port))
-            self.logger.debug(f"Node {self.id}: predecessor id {self.predecessor.id}")
 
             # Load Balance: transfer entries from successor of new node to new node
             retrieved_pairs = stub.LoadBalanceAfterJoin(node_services_pb2.LoadBalanceAfterJoinRequest(id = self.id))
             for item  in retrieved_pairs.pairs:
                 self.songRepository.addSong(item.key_entry,item.value_entry)
 
+        with grpc.insecure_channel(f'{self.predecessor.ip}:{self.predecessor.port}') as channel:
+            stub = node_services_pb2_grpc.NodeServiceStub(channel)
+
+            # Notify predecessor of new node that his successor changed
+            response = stub.Notify(node_services_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port, neighboor='predecessor'))
+
+
+    
     def requestSuccessor(self, request):
         with grpc.insecure_channel(f'{self.successor.ip}:{self.successor.port}') as channel:
             self.logger.debug(f"Node {self.id}: sending find-successor request from {self.address.port} to {self.successor.port}")
