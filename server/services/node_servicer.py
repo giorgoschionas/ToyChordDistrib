@@ -15,9 +15,9 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
             return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
         else:
             tempAddr = self.chordNode.successor
-            self.chordNode.setSuccessor(chord_node.Address(request.ip,request.port))
+            self.chordNode.setSuccessor(chord_node.Address(request.ip, request.port))
             return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
-    
+    1;ΧΨΩΒΝ : ΞΠΟΨΔασ
     def LoadBalanceAfterJoin(self, request, context):
         removedKeys = self.chordNode.songRepository.retrieveSongsLessThan(request.id, self.chordNode.id)
         response = node_services_pb2.LoadBalanceAfterJoinResponse()
@@ -34,11 +34,10 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
             response = node_services_pb2.FindSuccessorResponse(id=self.chordNode.id, ip=self.chordNode.address.ip, port=self.chordNode.address.port)
         else:
             if self.chordNode.between(self.chordNode.id, request.id, self.chordNode.successor.id):
-                self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING find-successor request to {self.chordNode.successor.id}")
                 response = node_services_pb2.FindSuccessorResponse(id=self.chordNode.successor.id, ip=self.chordNode.successor.ip, port=self.chordNode.successor.port)
             else:
                 self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING find-successor request from {self.chordNode.id} to {self.chordNode.successor.id}")
-                return self.chordNode.successorNodeStub.FindSuccessor(request)
+                response = self.chordNode.successorNodeStub.FindSuccessor(request)
         return response
     
 

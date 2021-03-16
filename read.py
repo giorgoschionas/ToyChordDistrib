@@ -13,6 +13,9 @@ ips = ['[2001:648:2ffe:501:cc00:10ff:fead:aa9c]', '[2001:648:2ffe:501:cc00:10ff:
 
 ports = [1024,1025,1050,1025,1060,1025,1090,1100,1031,1036]
 
+ips = ['localhost']
+ports = [1024]
+
 class Address:
     def __init__(self, ip, port):
         self.ip = ip

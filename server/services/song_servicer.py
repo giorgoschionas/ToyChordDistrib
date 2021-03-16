@@ -3,14 +3,6 @@ from generated import client_services_pb2
 from generated import node_services_pb2_grpc
 from generated import node_services_pb2
 
-import grpc
-import hashlib
-
-def sha1(msg):
-    digest = hashlib.sha1(msg.encode())
-    hex_digest= digest.hexdigest()
-    return int(hex_digest, 16) % 65536
-
 class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
     def __init__(self, chordNode, strategy, shutdownServerEvent):
         self.chordNode = chordNode
@@ -32,9 +24,10 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
             domainResponse = self.chordNode.songRepository.put(request.song, '')
             if self.chordNode.replicationFactor > 1:
                 self.chordNode.replicate(request)
-            return client_services_pb2.DeleteResponse(response = domainResponse)
+            response = client_services_pb2.DeleteResponse(response = domainResponse)
         else:
-            return self.chordNode.successorSongStub.Delete(request)
+            response = self.chordNode.successorSongStub.Delete(request)
+        return response
 
     def Query(self, request, context):
         if request.song != '*':

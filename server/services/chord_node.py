@@ -36,7 +36,7 @@ class ChordNode:
         self.logger = logging.getLogger('node')
         self.logger.debug(f'NODE ID: {self.id}')     
         self.bootstrapChannel = grpc.insecure_channel('localhost:1024')
-        self.bootstrapChannel = node_services_pb2_grpc.NodeServiceStub(self.bootstrapChannel)
+        self.bootstrapNodeStub = node_services_pb2_grpc.NodeServiceStub(self.bootstrapChannel)
         self.predecessorChannel = None
         self.successorChannel = None
 
@@ -66,11 +66,11 @@ class ChordNode:
     
     def join(self, nodeId):
         request = node_services_pb2.FindSuccessorRequest(id=self.id, ip=self.address.ip, port = self.address.port)
-        response = self.bootstrapChannel.FindSuccessor(request)
+        response = self.bootstrapNodeStub.FindSuccessor(request)
         self.setSuccessor(Address(response.ip, response.port))
 
         # Notify successor of new node that his predecessor changed and set the predecessor of new node
-        notifyRequest = node_services_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port, neighboor='predecessor')
+        notifyRequest = node_services_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port, neighboor='successor')
         notifyResponse = self.successorNodeStub.Notify(request)
         self.setPredecessor(Address(notifyResponse.ip, notifyResponse.port))
 
@@ -81,12 +81,8 @@ class ChordNode:
             self.songRepository.addSong(item.key_entry, item.value_entry)
 
         # Notify predecessor of new node that his successor changed
-        notifyPredecessorRequest = node_services_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port, neighboor='successor')
+        notifyPredecessorRequest = node_services_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port, neighboor='predecessor')
         notifyPredecessorResponse = self.predecessorNodeStub.Notify(notifyPredecessorRequest)
-    
-    def requestSuccessor(self, request):
-        self.logger.debug(f"NODE {self.id}: SENDING find-successor request from {self.id} to {self.successor.id}")
-        return self.successorNodeStub.FindSuccessor(request)
 
     def replicate(self, request):
         self.logger.debug(f"NODE {self.id}: SENDING replicate request from {self.id} to {self.successor.id}")
@@ -95,6 +91,7 @@ class ChordNode:
         else:
             replicateRequest = node_services_pb2.ReplicateRequest(k = self.replicationFactor, song = request.song, value = None)
         self.successorNodeStub.Replicate(replicateRequest)
+        self.successorChannel.close()
 
     def isResponsible(self, key):
         digest = sha1(key)
