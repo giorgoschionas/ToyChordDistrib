@@ -1,0 +1,5 @@
+Server1 snf-18374.ok-kno.grnetcloud.net ysLp6v898u 2001:648:2ffe:501:cc00:10ff:fead:aa9c
+Server2 snf-18375.ok-kno.grnetcloud.net pMQB4SB7wB 2001:648:2ffe:501:cc00:12ff:fe98:a535
+Server3 snf-18376.ok-kno.grnetcloud.net WLygQbdu3k 2001:648:2ffe:501:cc00:11ff:fe56:ca8d
+Server4 snf-18377.ok-kno.grnetcloud.net lOAh23WZHn 2001:648:2ffe:501:cc00:10ff:fe2e:3b6c
+Server5 snf-18378.ok-kno.grnetcloud.net OSLcHe3QVK 2001:648:2ffe:501:cc00:12ff:fe45:4cf9
