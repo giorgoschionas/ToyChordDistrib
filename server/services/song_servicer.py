@@ -3,6 +3,7 @@ from generated import client_services_pb2
 from generated import node_services_pb2_grpc
 from generated import node_services_pb2
 
+import threading
 import grpc
 import hashlib
 
@@ -23,10 +24,14 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
             domainResponse = self.chordNode.put(request.song, request.value)
             self.chordNode.logger.debug(f'INSERTING song({request.song}) to node({self.chordNode.id})')
             if self.chordNode.replicationFactor > 1:
-                self.chordNode.replicate(request)
+                if self.strategy == 'L':
+                    self.chordNode.replicate(request)
+                else:
+                    task = threading.Thread(target=self.chordNode.replicate, args=(request,))
+                    task.start()
             return client_services_pb2.InsertResponse(response = domainResponse)
         else:
-            with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+            with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}', options=[('grpc.max_send_message_length', int(32e9)), ('grpc.max_receive_message_length', int(32e9)) as channel:
                 stub = client_services_pb2_grpc.ClientServiceStub(channel)
                 response = stub.Insert(request)
                 return response

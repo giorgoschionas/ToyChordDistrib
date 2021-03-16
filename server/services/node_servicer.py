@@ -84,7 +84,7 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
             return node_services_pb2.ReplicateResponse(msg='Successfully replicated entry')
         else:
             self.chordNode.put(request.song, request.value)
-            with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}') as channel:
+            with grpc.insecure_channel(f'{self.chordNode.successor.ip}:{self.chordNode.successor.port}', options=[('grpc.max_send_message_length', int(32e9)), ('grpc.max_receive_message_length', int(32e9)) as channel:
                 self.chordNode.logger.debug(f"Node {self.chordNode.id}: sending replicate request to {self.chordNode.successor.id}")
                 stub = node_services_pb2_grpc.NodeServiceStub(channel)
                 newRequest = node_services_pb2.ReplicateRequest(k = request.k - 1, song = request.song, value = request.value)
