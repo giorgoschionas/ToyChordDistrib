@@ -1,3 +1,5 @@
+import logging
+
 from database import database
 
 def between(n1, n2, n3):
@@ -16,7 +18,17 @@ class SongRepository:
     def __init__(self, database, hashFunction):
         self.database = database
         self.hashFunction = hashFunction
+        self.logger = logging.getLogger('repository')
     
+    def put(self, key, value):
+        if value == '':
+            self.logger.debug(f'DELETING song({key})')
+            domainResponse = self.deleteSong(key)
+        else:
+            self.logger.debug(f'ADDING song({key})')
+            domainResponse = self.addSong(key, value)
+        return domainResponse
+
     def addSong(self, key, value):
         if self.contains(key):
             response = 'Updated'
@@ -34,6 +46,7 @@ class SongRepository:
         return response
 
     def getValue(self, key):
+        self.logger.debug(f"GETTING song({key})")
         if self.contains(key):
             response = self.database.get(key)
         else:
