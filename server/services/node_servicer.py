@@ -17,7 +17,7 @@ class NodeServicer(node_services_pb2_grpc.NodeServiceServicer):
             tempAddr = self.chordNode.successor
             self.chordNode.setSuccessor(chord_node.Address(request.ip, request.port))
             return node_services_pb2.NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
-    1;ΧΨΩΒΝ : ΞΠΟΨΔασ
+
     def LoadBalanceAfterJoin(self, request, context):
         removedKeys = self.chordNode.songRepository.retrieveSongsLessThan(request.id, self.chordNode.id)
         response = node_services_pb2.LoadBalanceAfterJoinResponse()

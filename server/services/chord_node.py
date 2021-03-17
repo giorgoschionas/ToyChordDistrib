@@ -38,11 +38,15 @@ class ChordNode:
         self.bootstrapChannel = grpc.insecure_channel('localhost:1024')
         self.bootstrapNodeStub = node_services_pb2_grpc.NodeServiceStub(self.bootstrapChannel)
         self.predecessorChannel = None
+        self.predecessorNodeStub = None
+        self.predecessorSongStub = None
         self.successorChannel = None
+        self.successorNodeStub = None
+        self.successorSongStub = None
 
     def setPredecessor(self, predecessorAddress):
         self.predecessor = NeigboorInfo(predecessorAddress)
-        self.logger.debug(f'NODE {self.id}: PREDECESSOR {self.successor.id}')
+        self.logger.debug(f'NODE {self.id}: PREDECESSOR {self.predecessor.id}')
         if self.predecessorChannel != None:
             self.predecessorChannel.close()
         self.predecessorChannel = grpc.insecure_channel(f'{self.predecessor.ip}:{self.predecessor.port}')
@@ -71,7 +75,7 @@ class ChordNode:
 
         # Notify successor of new node that his predecessor changed and set the predecessor of new node
         notifyRequest = node_services_pb2.NotifyRequest(id=self.id, ip=self.address.ip, port = self.address.port, neighboor='successor')
-        notifyResponse = self.successorNodeStub.Notify(request)
+        notifyResponse = self.successorNodeStub.Notify(notifyRequest)
         self.setPredecessor(Address(notifyResponse.ip, notifyResponse.port))
 
         # Load Balance: transfer entries from successor of new node to new node
@@ -91,7 +95,6 @@ class ChordNode:
         else:
             replicateRequest = node_services_pb2.ReplicateRequest(k = self.replicationFactor, song = request.song, value = None)
         self.successorNodeStub.Replicate(replicateRequest)
-        self.successorChannel.close()
 
     def isResponsible(self, key):
         digest = sha1(key)

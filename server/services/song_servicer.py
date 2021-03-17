@@ -31,8 +31,8 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
 
     def Query(self, request, context):
         if request.song != '*':
-            if self.strategy == 'L':
-                if self.chordNode.songRepository.contains(request.song) or self.chordNode.isResponsible(request.song):
+            if self.chordNode.songRepository.contains(request.song) or self.chordNode.isResponsible(request.song):
+                if self.strategy == 'L':
                     with grpc.insecure_channel(f'{self.chordNode.address.ip}:{self.chordNode.address.port}') as channel:
                         stub = node_services_pb2_grpc.NodeServiceStub(channel)
                         newRequest = node_services_pb2.QueryLinearizabilityRequest(key=request.song) 
@@ -42,22 +42,17 @@ class SongServicer(client_services_pb2_grpc.ClientServiceServicer):
                         for item in queryLinearizabilityResponse.pairs:
                             pair = client_services_pb2.PairClient(key_entry = item.key_entry, value_entry = item.value_entry)
                             response.pairs.append(pair)
-                else:
-                    self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING query request to {self.chordNode.successor.id}")
-                    response = self.chordNode.successorSongStub.Query(request)
-                return response
-            elif self.strategy == 'E':
-                if self.chordNode.songRepository.contains(request.song) or self.chordNode.isResponsible(request.song):
+                elif self.strategy == 'E':
                     domainResponse = self.chordNode.songRepository.getValue(request.song)
                     self.chordNode.logger.debug(f"NODE {self.chordNode.id}: QUERY RESULT {domainResponse}")
                     response = client_services_pb2.QueryResponse() 
                     if domainResponse != '':
                         pair = client_services_pb2.PairClient(key_entry = request.song, value_entry = domainResponse)
                         response.pairs.append(pair)
-                else:
-                    self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING query request to {self.chordNode.successor.id}")
-                    response = self.chordNode.successorSongStub.Query(request)
-                return response
+            else:
+                self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING query request to {self.chordNode.successor.id}")
+                response = self.chordNode.successorSongStub.Query(request)
+            return response
         else:
             self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING query-all request to {self.chordNode.successor.id}")
             queryAllRequest = node_services_pb2.QueryAllRequest(id = self.chordNode.id)
