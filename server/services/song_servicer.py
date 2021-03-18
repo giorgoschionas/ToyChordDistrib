@@ -23,7 +23,7 @@ class SongServicer(ClientServiceServicer):
             if self.chordNode.replicationFactor > 1:
                 self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
                 self.chordNode.successor.nodeService.replicate(self.chordNode.replicationFactor, request.song, request.value)
-            response = InsertResponse(response = domainResponse)
+            response = InsertResponse(response=domainResponse)
         else:
             response = self.chordNode.successor.songService.insert(request.song, request.value)
         return response
@@ -35,7 +35,7 @@ class SongServicer(ClientServiceServicer):
             if self.chordNode.replicationFactor > 1:
                 self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
                 self.chordNode.successor.nodeService.replicate(self.chordNode.replicationFactor, request.song, None)
-            response = DeleteResponse(response = domainResponse)
+            response = DeleteResponse(response=domainResponse)
         else:
             response = self.chordNode.successor.songService.delete(request.song)
         return response

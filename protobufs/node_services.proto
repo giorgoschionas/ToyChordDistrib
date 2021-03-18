@@ -15,8 +15,6 @@ service NodeService {
 
 message FindSuccessorRequest {
   uint64 id = 1;
-  string ip = 2;
-  uint32 port = 3;
 }
 
 message FindSuccessorResponse {

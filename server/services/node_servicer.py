@@ -29,9 +29,8 @@ class NodeServicer(NodeServiceServicer):
             self.chordNode.songRepository.addSong(item.key_entry, item.value_entry)
         return LoadBalanceAfterDepartResponse(msg ='Done')
 
-    # to request pou pairnei einai to id 
     def FindSuccessor(self, request, context):
-        if self.chordNode.id == self.chordNode.successor.id:
+        if self.chordNode.isBootstrap():
             response = FindSuccessorResponse(id=self.chordNode.id, ip=self.chordNode.address.ip, port=self.chordNode.address.port)
         else:
             if self.chordNode.isResponsible(request.id):

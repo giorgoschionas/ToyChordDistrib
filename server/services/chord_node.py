@@ -86,6 +86,9 @@ class ChordNode:
     def isResponsible(self, id):
         return self.between(self.predecessor.id, id, self.id)
 
+    def isBootstrap(self):
+        return self.id == self.successor.id
+
     def between(self, n1, n2, n3):
         # TODO: added corner case when id == -1
         if n2 == -1:
