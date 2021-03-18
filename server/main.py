@@ -35,6 +35,7 @@ def main(argv):
     else:
         strategy = 'E'
 
+    BOOTSTRAP_ADDRESS = chord_node.Address('localhost', 1024)
 
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
@@ -43,10 +44,10 @@ def main(argv):
     newNode = chord_node.ChordNode(address, k, songRepository)
     nodeServicer = node_servicer.NodeServicer(newNode)
 
-    if port == 1024:
+    if address == BOOTSTRAP_ADDRESS:
         newNode.createTopology()
     else:
-        newNode.join(1)
+        newNode.join(BOOTSTRAP_ADDRESS)
 
     nodeServer = GrpcServer(ip, port, maxWorkers=10)
     songServicer = song_servicer.SongServicer(newNode, strategy, nodeServer.shutdownServerEvent)
