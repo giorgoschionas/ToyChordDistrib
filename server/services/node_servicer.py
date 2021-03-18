@@ -1,9 +1,10 @@
-from generated.node_services_pb2_grpc import NodeServiceServicer
-from generated.node_services_pb2 import *
+import grpc
 from services import chord_node
 from repositories import song_repository
 
-import grpc
+from generated.node_services_pb2_grpc import NodeServiceServicer
+from generated.node_services_pb2 import *
+
 
 class NodeServicer(NodeServiceServicer):
     def __init__(self, chordNode):

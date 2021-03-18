@@ -1,9 +1,10 @@
+import threading
+import grpc
+import hashlib
+
 from generated.client_services_pb2_grpc import ClientServiceServicer
 from generated.client_services_pb2 import *
-from generated.node_services_pb2_grpc import NodeServiceServicer
-from generated.node_services_pb2 import *
-
-import hashlib
+from generated.node_services_pb2_grpc import NodeServiceStub
 
 def sha1(msg):
     digest = hashlib.sha1(msg.encode())
@@ -22,7 +23,11 @@ class SongServicer(ClientServiceServicer):
             domainResponse = self.chordNode.songRepository.put(request.song, request.value)
             if self.chordNode.replicationFactor > 1:
                 self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
-                self.chordNode.successor.nodeService.replicate(self.chordNode.replicationFactor, request.song, request.value)
+                if self.strategy == 'L':
+                    self.chordNode.successor.nodeService.replicate(self.chordNode.replicationFactor, request.song, request.value)
+                else:
+                    task = threading.Thread(target=self.chordNode.successor.nodeService.replicate, args=(self.chordNode.replicationFactor, request.song, request.value,))
+                    task.start()
             response = InsertResponse(response=domainResponse)
         else:
             response = self.chordNode.successor.songService.insert(request.song, request.value)

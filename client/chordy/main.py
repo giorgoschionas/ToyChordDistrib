@@ -5,7 +5,7 @@ from .core.exc import ChordyApplicationError
 from .controllers.base import Base
 
 # configuration defaults
-CONFIG = init_defaults('chordy')
+CONFIG = init_defaults('chordy', 'log.logging')
 CONFIG['chordy']['foo'] = 'barh'
 
 
