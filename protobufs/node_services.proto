@@ -11,6 +11,7 @@ service NodeService {
   rpc OverlayAll(OverlayAllRequest) returns (OverlayAllResponse){}
   rpc Replicate(ReplicateRequest) returns (ReplicateResponse) {}
   rpc QueryLinearizability(QueryLinearizabilityRequest) returns (QueryLinearizabilityResponse) {}
+  rpc Lookup(LookupRequest) returns (LookupResponse)
 }
 
 message FindSuccessorRequest {
@@ -89,4 +90,12 @@ message QueryLinearizabilityRequest {
 
 message QueryLinearizabilityResponse {
   repeated Pair pairs = 1;
+}
+
+message LookupRequest {
+  uint64 id = 1;
+}
+
+message LookupResponse {
+  
 }

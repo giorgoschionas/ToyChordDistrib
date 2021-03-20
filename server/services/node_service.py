@@ -24,6 +24,10 @@ class NodeService:
         request = FindSuccessorRequest(id=id)
         return self.stub.FindSuccessor(request)
 
+    def lookup(self, id):
+        request = LookupRequest(id)
+        return self.stub.Lookup(request)
+
     def replicate(self, replicationFactor, key, value):
         request = ReplicateRequest(k=replicationFactor, song=key, value=value)
         return self.stub.Replicate(request)

@@ -10,6 +10,12 @@ class NodeServicer(NodeServiceServicer):
     def __init__(self, chordNode):
         self.chordNode = chordNode
 
+    def Lookup(self, request, context):
+        if self.chordNode.isResponsible(request.id):
+            return self.chordNode
+        else:
+            return self.chordNode.successor.nodeService.lookup(request.id)
+
     def Notify(self, request, context):
         if request.neighboor == 'successor':
             tempAddr = self.chordNode.predecessor.address

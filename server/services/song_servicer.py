@@ -12,38 +12,33 @@ def sha1(msg):
     return int(hex_digest, 16) % 65536
 
 class SongServicer(ClientServiceServicer):
-    def __init__(self, chordNode, strategy, shutdownServerEvent):
+    def __init__(self, chordNode, strategy, replicationFactor, shutdownServerEvent):
         self.chordNode = chordNode
         self.strategy = strategy
+        self.replicationFactor = replicationFactor
         self._shutdownServerEvent = shutdownServerEvent
 
     def Insert(self, request, context):
         digest = sha1(request.song)
-        if self.chordNode.isResponsible(digest):
-            domainResponse = self.chordNode.songRepository.put(request.song, request.value)
-            if self.chordNode.replicationFactor > 1:
-                self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
-                if self.strategy == 'L':
-                    self.chordNode.successor.nodeService.replicate(self.chordNode.replicationFactor, request.song, request.value)
-                else:
-                    task = threading.Thread(target=self.chordNode.successor.nodeService.replicate, args=(self.chordNode.replicationFactor, request.song, request.value,))
-                    task.start()
-            response = InsertResponse(response=domainResponse)
-        else:
-            response = self.chordNode.successor.songService.insert(request.song, request.value)
-        return response
+        node = self.chordNode.nodeService.lookup(digest)
+        domainResponse = node.songRepository.put(request.song, request.value)
+        if self.replicationFactor > 1:
+            node.logger.debug(f"NODE {node.id}: SENDING replicate request to {node.successor.id}")
+            if self.strategy == 'L':
+                node.successor.nodeService.replicate(self.replicationFactor, request.song, request.value)
+            else:
+                task = threading.Thread(target=node.successor.nodeService.replicate, args=(self.replicationFactor, request.song, request.value,))
+                task.start()
+        return InsertResponse(response=domainResponse)
     
     def Delete(self, request, context):
         digest = sha1(request.song)
-        if self.chordNode.isResponsible(digest):
-            domainResponse = self.chordNode.songRepository.put(request.song, '')
-            if self.chordNode.replicationFactor > 1:
-                self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
-                self.chordNode.successor.nodeService.replicate(self.chordNode.replicationFactor, request.song, None)
-            response = DeleteResponse(response=domainResponse)
-        else:
-            response = self.chordNode.successor.songService.delete(request.song)
-        return response
+        node = self.chordNode.lookup(digest)
+        domainResponse = node.songRepository.put(request.song, '')
+        if self.replicationFactor > 1:
+            node.logger.debug(f"NODE {node.id}: SENDING replicate request to {node.successor.id}")
+            node.successor.nodeService.replicate(self.replicationFactor, request.song, None)
+        return DeleteResponse(response=domainResponse)
 
     def Query(self, request, context):
         if request.song != '*':

@@ -26,26 +26,17 @@ class Address:
             return NotImplemented
         return self.ip == other.ip and self.port == other.port
 
-class NeigboorInfo:
-    def __init__(self, address):
-        self.id = sha1(f'{address.ip}:{address.port}')
-        self.address = address
-        self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
-        self._songStub = ClientServiceStub(self._channel)
-        self.songService = SongService(self._songStub)
-        self._nodeStub = NodeServiceStub(self._channel)
-        self.nodeService = NodeService(self._nodeStub)
-
 class ChordNode:
-    def __init__(self, address, replicationFactor, songRepository):
+    def __init__(self, address):
         self.id = sha1(f'{address.ip}:{address.port}')
         self.address = address
         self.successor = None
         self.predecessor = None
-        self.replicationFactor = replicationFactor
-        self.songRepository = songRepository
         self.logger = logging.getLogger('node')
         self.logger.debug(f'NODE ID: {self.id}')     
+        self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
+        self._nodeStub = NodeServiceStub(self._channel)
+        self.nodeService = NodeService(self._nodeStub)
 
     def setPredecessor(self, predecessorAddress):
         if self.predecessor != None:
@@ -75,13 +66,15 @@ class ChordNode:
         notifyResponse = self.successor.nodeService.notify(self.id, self.address, 'successor')
         self.setPredecessor(Address(notifyResponse.ip, notifyResponse.port))
 
-        # Load Balance: transfer entries from successor of new node to new node
-        loadBalanceResponse = self.successor.nodeService.loadBalance(self.id)
-        for item in loadBalanceResponse.pairs:
-            self.songRepository.addSong(item.key_entry, item.value_entry)
-
         # Notify predecessor of new node that his successor changed
         notifyPredecessorResponse = self.predecessor.nodeService.notify(self.id, self.address, 'predecessor')
+ 
+    def lookup(id):
+        if self.isResponsible(id):
+            return self
+        else:
+            return self.successor.lookup(id)
+
  
     def isResponsible(self, id):
         return self.between(self.predecessor.id, id, self.id)
@@ -100,3 +93,18 @@ class ChordNode:
             return n1 < n2 < n3
         else:
             return n1 < n2 or n2 < n3
+
+
+class ExtendedChordNode(ChordNode):
+    def __init__(self, address, songRepository):
+        super().__init__(address)
+        self.songRepository = songRepository
+
+
+    def join(bootstrapAddress):
+        super().join(bootstrapAddress)
+        
+        # Load Balance: transfer entries from successor of new node to new node
+        loadBalanceResponse = self.successor.nodeService.loadBalance(self.id)
+        for item in loadBalanceResponse.pairs:
+            self.songRepository.addSong(item.key_entry, item.value_entry)
