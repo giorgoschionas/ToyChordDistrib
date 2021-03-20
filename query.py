@@ -28,8 +28,7 @@ with open(filename, 'r') as csvfile:
     csvreader = csv.reader(csvfile)
     for row in csvreader:
         rand_addr = random.choice(addrs)
-        list_files = subprocess.run(["chordy", f"--ip={rand_addr.ip}", f'--port={rand_addr.port}', 'insert', f'-k={row[0]}', f'-v={row[1]}'])
+        list_files = subprocess.run(["chordy", f"--ip={rand_addr.ip}", f'--port={rand_addr.port}', 'query', f'-k={row[0]}'])
 
 end = time.time()
 print(end - start)
-
