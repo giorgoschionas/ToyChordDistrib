@@ -12,8 +12,9 @@ def sha1(msg):
     return int(hex_digest, 16) % 65536
 
 class SongServicer(ClientServiceServicer):
-    def __init__(self, chordNode, strategy, shutdownServerEvent):
+    def __init__(self, chordNode, k, strategy, shutdownServerEvent):
         self.chordNode = chordNode
+        self.replicationFactor = k
         self.strategy = strategy
         self._shutdownServerEvent = shutdownServerEvent
 
@@ -21,12 +22,12 @@ class SongServicer(ClientServiceServicer):
         digest = sha1(request.song)
         if self.chordNode.isResponsible(digest):
             domainResponse = self.chordNode.songRepository.put(request.song, request.value)
-            if self.chordNode.replicationFactor > 1:
+            if self.replicationFactor > 1:
                 self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
                 if self.strategy == 'L':
-                    self.chordNode.successor.nodeService.replicate(self.chordNode.replicationFactor, request.song, request.value)
+                    self.chordNode.successor.nodeService.replicate(self.replicationFactor, request.song, request.value)
                 else:
-                    task = threading.Thread(target=self.chordNode.successor.nodeService.replicate, args=(self.chordNode.replicationFactor, request.song, request.value,))
+                    task = threading.Thread(target=self.chordNode.successor.nodeService.replicate, args=(self.replicationFactor, request.song, request.value,))
                     task.start()
             response = InsertResponse(response=domainResponse)
         else:
@@ -37,9 +38,13 @@ class SongServicer(ClientServiceServicer):
         digest = sha1(request.song)
         if self.chordNode.isResponsible(digest):
             domainResponse = self.chordNode.songRepository.put(request.song, '')
-            if self.chordNode.replicationFactor > 1:
-                self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
-                self.chordNode.successor.nodeService.replicate(self.chordNode.replicationFactor, request.song, None)
+            self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
+            if self.replicationFactor > 1:
+                if self.strategy == 'L':
+                    self.chordNode.successor.nodeService.replicate(self.replicationFactor, request.song, None)
+                else:
+                    task = threading.Thread(target=self.chordNode.successor.nodeService.replicate, args=(self.replicationFactor, request.song, None,))
+                    task.start()
             response = DeleteResponse(response=domainResponse)
         else:
             response = self.chordNode.successor.songService.delete(request.song)

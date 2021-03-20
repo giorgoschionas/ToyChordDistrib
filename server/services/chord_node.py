@@ -37,12 +37,11 @@ class NeigboorInfo:
         self.nodeService = NodeService(self._nodeStub)
 
 class ChordNode:
-    def __init__(self, address, replicationFactor, songRepository):
+    def __init__(self, address, songRepository):
         self.id = sha1(f'{address.ip}:{address.port}')
         self.address = address
         self.successor = None
         self.predecessor = None
-        self.replicationFactor = replicationFactor
         self.songRepository = songRepository
         self.logger = logging.getLogger('node')
         self.logger.debug(f'NODE ID: {self.id}')     
