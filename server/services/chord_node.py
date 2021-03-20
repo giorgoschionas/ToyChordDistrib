@@ -43,6 +43,11 @@ class ChordNode:
         self.successor = None
         self.predecessor = None
         self.songRepository = songRepository
+        self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
+        self._songStub = ClientServiceStub(self._channel)
+        self.songService = SongService(self._songStub)
+        self._nodeStub = NodeServiceStub(self._channel)
+        self.nodeService = NodeService(self._nodeStub)
         self.logger = logging.getLogger('node')
         self.logger.debug(f'NODE ID: {self.id}')     
 

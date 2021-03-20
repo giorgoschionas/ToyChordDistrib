@@ -5,6 +5,7 @@ import hashlib
 from generated.client_services_pb2_grpc import ClientServiceServicer
 from generated.client_services_pb2 import *
 from generated.node_services_pb2_grpc import NodeServiceStub
+from generated.node_services_pb2 import *
 
 def sha1(msg):
     digest = hashlib.sha1(msg.encode())
@@ -55,15 +56,11 @@ class SongServicer(ClientServiceServicer):
             digest = sha1(request.song)
             if self.chordNode.songRepository.contains(request.song) or self.chordNode.isResponsible(digest):
                 if self.strategy == 'L':
-                    with grpc.insecure_channel(f'{self.chordNode.address.ip}:{self.chordNode.address.port}') as channel:
-                        stub = NodeServiceStub(channel)
-                        newRequest = QueryLinearizabilityRequest(key=request.song) 
-                        queryLinearizabilityResponse = stub.QueryLinearizability(newRequest)
-
-                        response = QueryResponse()
-                        for item in queryLinearizabilityResponse.pairs:
-                            pair = PairClient(key_entry = item.key_entry, value_entry = item.value_entry)
-                            response.pairs.append(pair)
+                    queryLinearizabilityResponse = self.chordNode.nodeService.queryLinearizability(request.song)
+                    response = QueryResponse()
+                    for item in queryLinearizabilityResponse.pairs:
+                        pair = PairClient(key_entry = item.key_entry, value_entry = item.value_entry)
+                        response.pairs.append(pair)
                 elif self.strategy == 'E':
                     domainResponse = self.chordNode.songRepository.getValue(request.song)
                     self.chordNode.logger.debug(f"NODE {self.chordNode.id}: QUERY RESULT {domainResponse}")
