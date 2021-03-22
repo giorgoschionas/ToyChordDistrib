@@ -13,7 +13,7 @@ class _Server:
         self.shutdownServerEvent = threading.Event()
 
 class GrpcServer(_Server):
-    def __init__(self, host, port, maxWorkers):
+    def __init__(self, host, port, maxWorkers=40):
         super().__init__(host, port)
         self.maxWorkers = maxWorkers
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=self.maxWorkers))

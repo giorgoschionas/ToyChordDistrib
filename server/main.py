@@ -1,9 +1,6 @@
 import sys
-import os
 import logging
 import hashlib
-import grpc  
-from concurrent import futures
 
 from generated import node_services_pb2_grpc, node_services_pb2, client_services_pb2_grpc, client_services_pb2
 from repositories.song_repository import SongRepository
@@ -49,12 +46,11 @@ def main(argv):
     else:
         newNode.join(BOOTSTRAP_ADDRESS)
 
-    nodeServer = GrpcServer(ip, port, maxWorkers=10)
+    nodeServer = GrpcServer(ip, port, 100)
     songServicer = song_servicer.SongServicer(newNode, k, strategy, nodeServer.shutdownServerEvent)
     nodeServer.addServicer(nodeServicer, node_services_pb2_grpc.add_NodeServiceServicer_to_server)
     nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
     nodeServer.run()
-
     
 def setupLogging():
     # only cofnigure logger if script is main module

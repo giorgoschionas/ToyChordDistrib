@@ -2,7 +2,6 @@ import logging
 import grpc     
 import hashlib
 import logging
-from concurrent import futures                                                             
 
 from generated.client_services_pb2 import *
 from generated.client_services_pb2_grpc import ClientServiceStub
@@ -31,9 +30,10 @@ class NeigboorInfo:
         self.id = sha1(f'{address.ip}:{address.port}')
         self.address = address
         self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
+        self._channel2 = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
         self._songStub = ClientServiceStub(self._channel)
         self.songService = SongService(self._songStub)
-        self._nodeStub = NodeServiceStub(self._channel)
+        self._nodeStub = NodeServiceStub(self._channel2)
         self.nodeService = NodeService(self._nodeStub)
 
 class ChordNode:
@@ -44,9 +44,10 @@ class ChordNode:
         self.predecessor = None
         self.songRepository = songRepository
         self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
+        self._channel2 = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
         self._songStub = ClientServiceStub(self._channel)
         self.songService = SongService(self._songStub)
-        self._nodeStub = NodeServiceStub(self._channel)
+        self._nodeStub = NodeServiceStub(self._channel2)
         self.nodeService = NodeService(self._nodeStub)
         self.logger = logging.getLogger('node')
         self.logger.debug(f'NODE ID: {self.id}')     
