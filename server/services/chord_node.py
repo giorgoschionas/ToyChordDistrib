@@ -30,7 +30,7 @@ class NeigboorInfo:
         self.id = sha1(f'{address.ip}:{address.port}')
         self.address = address
         self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
-        self._channel2 = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
+        self._channel2 = grpc.insecure_channel(f'{self.address.ip}:{self.address.port + 1000}')
         self._songStub = ClientServiceStub(self._channel)
         self.songService = SongService(self._songStub)
         self._nodeStub = NodeServiceStub(self._channel2)
@@ -44,7 +44,7 @@ class ChordNode:
         self.predecessor = None
         self.songRepository = songRepository
         self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
-        self._channel2 = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
+        self._channel2 = grpc.insecure_channel(f'{self.address.ip}:{self.address.port + 1000}')
         self._songStub = ClientServiceStub(self._channel)
         self.songService = SongService(self._songStub)
         self._nodeStub = NodeServiceStub(self._channel2)

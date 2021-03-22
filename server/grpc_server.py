@@ -23,7 +23,7 @@ class GrpcServer(_Server):
         self.server.start()
         self.logger.info('grpc server is now listening on ' + self.address)
         try:
-            signal.signal(signal.SIGINT, signal.SIG_DFL)
+            # signal.signal(signal.SIGINT, signal.SIG_DFL)
             self.shutdownServerEvent.wait()
             self.server.stop(1)
         except KeyboardInterrupt:

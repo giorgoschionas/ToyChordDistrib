@@ -13,11 +13,12 @@ def sha1(msg):
     return int(hex_digest, 16) % 65536
 
 class SongServicer(ClientServiceServicer):
-    def __init__(self, chordNode, k, strategy, shutdownServerEvent):
+    def __init__(self, chordNode, k, strategy, shutdownServerEvent, shutdownServerEvent2):
         self.chordNode = chordNode
         self.replicationFactor = k
         self.strategy = strategy
         self._shutdownServerEvent = shutdownServerEvent
+        self._shutdownServerEvent2 = shutdownServerEvent2
 
     def Insert(self, request, context):
         digest = sha1(request.song)
@@ -93,6 +94,7 @@ class SongServicer(ClientServiceServicer):
         
         # Send a shutdown event to the server
         self._shutdownServerEvent.set()
+        self._shutdownServerEvent2.set()
         return DepartResponse(response='Node {self.chordNode.id} left chord successfully')
 
     def Overlay(self, request, context):

@@ -1,6 +1,7 @@
 import sys
 import logging
 import hashlib
+import threading
 
 from generated import node_services_pb2_grpc, node_services_pb2, client_services_pb2_grpc, client_services_pb2
 from repositories.song_repository import SongRepository
@@ -32,7 +33,7 @@ def main(argv):
     else:
         strategy = 'E'
 
-    BOOTSTRAP_ADDRESS = chord_node.Address('localhost', 1024)
+    BOOTSTRAP_ADDRESS = chord_node.Address('localhost', 2024)
 
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
@@ -41,17 +42,31 @@ def main(argv):
     newNode = chord_node.ChordNode(address, songRepository)
     nodeServicer = node_servicer.NodeServicer(newNode)
 
-    if address == BOOTSTRAP_ADDRESS:
+    if address.port == BOOTSTRAP_ADDRESS.port - 1000: 
         newNode.createTopology()
     else:
         newNode.join(BOOTSTRAP_ADDRESS)
 
-    nodeServer = GrpcServer(ip, port, 100)
-    songServicer = song_servicer.SongServicer(newNode, k, strategy, nodeServer.shutdownServerEvent)
+    nodeServer = GrpcServer(ip, port + 1000, 100)
     nodeServer.addServicer(nodeServicer, node_services_pb2_grpc.add_NodeServiceServicer_to_server)
-    nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
-    nodeServer.run()
     
+    songServer = GrpcServer(ip, port, 100)
+    songServicer = song_servicer.SongServicer(newNode, k, strategy, songServer.shutdownServerEvent, nodeServer.shutdownServerEvent)
+    songServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
+
+    threads = list()
+    
+    t1 = threading.Thread(target=nodeServer.run)
+    t1.start()
+    threads.append(t1)
+
+    t2 = threading.Thread(target=songServer.run)
+    t2.start()
+    threads.append(t2)
+    
+    for t in threads:
+        t.join()
+
 def setupLogging():
     # only cofnigure logger if script is main module
     # configuring logger in multiple places is bad
