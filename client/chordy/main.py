@@ -7,7 +7,7 @@ from .controllers.base import Base
 # configuration defaults
 CONFIG = init_defaults('chordy', 'log.logging')
 CONFIG['chordy']['foo'] = 'barh'
-
+CONFIG['log.logging']['level'] = 'ERROR'
 
 class ChordyApplication(App):
     """Chordy Application primary application."""

@@ -85,7 +85,7 @@ class Base(Controller):
         with grpc.insecure_channel(f'{self.app.pargs.ip}:{self.app.pargs.port}') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Insert(client_services_pb2.InsertRequest(song=key, value=value))
-            self.app.log.info(f'Result: song {key} with value {value} was {response.response}')
+            # self.app.log.info(f'Result: song {key} with value {value} was {response.response}')
 
     @ex(help='Query a song from the network',
         # sub-command level arguments. ex: 'chordy command1 --foo bar'
@@ -103,19 +103,19 @@ class Base(Controller):
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Query(client_services_pb2.QueryRequest(song=key))
 
-            if len(response.pairs) == 0:
-                self.app.log.info(f'Result: song {key} not found')
-            else:
-                output = []
-                headers = ['KEY', 'VALUE']
-                for item in response.pairs:
+            # if len(response.pairs) == 0:
+            #     self.app.log.info(f'Result: song {key} not found')
+            # else:
+            #     output = []
+            #     headers = ['KEY', 'VALUE']
+            #     for item in response.pairs:
                     
-                    item_list = []
-                    item_list.append(item.key_entry)
-                    item_list.append(item.value_entry)
-                    output.append(item_list)
+            #         item_list = []
+            #         item_list.append(item.key_entry)
+            #         item_list.append(item.value_entry)
+            #         output.append(item_list)
 
-                self.app.render(output, headers=headers)
+            #     self.app.render(output, headers=headers)
 
     @ex(help='Delete a song from the network',
         # sub-command level arguments. ex: 'chordy command1 --foo bar'

@@ -66,7 +66,7 @@ def setupLogging():
     # configuring logger in multiple places is bad
     # only top-level module should configure logger
     if not len(log.handlers):
-        log.setLevel(logging.DEBUG)
+        log.setLevel(logging.ERROR)
         # create console handler with a higher log level
         ch = logging.StreamHandler()
         ch.setLevel(logging.DEBUG)
