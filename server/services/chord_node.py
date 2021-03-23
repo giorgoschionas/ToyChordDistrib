@@ -1,10 +1,8 @@
 import logging
 import grpc     
-import hashlib
-import logging
+
 from utilities.math_utilities import sha1, between
 from utilities.network_utilities import Address
-
 from generated.client_services_pb2 import *
 from generated.client_services_pb2_grpc import ClientServiceStub
 from generated.node_services_pb2 import *

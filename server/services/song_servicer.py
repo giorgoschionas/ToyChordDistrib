@@ -1,5 +1,4 @@
 import threading
-import grpc
 
 from utilities.math_utilities import sha1
 from generated.client_services_pb2_grpc import ClientServiceServicer
