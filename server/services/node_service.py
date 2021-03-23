@@ -25,8 +25,12 @@ class NodeService:
         return self.stub.FindSuccessor(request)
 
     def lookup(self, id):
-        request = LookupRequest(id)
+        request = LookupRequest(id=id)
         return self.stub.Lookup(request)
+
+    def lookupReplicas(self, song):
+        request = LookupReplicasRequest(song=song)
+        return self.stub.LookupReplicas(request)
 
     def replicate(self, replicationFactor, key, value):
         request = ReplicateRequest(k=replicationFactor, song=key, value=value)
@@ -42,4 +46,4 @@ class NodeService:
 
     def queryLinearizability(self, key):
         request = QueryLinearizabilityRequest(key=key)
-        return self.stub.QueryLinearizability(request)
+        return self.stub.QueryLinearizability(request)        

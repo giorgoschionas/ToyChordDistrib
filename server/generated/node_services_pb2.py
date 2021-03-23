@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x13node_services.proto\x12\x05\x63hord\"<\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"H\n\rNotifyRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\x12\x11\n\tneighboor\x18\x04 \x01(\t\"*\n\x0eNotifyResponse\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\r\".\n\x04Pair\x12\x11\n\tkey_entry\x18\x01 \x01(\t\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\")\n\x1bLoadBalanceAfterJoinRequest\x12\n\n\x02id\x18\x01 \x01(\x04\":\n\x1cLoadBalanceAfterJoinResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\";\n\x1dLoadBalanceAfterDepartRequest\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"-\n\x1eLoadBalanceAfterDepartResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\x1d\n\x0fQueryAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\".\n\x10QueryAllResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"\x1f\n\x11OverlayAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\"!\n\x12OverlayAllResponse\x12\x0b\n\x03ids\x18\x01 \x03(\x04\":\n\x10ReplicateRequest\x12\t\n\x01k\x18\x01 \x01(\r\x12\x0c\n\x04song\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\t\" \n\x11ReplicateResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"*\n\x1bQueryLinearizabilityRequest\x12\x0b\n\x03key\x18\x01 \x01(\t\":\n\x1cQueryLinearizabilityResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair2\x89\x05\n\x0bNodeService\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00\x12\x37\n\x06Notify\x12\x14.chord.NotifyRequest\x1a\x15.chord.NotifyResponse\"\x00\x12\x61\n\x14LoadBalanceAfterJoin\x12\".chord.LoadBalanceAfterJoinRequest\x1a#.chord.LoadBalanceAfterJoinResponse\"\x00\x12g\n\x16LoadBalanceAfterDepart\x12$.chord.LoadBalanceAfterDepartRequest\x1a%.chord.LoadBalanceAfterDepartResponse\"\x00\x12=\n\x08QueryAll\x12\x16.chord.QueryAllRequest\x1a\x17.chord.QueryAllResponse\"\x00\x12\x43\n\nOverlayAll\x12\x18.chord.OverlayAllRequest\x1a\x19.chord.OverlayAllResponse\"\x00\x12@\n\tReplicate\x12\x17.chord.ReplicateRequest\x1a\x18.chord.ReplicateResponse\"\x00\x12\x61\n\x14QueryLinearizability\x12\".chord.QueryLinearizabilityRequest\x1a#.chord.QueryLinearizabilityResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x13node_services.proto\x12\x05\x63hord\"\"\n\x14\x46indSuccessorRequest\x12\n\n\x02id\x18\x01 \x01(\x04\"=\n\x15\x46indSuccessorResponse\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\"H\n\rNotifyRequest\x12\n\n\x02id\x18\x01 \x01(\x04\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x0c\n\x04port\x18\x03 \x01(\r\x12\x11\n\tneighboor\x18\x04 \x01(\t\"*\n\x0eNotifyResponse\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\r\".\n\x04Pair\x12\x11\n\tkey_entry\x18\x01 \x01(\t\x12\x13\n\x0bvalue_entry\x18\x02 \x01(\t\")\n\x1bLoadBalanceAfterJoinRequest\x12\n\n\x02id\x18\x01 \x01(\x04\":\n\x1cLoadBalanceAfterJoinResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\";\n\x1dLoadBalanceAfterDepartRequest\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"-\n\x1eLoadBalanceAfterDepartResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"\x1d\n\x0fQueryAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\".\n\x10QueryAllResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"\x1f\n\x11OverlayAllRequest\x12\n\n\x02id\x18\x01 \x01(\x04\"!\n\x12OverlayAllResponse\x12\x0b\n\x03ids\x18\x01 \x03(\x04\":\n\x10ReplicateRequest\x12\t\n\x01k\x18\x01 \x01(\r\x12\x0c\n\x04song\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\t\" \n\x11ReplicateResponse\x12\x0b\n\x03msg\x18\x01 \x01(\t\"*\n\x1bQueryLinearizabilityRequest\x12\x0b\n\x03key\x18\x01 \x01(\t\":\n\x1cQueryLinearizabilityResponse\x12\x1a\n\x05pairs\x18\x01 \x03(\x0b\x32\x0b.chord.Pair\"\x1b\n\rLookupRequest\x12\n\n\x02id\x18\x01 \x01(\x04\"*\n\x0eLookupResponse\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\r\"%\n\x15LookupReplicasRequest\x12\x0c\n\x04song\x18\x01 \x01(\t\"2\n\x16LookupReplicasResponse\x12\n\n\x02ip\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\r2\x93\x06\n\x0bNodeService\x12L\n\rFindSuccessor\x12\x1b.chord.FindSuccessorRequest\x1a\x1c.chord.FindSuccessorResponse\"\x00\x12\x37\n\x06Notify\x12\x14.chord.NotifyRequest\x1a\x15.chord.NotifyResponse\"\x00\x12\x61\n\x14LoadBalanceAfterJoin\x12\".chord.LoadBalanceAfterJoinRequest\x1a#.chord.LoadBalanceAfterJoinResponse\"\x00\x12g\n\x16LoadBalanceAfterDepart\x12$.chord.LoadBalanceAfterDepartRequest\x1a%.chord.LoadBalanceAfterDepartResponse\"\x00\x12=\n\x08QueryAll\x12\x16.chord.QueryAllRequest\x1a\x17.chord.QueryAllResponse\"\x00\x12\x43\n\nOverlayAll\x12\x18.chord.OverlayAllRequest\x1a\x19.chord.OverlayAllResponse\"\x00\x12@\n\tReplicate\x12\x17.chord.ReplicateRequest\x1a\x18.chord.ReplicateResponse\"\x00\x12\x61\n\x14QueryLinearizability\x12\".chord.QueryLinearizabilityRequest\x1a#.chord.QueryLinearizabilityResponse\"\x00\x12\x37\n\x06Lookup\x12\x14.chord.LookupRequest\x1a\x15.chord.LookupResponse\"\x00\x12O\n\x0eLookupReplicas\x12\x1c.chord.LookupReplicasRequest\x1a\x1d.chord.LookupReplicasResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -40,20 +40,6 @@ _FINDSUCCESSORREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='ip', full_name='chord.FindSuccessorRequest.ip', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"".decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
-    _descriptor.FieldDescriptor(
-      name='port', full_name='chord.FindSuccessorRequest.port', index=2,
-      number=3, type=13, cpp_type=3, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -67,7 +53,7 @@ _FINDSUCCESSORREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=30,
-  serialized_end=90,
+  serialized_end=64,
 )
 
 
@@ -112,8 +98,8 @@ _FINDSUCCESSORRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=92,
-  serialized_end=153,
+  serialized_start=66,
+  serialized_end=127,
 )
 
 
@@ -165,8 +151,8 @@ _NOTIFYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=155,
-  serialized_end=227,
+  serialized_start=129,
+  serialized_end=201,
 )
 
 
@@ -204,8 +190,8 @@ _NOTIFYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=229,
-  serialized_end=271,
+  serialized_start=203,
+  serialized_end=245,
 )
 
 
@@ -243,8 +229,8 @@ _PAIR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=273,
-  serialized_end=319,
+  serialized_start=247,
+  serialized_end=293,
 )
 
 
@@ -275,8 +261,8 @@ _LOADBALANCEAFTERJOINREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=321,
-  serialized_end=362,
+  serialized_start=295,
+  serialized_end=336,
 )
 
 
@@ -307,8 +293,8 @@ _LOADBALANCEAFTERJOINRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=364,
-  serialized_end=422,
+  serialized_start=338,
+  serialized_end=396,
 )
 
 
@@ -339,8 +325,8 @@ _LOADBALANCEAFTERDEPARTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=424,
-  serialized_end=483,
+  serialized_start=398,
+  serialized_end=457,
 )
 
 
@@ -371,8 +357,8 @@ _LOADBALANCEAFTERDEPARTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=485,
-  serialized_end=530,
+  serialized_start=459,
+  serialized_end=504,
 )
 
 
@@ -403,8 +389,8 @@ _QUERYALLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=532,
-  serialized_end=561,
+  serialized_start=506,
+  serialized_end=535,
 )
 
 
@@ -435,8 +421,8 @@ _QUERYALLRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=563,
-  serialized_end=609,
+  serialized_start=537,
+  serialized_end=583,
 )
 
 
@@ -467,8 +453,8 @@ _OVERLAYALLREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=611,
-  serialized_end=642,
+  serialized_start=585,
+  serialized_end=616,
 )
 
 
@@ -499,8 +485,8 @@ _OVERLAYALLRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=644,
-  serialized_end=677,
+  serialized_start=618,
+  serialized_end=651,
 )
 
 
@@ -545,8 +531,8 @@ _REPLICATEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=679,
-  serialized_end=737,
+  serialized_start=653,
+  serialized_end=711,
 )
 
 
@@ -577,8 +563,8 @@ _REPLICATERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=739,
-  serialized_end=771,
+  serialized_start=713,
+  serialized_end=745,
 )
 
 
@@ -609,8 +595,8 @@ _QUERYLINEARIZABILITYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=773,
-  serialized_end=815,
+  serialized_start=747,
+  serialized_end=789,
 )
 
 
@@ -641,8 +627,150 @@ _QUERYLINEARIZABILITYRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=817,
-  serialized_end=875,
+  serialized_start=791,
+  serialized_end=849,
+)
+
+
+_LOOKUPREQUEST = _descriptor.Descriptor(
+  name='LookupRequest',
+  full_name='chord.LookupRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='chord.LookupRequest.id', index=0,
+      number=1, type=4, cpp_type=4, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=851,
+  serialized_end=878,
+)
+
+
+_LOOKUPRESPONSE = _descriptor.Descriptor(
+  name='LookupResponse',
+  full_name='chord.LookupResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ip', full_name='chord.LookupResponse.ip', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='port', full_name='chord.LookupResponse.port', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=880,
+  serialized_end=922,
+)
+
+
+_LOOKUPREPLICASREQUEST = _descriptor.Descriptor(
+  name='LookupReplicasRequest',
+  full_name='chord.LookupReplicasRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='song', full_name='chord.LookupReplicasRequest.song', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=924,
+  serialized_end=961,
+)
+
+
+_LOOKUPREPLICASRESPONSE = _descriptor.Descriptor(
+  name='LookupReplicasResponse',
+  full_name='chord.LookupReplicasResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='ip', full_name='chord.LookupReplicasResponse.ip', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='port', full_name='chord.LookupReplicasResponse.port', index=1,
+      number=2, type=13, cpp_type=3, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=963,
+  serialized_end=1013,
 )
 
 _LOADBALANCEAFTERJOINRESPONSE.fields_by_name['pairs'].message_type = _PAIR
@@ -666,6 +794,10 @@ DESCRIPTOR.message_types_by_name['ReplicateRequest'] = _REPLICATEREQUEST
 DESCRIPTOR.message_types_by_name['ReplicateResponse'] = _REPLICATERESPONSE
 DESCRIPTOR.message_types_by_name['QueryLinearizabilityRequest'] = _QUERYLINEARIZABILITYREQUEST
 DESCRIPTOR.message_types_by_name['QueryLinearizabilityResponse'] = _QUERYLINEARIZABILITYRESPONSE
+DESCRIPTOR.message_types_by_name['LookupRequest'] = _LOOKUPREQUEST
+DESCRIPTOR.message_types_by_name['LookupResponse'] = _LOOKUPRESPONSE
+DESCRIPTOR.message_types_by_name['LookupReplicasRequest'] = _LOOKUPREPLICASREQUEST
+DESCRIPTOR.message_types_by_name['LookupReplicasResponse'] = _LOOKUPREPLICASRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 FindSuccessorRequest = _reflection.GeneratedProtocolMessageType('FindSuccessorRequest', (_message.Message,), {
@@ -787,6 +919,34 @@ QueryLinearizabilityResponse = _reflection.GeneratedProtocolMessageType('QueryLi
   })
 _sym_db.RegisterMessage(QueryLinearizabilityResponse)
 
+LookupRequest = _reflection.GeneratedProtocolMessageType('LookupRequest', (_message.Message,), {
+  'DESCRIPTOR' : _LOOKUPREQUEST,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.LookupRequest)
+  })
+_sym_db.RegisterMessage(LookupRequest)
+
+LookupResponse = _reflection.GeneratedProtocolMessageType('LookupResponse', (_message.Message,), {
+  'DESCRIPTOR' : _LOOKUPRESPONSE,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.LookupResponse)
+  })
+_sym_db.RegisterMessage(LookupResponse)
+
+LookupReplicasRequest = _reflection.GeneratedProtocolMessageType('LookupReplicasRequest', (_message.Message,), {
+  'DESCRIPTOR' : _LOOKUPREPLICASREQUEST,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.LookupReplicasRequest)
+  })
+_sym_db.RegisterMessage(LookupReplicasRequest)
+
+LookupReplicasResponse = _reflection.GeneratedProtocolMessageType('LookupReplicasResponse', (_message.Message,), {
+  'DESCRIPTOR' : _LOOKUPREPLICASRESPONSE,
+  '__module__' : 'node_services_pb2'
+  # @@protoc_insertion_point(class_scope:chord.LookupReplicasResponse)
+  })
+_sym_db.RegisterMessage(LookupReplicasResponse)
+
 
 
 _NODESERVICE = _descriptor.ServiceDescriptor(
@@ -796,8 +956,8 @@ _NODESERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=878,
-  serialized_end=1527,
+  serialized_start=1016,
+  serialized_end=1803,
   methods=[
   _descriptor.MethodDescriptor(
     name='FindSuccessor',
@@ -876,6 +1036,26 @@ _NODESERVICE = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_QUERYLINEARIZABILITYREQUEST,
     output_type=_QUERYLINEARIZABILITYRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Lookup',
+    full_name='chord.NodeService.Lookup',
+    index=8,
+    containing_service=None,
+    input_type=_LOOKUPREQUEST,
+    output_type=_LOOKUPRESPONSE,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='LookupReplicas',
+    full_name='chord.NodeService.LookupReplicas',
+    index=9,
+    containing_service=None,
+    input_type=_LOOKUPREPLICASREQUEST,
+    output_type=_LOOKUPREPLICASRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

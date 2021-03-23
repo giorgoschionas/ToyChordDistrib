@@ -1,8 +1,6 @@
-import grpc
 from services import chord_node
-from repositories import song_repository
 from utilities.network_utilities import Address
-
+from utilities.math_utilities import sha1
 from generated.node_services_pb2_grpc import NodeServiceServicer
 from generated.node_services_pb2 import *
 
@@ -13,9 +11,19 @@ class NodeServicer(NodeServiceServicer):
 
     def Lookup(self, request, context):
         if self.chordNode.isResponsible(request.id):
-            return self.chordNode
+            response = LookupResponse(ip=self.chordNode.address.ip, port=self.chordNode.address.port)
         else:
-            return self.chordNode.successor.nodeService.lookup(request.id)
+            response = self.chordNode.successor.nodeService.lookup(request.id)
+        return response
+
+    def LookupReplicas(self, request, context):
+        digest = sha1(request.song)
+        if self.chordNode.isResponsible(digest) or self.chordNode.songRepository.contains(request.song):
+            response = LookupResponse(ip=self.chordNode.address.ip, port=self.chordNode.address.port)
+        else:
+            response = self.chordNode.successor.nodeService.lookup(request.song)
+        return response
+
 
     def Notify(self, request, context):
         if request.neighboor == 'successor':

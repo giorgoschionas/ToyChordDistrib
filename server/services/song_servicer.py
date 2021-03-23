@@ -4,73 +4,73 @@ import grpc
 from utilities.math_utilities import sha1
 from generated.client_services_pb2_grpc import ClientServiceServicer
 from generated.client_services_pb2 import *
+from generated.node_services_pb2_grpc import NodeServiceStub
+from services.node_service import NodeService
 
 class SongServicer(ClientServiceServicer):
     def __init__(self, chordNode, k, strategy, shutdownServerEvent, shutdownServerEvent2):
         self.chordNode = chordNode
         self.replicationFactor = k
         self.strategy = strategy
-        self.replicationFactor = replicationFactor
         self._shutdownServerEvent = shutdownServerEvent
         self._shutdownServerEvent2 = shutdownServerEvent2
 
+    def _getService(self, address):
+        nodeChannel = grpc.insecure_channel(f'{address.ip}:{address.port + 1000}')
+        nodeStub = NodeServiceStub(nodeChannel)
+        nodeService = NodeService(nodeStub)
+        return nodeService
+
     def Insert(self, request, context):
         digest = sha1(request.song)
-        if self.chordNode.isResponsible(digest):
-            domainResponse = self.chordNode.songRepository.put(request.song, request.value)
-            if self.replicationFactor > 1:
-                self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
-                if self.strategy == 'L':
-                    self.chordNode.successor.nodeService.replicate(self.replicationFactor - 1, request.song, request.value)
-                else:
-                    task = threading.Thread(target=self.chordNode.successor.nodeService.replicate, args=(self.replicationFactor - 1, request.song, request.value,))
-                    task.start()
-            response = InsertResponse(response=domainResponse)
+        nodeAddress = self.chordNode.nodeService.lookup(digest)
+        nodeService = self._getService(nodeAddress)
+        self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
+        if self.strategy == 'L':
+            domainResponse = nodeService.replicate(self.replicationFactor, request.song, request.value)
         else:
-            response = self.chordNode.successor.songService.insert(request.song, request.value)
+            task = threading.Thread(target=nodeService.replicate, args=(self.replicationFactor, request.song, request.value,))
+            task.start()
+        domainResponse = 'Added'
+        response = InsertResponse(response=domainResponse)
         return response
     
     def Delete(self, request, context):
         digest = sha1(request.song)
-        if self.chordNode.isResponsible(digest):
-            domainResponse = self.chordNode.songRepository.put(request.song, '')
-            if self.replicationFactor > 1:
-                self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
-                if self.strategy == 'L':
-                    self.chordNode.successor.nodeService.replicate(self.replicationFactor - 1, request.song, None)
-                else:
-                    task = threading.Thread(target=self.chordNode.successor.nodeService.replicate, args=(self.replicationFactor - 1, request.song, None,))
-                    task.start()
-            response = DeleteResponse(response=domainResponse)
+        nodeAddress = self.chordNode.nodeService.lookup(digest)
+        nodeService = self._getService(nodeAddress)
+        self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
+        if self.strategy == 'L':
+            nodeService.replicate(self.replicationFactor, request.song, None)
         else:
-            response = self.chordNode.successor.songService.delete(request.song)
+            task = threading.Thread(target=nodeService.replicate, args=(self.replicationFactor, request.song, None,))
+            task.start()
+        domainResponse = 'Deleted'
+        response = DeleteResponse(response=domainResponse)
         return response
 
     def Query(self, request, context):
         if request.song != '*':
-            digest = sha1(request.song)
-            if self.chordNode.songRepository.contains(request.song) or self.chordNode.isResponsible(digest):
-                if self.strategy == 'L':
-                    queryLinearizabilityResponse = self.chordNode.nodeService.queryLinearizability(request.song)
-                    response = QueryResponse()
-                    for item in queryLinearizabilityResponse.pairs:
-                        pair = PairClient(key_entry = item.key_entry, value_entry = item.value_entry)
-                        response.pairs.append(pair)
-                elif self.strategy == 'E':
-                    domainResponse = self.chordNode.songRepository.getValue(request.song)
-                    self.chordNode.logger.debug(f"NODE {self.chordNode.id}: QUERY RESULT {domainResponse}")
-                    response = QueryResponse() 
-                    if domainResponse != '':
-                        pair = PairClient(key_entry = request.song, value_entry = domainResponse)
-                        response.pairs.append(pair)
-            else:
-                self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING query request to {self.chordNode.successor.id}")
-                response = self.chordNode.successor.songService.query(request.song)
+            nodeAddress = self.chordNode.lookupReplicas(request.song)
+            nodeService = self._getService(nodeAddress)
+            if self.strategy == 'L':
+                queryLinearizabilityResponse = nodeService.queryLinearizability(request.song)
+                response = QueryResponse()
+                for item in queryLinearizabilityResponse.pairs:
+                    pair = PairClient(key_entry = item.key_entry, value_entry = item.value_entry)
+                    response.pairs.append(pair)
+            elif self.strategy == 'E':
+                domainResponse = self.chordNode.songRepository.getValue(request.song)
+                self.chordNode.logger.debug(f"NODE {self.chordNode.id}: QUERY RESULT {domainResponse}")
+                response = QueryResponse() 
+                if domainResponse != '':
+                    pair = PairClient(key_entry = request.song, value_entry = domainResponse)
+                    response.pairs.append(pair)
             return response
         else:
             self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING query-all request to {self.chordNode.successor.id}")
             response = self.chordNode.successor.nodeService.queryAll(self.chordNode.id)
-                
+
             foo = QueryResponse()
             for item in response.pairs:
                 foo.pairs.append(PairClient(key_entry = item.key_entry, value_entry = item.value_entry))

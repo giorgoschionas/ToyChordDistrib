@@ -59,7 +59,7 @@ class ChordNode:
     def join(self, bootstrapAddress):
         with grpc.insecure_channel(f'{bootstrapAddress.ip}:{bootstrapAddress.port}') as bootstrapChannel:
             bootstrapNodeStub = NodeServiceStub(bootstrapChannel)
-            request = FindSuccessorRequest(id=self.id, ip=self.address.ip, port = self.address.port)
+            request = FindSuccessorRequest(id=self.id)
             response = bootstrapNodeStub.FindSuccessor(request)
         self.setSuccessor(Address(response.ip, response.port))
 

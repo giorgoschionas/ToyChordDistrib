@@ -11,7 +11,8 @@ service NodeService {
   rpc OverlayAll(OverlayAllRequest) returns (OverlayAllResponse){}
   rpc Replicate(ReplicateRequest) returns (ReplicateResponse) {}
   rpc QueryLinearizability(QueryLinearizabilityRequest) returns (QueryLinearizabilityResponse) {}
-  rpc Lookup(LookupRequest) returns (LookupResponse)
+  rpc Lookup(LookupRequest) returns (LookupResponse) {}
+  rpc LookupReplicas(LookupReplicasRequest) returns (LookupReplicasResponse) {}
 }
 
 message FindSuccessorRequest {
@@ -28,11 +29,11 @@ message NotifyRequest {
   uint64 id = 1;
   string ip = 2;
   uint32 port = 3;
-  string neighboor =4;
+  string neighboor = 4;
 }
 
 message NotifyResponse {
-  string ip =1;
+  string ip = 1;
   uint32 port = 2;
 }
 
@@ -97,5 +98,15 @@ message LookupRequest {
 }
 
 message LookupResponse {
-  
+  string ip = 1;
+  uint32 port = 2;
+}
+
+message LookupReplicasRequest {
+  string song = 1;
+}
+
+message LookupReplicasResponse {
+  string ip = 1;
+  uint32 port = 2;
 }

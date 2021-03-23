@@ -54,6 +54,16 @@ class NodeServiceStub(object):
                 request_serializer=node__services__pb2.QueryLinearizabilityRequest.SerializeToString,
                 response_deserializer=node__services__pb2.QueryLinearizabilityResponse.FromString,
                 )
+        self.Lookup = channel.unary_unary(
+                '/chord.NodeService/Lookup',
+                request_serializer=node__services__pb2.LookupRequest.SerializeToString,
+                response_deserializer=node__services__pb2.LookupResponse.FromString,
+                )
+        self.LookupReplicas = channel.unary_unary(
+                '/chord.NodeService/LookupReplicas',
+                request_serializer=node__services__pb2.LookupReplicasRequest.SerializeToString,
+                response_deserializer=node__services__pb2.LookupReplicasResponse.FromString,
+                )
 
 
 class NodeServiceServicer(object):
@@ -107,6 +117,18 @@ class NodeServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Lookup(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def LookupReplicas(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_NodeServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -149,6 +171,16 @@ def add_NodeServiceServicer_to_server(servicer, server):
                     servicer.QueryLinearizability,
                     request_deserializer=node__services__pb2.QueryLinearizabilityRequest.FromString,
                     response_serializer=node__services__pb2.QueryLinearizabilityResponse.SerializeToString,
+            ),
+            'Lookup': grpc.unary_unary_rpc_method_handler(
+                    servicer.Lookup,
+                    request_deserializer=node__services__pb2.LookupRequest.FromString,
+                    response_serializer=node__services__pb2.LookupResponse.SerializeToString,
+            ),
+            'LookupReplicas': grpc.unary_unary_rpc_method_handler(
+                    servicer.LookupReplicas,
+                    request_deserializer=node__services__pb2.LookupReplicasRequest.FromString,
+                    response_serializer=node__services__pb2.LookupReplicasResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -293,5 +325,39 @@ class NodeService(object):
         return grpc.experimental.unary_unary(request, target, '/chord.NodeService/QueryLinearizability',
             node__services__pb2.QueryLinearizabilityRequest.SerializeToString,
             node__services__pb2.QueryLinearizabilityResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Lookup(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.NodeService/Lookup',
+            node__services__pb2.LookupRequest.SerializeToString,
+            node__services__pb2.LookupResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def LookupReplicas(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/chord.NodeService/LookupReplicas',
+            node__services__pb2.LookupReplicasRequest.SerializeToString,
+            node__services__pb2.LookupReplicasResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
