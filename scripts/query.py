@@ -18,7 +18,7 @@ class Address:
         self.ip = ip
         self.port = port
 
-addrs = [Address(ip,port) for ip,port in zip(ips,ports)]
+addresses = [Address(ip,port) for ip,port in zip(ips,ports)]
 
 filename = sys.argv[1]
 
@@ -27,7 +27,7 @@ start = time.time()
 with open(filename, 'r') as csvfile:
     csvreader = csv.reader(csvfile)
     for row in csvreader:
-        rand_addr = random.choice(addrs)
+        rand_addr = random.choice(addresses)
         list_files = subprocess.run(["chordy", f"--ip={rand_addr.ip}", f'--port={rand_addr.port}', 'query', f'-k={row[0]}'])
 
 end = time.time()

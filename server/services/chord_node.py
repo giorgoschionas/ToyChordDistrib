@@ -2,6 +2,8 @@ import logging
 import grpc     
 import hashlib
 import logging
+from utilities.math_utilities import sha1, between
+from utilities.network_utilities import Address
 
 from generated.client_services_pb2 import *
 from generated.client_services_pb2_grpc import ClientServiceStub
@@ -9,21 +11,6 @@ from generated.node_services_pb2 import *
 from generated.node_services_pb2_grpc import NodeServiceStub
 from .song_service import SongService
 from .node_service import NodeService
-
-def sha1(msg):
-    digest = hashlib.sha1(msg.encode())
-    hex_digest= digest.hexdigest()
-    return int(hex_digest, 16) % 65536
-
-class Address:
-    def __init__(self, ip, port):
-        self.ip = ip
-        self.port = port
-    
-    def __eq__(self, other):
-        if not isinstance(other, Address):
-            return NotImplemented
-        return self.ip == other.ip and self.port == other.port
 
 class NeigboorInfo:
     def __init__(self, address):
@@ -89,19 +76,7 @@ class ChordNode:
         notifyPredecessorResponse = self.predecessor.nodeService.notify(self.id, self.address, 'predecessor')
  
     def isResponsible(self, id):
-        return self.between(self.predecessor.id, id, self.id)
+        return between(self.predecessor.id, id, self.id)
 
     def isBootstrap(self):
         return self.id == self.successor.id
-
-    def between(self, n1, n2, n3):
-        # TODO: added corner case when id == -1
-        if n2 == -1:
-            return False
-        if n1 == -1:
-            return True
-        # Since it's a circle if n1=n3 then n2 is between
-        if n1 < n3:
-            return n1 < n2 < n3
-        else:
-            return n1 < n2 or n2 < n3
