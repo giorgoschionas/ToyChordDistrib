@@ -1,6 +1,5 @@
 import sys
 import logging
-import signal
 import threading
 
 from generated import node_services_pb2_grpc, node_services_pb2, client_services_pb2_grpc, client_services_pb2
@@ -12,16 +11,9 @@ from utilities.math_utilities import sha1
 from utilities.network_utilities import Address
 
 log = logging.getLogger()
-run = 1
 
 def main(argv):
     # TODO: Find ip from os
-    def handler(sig, frame):
-        global run
-        run = 0
-
-    signal.signal(signal.SIGTERM, handler)
-    signal.signal(signal.SIGINT, handler)
 
     if len(argv) < 4 or len(argv) > 5:
         print('Usage: main.py [ip] [port] [k] {strategy}')
@@ -36,7 +28,7 @@ def main(argv):
     else:
         strategy = 'E'
 
-    BOOTSTRAP_ADDRESS = Address('localhost', 2024)
+    BOOTSTRAP_ADDRESS = Address('[2001:648:2ffe:501:cc00:10ff:fead:aa9c]', 2024)
 
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
@@ -65,16 +57,6 @@ def main(argv):
     t2 = threading.Thread(target=songServer.run)
     t2.start()
     threads.append(t2)
-
-    while run and not songServer.shutdownServerEvent.is_set():
-        for t in threads:
-            if not t.is_alive():
-                print("C")
-                t.join()
-
-    if not songServer.shutdownServerEvent.is_set():
-        songServer.shutdownServerEvent.set()
-        nodeServer.shutdownServerEvent.set()
 
     for t in threads:
         t.join()
