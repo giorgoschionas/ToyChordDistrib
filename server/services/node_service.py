@@ -40,6 +40,6 @@ class NodeService:
         request = QueryAllRequest(id=id)
         return self.stub.QueryAll(request)
 
-    def queryLinearizability(key):
+    def queryLinearizability(self, key):
         request = QueryLinearizabilityRequest(key=key)
         return self.stub.QueryLinearizability(request)

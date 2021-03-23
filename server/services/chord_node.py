@@ -2,7 +2,8 @@ import logging
 import grpc     
 import hashlib
 import logging
-from concurrent import futures                                                             
+from utilities.math_utilities import sha1, between
+from utilities.network_utilities import Address
 
 from generated.client_services_pb2 import *
 from generated.client_services_pb2_grpc import ClientServiceStub
@@ -11,32 +12,32 @@ from generated.node_services_pb2_grpc import NodeServiceStub
 from .song_service import SongService
 from .node_service import NodeService
 
-def sha1(msg):
-    digest = hashlib.sha1(msg.encode())
-    hex_digest= digest.hexdigest()
-    return int(hex_digest, 16) % 65536
-
-class Address:
-    def __init__(self, ip, port):
-        self.ip = ip
-        self.port = port
-    
-    def __eq__(self, other):
-        if not isinstance(other, Address):
-            return NotImplemented
-        return self.ip == other.ip and self.port == other.port
+class NeigboorInfo:
+    def __init__(self, address):
+        self.id = sha1(f'{address.ip}:{address.port}')
+        self.address = address
+        self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
+        self._channel2 = grpc.insecure_channel(f'{self.address.ip}:{self.address.port + 1000}')
+        self._songStub = ClientServiceStub(self._channel)
+        self.songService = SongService(self._songStub)
+        self._nodeStub = NodeServiceStub(self._channel2)
+        self.nodeService = NodeService(self._nodeStub)
 
 class ChordNode:
-    def __init__(self, address):
+    def __init__(self, address, songRepository):
         self.id = sha1(f'{address.ip}:{address.port}')
         self.address = address
         self.successor = None
         self.predecessor = None
+        self.songRepository = songRepository
+        self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
+        self._channel2 = grpc.insecure_channel(f'{self.address.ip}:{self.address.port + 1000}')
+        self._songStub = ClientServiceStub(self._channel)
+        self.songService = SongService(self._songStub)
+        self._nodeStub = NodeServiceStub(self._channel2)
+        self.nodeService = NodeService(self._nodeStub)
         self.logger = logging.getLogger('node')
         self.logger.debug(f'NODE ID: {self.id}')     
-        self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
-        self._nodeStub = NodeServiceStub(self._channel)
-        self.nodeService = NodeService(self._nodeStub)
 
     def setPredecessor(self, predecessorAddress):
         if self.predecessor != None:
@@ -75,36 +76,8 @@ class ChordNode:
         else:
             return self.successor.lookup(id)
 
- 
     def isResponsible(self, id):
-        return self.between(self.predecessor.id, id, self.id)
+        return between(self.predecessor.id, id, self.id)
 
     def isBootstrap(self):
         return self.id == self.successor.id
-
-    def between(self, n1, n2, n3):
-        # TODO: added corner case when id == -1
-        if n2 == -1:
-            return False
-        if n1 == -1:
-            return True
-        # Since it's a circle if n1=n3 then n2 is between
-        if n1 < n3:
-            return n1 < n2 < n3
-        else:
-            return n1 < n2 or n2 < n3
-
-
-class ExtendedChordNode(ChordNode):
-    def __init__(self, address, songRepository):
-        super().__init__(address)
-        self.songRepository = songRepository
-
-
-    def join(bootstrapAddress):
-        super().join(bootstrapAddress)
-        
-        # Load Balance: transfer entries from successor of new node to new node
-        loadBalanceResponse = self.successor.nodeService.loadBalance(self.id)
-        for item in loadBalanceResponse.pairs:
-            self.songRepository.addSong(item.key_entry, item.value_entry)

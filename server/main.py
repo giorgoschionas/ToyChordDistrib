@@ -1,26 +1,27 @@
 import sys
-import os
 import logging
-import hashlib
-import grpc  
-from concurrent import futures
+import signal
+import threading
 
 from generated import node_services_pb2_grpc, node_services_pb2, client_services_pb2_grpc, client_services_pb2
 from repositories.song_repository import SongRepository
 from database.database import Database
 from services import chord_node, song_servicer, node_servicer
 from grpc_server import GrpcServer
+from utilities.math_utilities import sha1
+from utilities.network_utilities import Address
 
 log = logging.getLogger()
-
-def sha1(message):
-    digest = hashlib.sha1(message.encode())
-    hex_digest= digest.hexdigest()
-    return int(hex_digest, 16) % 65536
+run = 1
 
 def main(argv):
     # TODO: Find ip from os
-    # TODO: Get port from args DONE 
+    def handler(sig, frame):
+        global run
+        run = 0
+
+    signal.signal(signal.SIGTERM, handler)
+    signal.signal(signal.SIGINT, handler)
 
     if len(argv) < 4 or len(argv) > 5:
         print('Usage: main.py [ip] [port] [k] {strategy}')
@@ -35,27 +36,49 @@ def main(argv):
     else:
         strategy = 'E'
 
-    BOOTSTRAP_ADDRESS = chord_node.Address('localhost', 1024)
+    BOOTSTRAP_ADDRESS = Address('localhost', 2024)
 
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
     
-    address = chord_node.Address(ip, port)
-    newNode = chord_node.ExtendedChordNode(address, songRepository)
+    address = Address(ip, port)
+    newNode = chord_node.ChordNode(address, songRepository)
     nodeServicer = node_servicer.NodeServicer(newNode)
 
-    if address == BOOTSTRAP_ADDRESS:
+    if address.port == BOOTSTRAP_ADDRESS.port - 1000: 
         newNode.createTopology()
     else:
         newNode.join(BOOTSTRAP_ADDRESS)
 
-    nodeServer = GrpcServer(ip, port, maxWorkers=10)
-    songServicer = song_servicer.SongServicer(newNode, strategy, k, nodeServer.shutdownServerEvent)
+    nodeServer = GrpcServer(ip, port + 1000, 100)
     nodeServer.addServicer(nodeServicer, node_services_pb2_grpc.add_NodeServiceServicer_to_server)
-    nodeServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
-    nodeServer.run()
-
     
+    songServer = GrpcServer(ip, port, 100)
+    songServicer = song_servicer.SongServicer(newNode, k, strategy, songServer.shutdownServerEvent, nodeServer.shutdownServerEvent)
+    songServer.addServicer(songServicer, client_services_pb2_grpc.add_ClientServiceServicer_to_server)
+
+    threads = list()
+    t1 = threading.Thread(target=nodeServer.run)
+    t1.start()
+    threads.append(t1)
+
+    t2 = threading.Thread(target=songServer.run)
+    t2.start()
+    threads.append(t2)
+
+    while run and not songServer.shutdownServerEvent.is_set():
+        for t in threads:
+            if not t.is_alive():
+                print("C")
+                t.join()
+
+    if not songServer.shutdownServerEvent.is_set():
+        songServer.shutdownServerEvent.set()
+        nodeServer.shutdownServerEvent.set()
+
+    for t in threads:
+        t.join()
+
 def setupLogging():
     # only cofnigure logger if script is main module
     # configuring logger in multiple places is bad

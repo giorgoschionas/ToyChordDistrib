@@ -1,6 +1,7 @@
 import grpc
 from services import chord_node
 from repositories import song_repository
+from utilities.network_utilities import Address
 
 from generated.node_services_pb2_grpc import NodeServiceServicer
 from generated.node_services_pb2 import *
@@ -19,11 +20,11 @@ class NodeServicer(NodeServiceServicer):
     def Notify(self, request, context):
         if request.neighboor == 'successor':
             tempAddr = self.chordNode.predecessor.address
-            self.chordNode.setPredecessor(chord_node.Address(request.ip,request.port))
+            self.chordNode.setPredecessor(Address(request.ip,request.port))
             return NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
         else:
             tempAddr = self.chordNode.successor.address
-            self.chordNode.setSuccessor(chord_node.Address(request.ip, request.port))
+            self.chordNode.setSuccessor(Address(request.ip, request.port))
             return NotifyResponse(ip = tempAddr.ip, port = tempAddr.port)
 
     def LoadBalanceAfterJoin(self, request, context):
@@ -76,12 +77,11 @@ class NodeServicer(NodeServiceServicer):
         return response
 
     def Replicate(self, request, context):
-        self.chordNode.logger.debug(f'NODE {self.chordNode.id}: REPLICATING song({request.song}) to node({self.chordNode.id})')
-        self.chordNode.songRepository.put(request.song, request.value)
-        if request.k <= 2:
+        if request.k == 0:
             self.chordNode.logger.debug(f"NODE {self.chordNode.id}: REPLICATE FINISHED")
             response = ReplicateResponse(msg='Successfully replicated entry')
         else:
+            self.chordNode.songRepository.put(request.song, request.value)
             self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING replicate request to {self.chordNode.successor.id}")
             response = self.chordNode.successor.nodeService.replicate(request.k - 1, request.song, request.value)
         return response

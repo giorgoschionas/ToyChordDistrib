@@ -1,18 +1,7 @@
 import logging
 
+from utilities.math_utilities import between
 from database import database
-
-def between(n1, n2, n3):
-    # TODO: added corner case when id == -1
-    if n2 == -1:
-        return False
-    if n1 == -1:
-        return True
-    # Since it's a circle if n1=n3 then n2 is between
-    if n1 < n3:
-        return n1 < n2 < n3
-    else:
-        return n1 < n2 or n2 < n3
 
 class SongRepository:
     def __init__(self, database, hashFunction):
