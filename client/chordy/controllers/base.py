@@ -85,7 +85,7 @@ class Base(Controller):
         with grpc.insecure_channel(f'{self.app.pargs.ip}:{self.app.pargs.port}') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Insert(client_services_pb2.InsertRequest(song=key, value=value))
-            # self.app.log.info(f'Result: song {key} with value {value} was {response.response}')
+            print(f'Result: song {key} with value {value} was {response.response}')
 
     @ex(help='Query a song from the network',
         # sub-command level arguments. ex: 'chordy command1 --foo bar'
@@ -103,19 +103,19 @@ class Base(Controller):
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Query(client_services_pb2.QueryRequest(song=key))
 
-            # if len(response.pairs) == 0:
-            #     self.app.log.info(f'Result: song {key} not found')
-            # else:
-            #     output = []
-            #     headers = ['KEY', 'VALUE']
-            #     for item in response.pairs:
+            if len(response.pairs) == 0:
+                print(f'Result: song {key} not found')
+            else:
+                output = []
+                headers = ['KEY', 'VALUE']
+                for item in response.pairs:
                     
-            #         item_list = []
-            #         item_list.append(item.key_entry)
-            #         item_list.append(item.value_entry)
-            #         output.append(item_list)
+                    item_list = []
+                    item_list.append(item.key_entry)
+                    item_list.append(item.value_entry)
+                    output.append(item_list)
 
-            #     self.app.render(output, headers=headers)
+                self.app.render(output, headers=headers)
 
     @ex(help='Delete a song from the network',
         # sub-command level arguments. ex: 'chordy command1 --foo bar'
@@ -132,20 +132,20 @@ class Base(Controller):
         with grpc.insecure_channel(f'{self.app.pargs.ip}:{self.app.pargs.port}') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Delete(client_services_pb2.DeleteRequest(song=key))
-            self.app.log.info(f'Result: song {key} {response.response}')
+            print(f'Result: song {key} {response.response}')
 
     @ex(help='Display the topology of the network')
     def overlay(self):
         with grpc.insecure_channel(f'{self.app.pargs.ip}:{self.app.pargs.port}') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Overlay(client_services_pb2.OverlayRequest())
-            self.app.log.info('Chord Network topology')
+            print('Chord Network topology')
             for item in response.ids:
-                self.app.log.info(f'Node id: {item}')
+                print(f'Node id: {item}')
 
     @ex(help='Leave the chord network')
     def depart(self):
         with grpc.insecure_channel(f'{self.app.pargs.ip}:{self.app.pargs.port}') as channel:
             stub = client_services_pb2_grpc.ClientServiceStub(channel)
             response = stub.Depart(client_services_pb2.DepartRequest())
-            self.app.log.info(f'Result: node departed from chord network')
+            print(f'Result: node departed from chord network')
