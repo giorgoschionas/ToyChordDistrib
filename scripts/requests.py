@@ -19,11 +19,7 @@ ips = [
 '192.168.0.6', '192.168.0.6'
 ]
 
-ips = ['localhost', 'localhost', 'localhost', 'localhost', 'localhost', 'localhost', 'localhost', 'localhost', 'localhost', 'localhost',]
 ports = [1024,1025,1026,1027,1028,1029,1030,1031,1032,1033]
-
-ips = ['localhost']
-ports = [1024]
 
 class Address:
     def __init__(self, ip, port):
