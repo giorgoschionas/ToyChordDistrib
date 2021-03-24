@@ -5,14 +5,14 @@ clean:
 
 virtualenv:
 	virtualenv --prompt '|> chordy <| ' env
-	env/Scripts/pip install -r requirements-dev.txt
-	env/Scripts/python setup.py develop
+	env/bin/pip install -r requirements-dev.txt
+	env/bin/python setup.py develop
 	@echo
 	@echo "VirtualENV Setup Complete. Now run: source env/bin/activate"
 	@echo
 
 test:
-	python -m pytest \
+	python3 -m pytest \
 		-v \
 		--cov=chordy \
 		--cov-report=term \
@@ -24,8 +24,8 @@ docker: clean
 
 dist: clean
 	rm -rf dist/*
-	python setup.py sdist
-	python setup.py bdist_wheel
+	python3 setup.py sdist
+	python3 setup.py bdist_wheel
 
 dist-upload:
 	twine upload dist/*
