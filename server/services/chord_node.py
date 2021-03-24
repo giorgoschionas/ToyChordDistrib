@@ -10,29 +10,17 @@ from generated.node_services_pb2_grpc import NodeServiceStub
 from .song_service import SongService
 from .node_service import NodeService
 
-class NeigboorInfo:
-    def __init__(self, address):
-        self.id = sha1(f'{address.ip}:{address.port}')
-        self.address = address
-        self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
-        self._channel2 = grpc.insecure_channel(f'{self.address.ip}:{self.address.port + 1000}')
-        self._songStub = ClientServiceStub(self._channel)
-        self.songService = SongService(self._songStub)
-        self._nodeStub = NodeServiceStub(self._channel2)
-        self.nodeService = NodeService(self._nodeStub)
-
 class ChordNode:
-    def __init__(self, address, songRepository):
+    def __init__(self, address):
         self.id = sha1(f'{address.ip}:{address.port}')
         self.address = address
         self.successor = None
         self.predecessor = None
-        self.songRepository = songRepository
         self._channel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port}')
-        self._channel2 = grpc.insecure_channel(f'{self.address.ip}:{self.address.port + 1000}')
         self._songStub = ClientServiceStub(self._channel)
         self.songService = SongService(self._songStub)
-        self._nodeStub = NodeServiceStub(self._channel2)
+        self._nodeChannel = grpc.insecure_channel(f'{self.address.ip}:{self.address.port + 1000}')
+        self._nodeStub = NodeServiceStub(self._nodeChannel)
         self.nodeService = NodeService(self._nodeStub)
         self.logger = logging.getLogger('node')
         self.logger.debug(f'NODE ID: {self.id}')     
@@ -40,13 +28,15 @@ class ChordNode:
     def setPredecessor(self, predecessorAddress):
         if self.predecessor != None:
             self.predecessor._channel.close()
-        self.predecessor = NeigboorInfo(predecessorAddress)
+            self.predecessor._nodeChannel.close()
+        self.predecessor = ChordNode(predecessorAddress)
         self.logger.debug(f'NODE {self.id}: PREDECESSOR {self.predecessor.id}')        
 
     def setSuccessor(self, successorAddress):
         if self.successor != None:
             self.successor._channel.close()
-        self.successor = NeigboorInfo(successorAddress)
+            self.successor._nodeChannel.close()
+        self.successor = ChordNode(successorAddress)
         self.logger.debug(f'NODE {self.id}: SUCCESSOR {self.successor.id}')
 
     def createTopology(self):
@@ -78,3 +68,9 @@ class ChordNode:
 
     def isBootstrap(self):
         return self.id == self.successor.id
+
+
+class ExtendedChordNode(ChordNode):
+    def __init__(self, address, songRepository):
+        super().__init__(address)
+        self.songRepository = songRepository

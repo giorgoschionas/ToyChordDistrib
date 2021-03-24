@@ -28,13 +28,13 @@ def main(argv):
     else:
         strategy = 'E'
 
-    BOOTSTRAP_ADDRESS = Address('192.168.0.5', 2024)
+    BOOTSTRAP_ADDRESS = Address('localhost', 2024)
 
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
     
     address = Address(ip, port)
-    newNode = chord_node.ChordNode(address, songRepository)
+    newNode = chord_node.ExtendedChordNode(address, songRepository)
     nodeServicer = node_servicer.NodeServicer(newNode)
 
     if address.port == BOOTSTRAP_ADDRESS.port - 1000: 
@@ -66,7 +66,7 @@ def setupLogging():
     # configuring logger in multiple places is bad
     # only top-level module should configure logger
     if not len(log.handlers):
-        log.setLevel(logging.ERROR)
+        log.setLevel(logging.DEBUG)
         # create console handler with a higher log level
         ch = logging.StreamHandler()
         ch.setLevel(logging.DEBUG)
