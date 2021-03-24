@@ -28,7 +28,7 @@ def main(argv):
     else:
         strategy = 'E'
 
-    BOOTSTRAP_ADDRESS = Address('localhost', 2024)
+    BOOTSTRAP_ADDRESS = Address('192.168.0.5', 2024)
 
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)
