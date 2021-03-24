@@ -36,7 +36,7 @@ with open(filename, 'r') as csvfile:
     csvreader = csv.reader(csvfile)
     for row in csvreader:
         rand_addr = random.choice(addrs)
-        list_files = subprocess.run(["python3", ,"simple_client.py", "insert", f"{rand_addr.ip}", f'{rand_addr.port}', f'{row[0]}', f'{row[1]}'])
+        list_files = subprocess.run(["python3", "simple_client.py", "insert", f"{rand_addr.ip}", f'{rand_addr.port}', f'{row[0]}', f'{row[1]}'])
 
 end = time.time()
 print(end - start)

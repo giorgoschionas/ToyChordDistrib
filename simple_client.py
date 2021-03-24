@@ -1,7 +1,7 @@
 import sys 
 import grpc
-from client.generated.client_services_pb2_grpc import ClientServiceStub
-from client.generated.client_services_pb2 import *
+from client.chordy.generated.client_services_pb2_grpc import ClientServiceStub
+from client.chordy.generated.client_services_pb2 import *
 
 def main(argv):
     if argv[1] == 'insert':
@@ -12,8 +12,9 @@ def main(argv):
     elif argv[1] == 'query':
         with grpc.insecure_channel(f'{argv[2]}:{argv[3]}') as channel:
             stub = ClientServiceStub(channel)
-            response = stub.Insert(QueryRequest(song=argv[4]))
-            print(f'Result: song {argv[4]} was {response.pairs.value_entry}')
+            response = stub.Query(QueryRequest(song=argv[4]))
+            for item in response.pairs:
+                print(f'Result: song {argv[4]} was {item.value_entry}')
 
 if __name__ == "__main__":
     main(sys.argv)
