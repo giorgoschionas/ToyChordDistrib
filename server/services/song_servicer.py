@@ -22,6 +22,7 @@ class SongServicer(ClientServiceServicer):
                     self.chordNode.successor.nodeService.replicate(self.replicationFactor - 1, request.song, request.value)
                 else:
                     task = threading.Thread(target=self.chordNode.successor.nodeService.replicate, args=(self.replicationFactor - 1, request.song, request.value,))
+                    task.deamon = True
                     task.start()
             response = InsertResponse(response=domainResponse)
         else:

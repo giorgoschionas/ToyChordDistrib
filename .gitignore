@@ -140,5 +140,5 @@ dmypy.json
 
 .vscode
 
-config.yaml
-server/config.yaml
+./config.yaml
+./server/config.yaml
