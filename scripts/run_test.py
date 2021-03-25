@@ -54,7 +54,7 @@ def insertTestSimple(testFilename, addresses):
         csvReader = csv.reader(csvFile)
         for row in csvReader:
             randomAddress = random.choice(addresses)
-            result = subprocess.run(["python3", "client_simple/simple_client.py", "insert", f"{rand_addr.ip}", f'{rand_addr.port}', f'{row[0]}', f'{row[1]}'])
+            result = subprocess.run(["python3", "client_simple/simple_client.py", "insert", f"{randomAddress.ip}", f'{randomAddress.port}', f'{row[0]}', f'{row[1]}'])
     end = time.time()
     print(end - start)
     
@@ -65,7 +65,7 @@ def queryTestSimple(testFilename, addresses):
         csvReader = csv.reader(csvFile)
         for row in csvReader:
             randomAddress = random.choice(addresses)
-            result = subprocess.run(["python3", "client_simple/simple_client.py", "query", f"{rand_addr.ip}", f'{rand_addr.port}', f'{row[0]}'])
+            result = subprocess.run(["python3", "client_simple/simple_client.py", "query", f"{randomAddress.ip}", f'{randomAddress.port}', f'{row[0]}'])
     end = time.time()
     print(end - start)
 
@@ -76,9 +76,9 @@ def requestsTestSimple(testFilename, addresses):
         for row in csvReader:
             randomAddress = random.choice(addresses)
             if row[0] == 'insert':
-                result = subprocess.run(["python3", "client_simple/simple_client.py", "insert", f"{rand_addr.ip}", f'{rand_addr.port}', f'{row[0]}', f'{row[1]}']}'])
+                result = subprocess.run(["python3", "client_simple/simple_client.py", "insert", f"{randomAddress.ip}", f'{randomAddress.port}', f'{row[0]}', f'{row[1]}'])
             elif row[0] == 'query':
-                result = subprocess.run(["python3", "client_simple/simple_client.py", "query", f"{rand_addr.ip}", f'{rand_addr.port}', f'{row[0]}'])
+                result = subprocess.run(["python3", "client_simple/simple_client.py", "query", f"{randomAddress.ip}", f'{randomAddress.port}', f'{row[0]}'])
             else:
                 print("ERROR: Unknown command")
                 exit(0)
