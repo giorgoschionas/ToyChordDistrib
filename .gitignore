@@ -139,3 +139,6 @@ dmypy.json
 .prof
 
 .vscode
+
+config.yaml
+server/config.yaml
