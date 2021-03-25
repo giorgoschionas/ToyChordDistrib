@@ -5,7 +5,7 @@ SESSION="Server"
 SESSIONEXISTS=$(tmux list-sessions | grep $SESSION)
 
 PORT=$1
-if [ "$PORT" = "1024"]
+if [ "$PORT" -eq 1024 ]
 then
     IP=$(ifconfig eth2 | grep "inet " | awk '{print $2}')
 else
