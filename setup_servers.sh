@@ -17,6 +17,8 @@ then
     tmux rename-window -t 0 'Server1'
     tmux send-keys -t 'Server1' "python3 server/main.py $IP $PORT" C-m
 
+    sleep 1
+    
     # Create and setup pane for server 2
     tmux new-window -t $SESSION:1 -n 'Server2'
     tmux send-keys -t 'Server2' "python3 server/main.py $IP $((PORT + 1))" C-m
