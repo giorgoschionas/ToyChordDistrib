@@ -1,6 +1,7 @@
 import sys
 import logging
 import threading
+import yaml
 
 from generated import node_services_pb2_grpc, node_services_pb2, client_services_pb2_grpc, client_services_pb2
 from repositories.song_repository import SongRepository
@@ -13,22 +14,19 @@ from utilities.network_utilities import Address
 log = logging.getLogger()
 
 def main(argv):
-    # TODO: Find ip from os
-
-    if len(argv) < 4 or len(argv) > 5:
-        print('Usage: main.py [ip] [port] [k] {strategy}')
+    if len(argv) != 3:
+        print('Usage: main.py [ip] [port]')
         exit(0)
 
     ip = argv[1]
     port = int(argv[2])
-    k = int(argv[3])
 
-    if len(argv) == 5:
-        strategy = argv[4]
-    else:
-        strategy = 'E'
-
-    BOOTSTRAP_ADDRESS = Address('192.168.0.5', 2024)
+    CONFIG_PATH = "config.yaml"
+    config = yaml.safe_load(open(CONFIG_PATH))
+    serverOptions = serverConfig['options']
+    k = serverOptions['k']
+    strategy = serverOptions['strategy']
+    BOOTSTRAP_ADDRESS = Address(serverOptions['bootstrap']['ip'], serverOptions['bootstrap']['port'])
 
     db = Database()
     songRepository = SongRepository(db, hashFunction=sha1)

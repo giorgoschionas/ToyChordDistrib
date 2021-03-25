@@ -1,0 +1,70 @@
+test:
+  insert: 'data/insert.txt'
+  query: 'data/query.txt'
+  requests: 'data/requests.txt'
+
+remote_private_servers:
+  - ip: '[2001:648:2ffe:501:cc00:10ff:fead:aa9c]'
+    port: 1024
+  - ip: '[2001:648:2ffe:501:cc00:10ff:fead:aa9c]'
+    port: 1025
+  - ip: '[2001:648:2ffe:501:cc00:12ff:fe98:a535]'
+    port: 1026
+  - ip: '[2001:648:2ffe:501:cc00:12ff:fe98:a535]'
+    port: 1027
+  - ip: '[2001:648:2ffe:501:cc00:11ff:fe56:ca8d]'
+    port: 1028
+  - ip: '[2001:648:2ffe:501:cc00:11ff:fe56:ca8d]'
+    port: 1029
+  - ip: '[2001:648:2ffe:501:cc00:10ff:fe2e:3b6c]'
+    port: 1030
+  - ip: '[2001:648:2ffe:501:cc00:10ff:fe2e:3b6c]'
+    port: 1031
+  - ip: '[2001:648:2ffe:501:cc00:12ff:fe45:4cf9]'
+    port: 1032
+  - ip: '[2001:648:2ffe:501:cc00:12ff:fe45:4cf9]'
+    port: 1033
+
+remote_public_servers:
+  - ip: '192.168.0.5'
+    port: 1024
+  - ip: '192.168.0.5'
+    port: 1025
+  - ip: '192.168.0.1'
+    port: 1026
+  - ip: '192.168.0.1'
+    port: 1027
+  - ip: '192.168.0.3'
+    port: 1028
+  - ip: '192.168.0.3'
+    port: 1029
+  - ip: '192.168.0.6'
+    port: 1030
+  - ip: '192.168.0.6'
+    port: 1031
+  - ip: '192.168.0.4'
+    port: 1032
+  - ip: '192.168.0.4'
+    port: 1033
+
+local_servers:
+  - ip: 'localhost'
+    port: 1024
+  - ip: 'localhost'
+    port: 1025
+  - ip: 'localhost'
+    port: 1026
+  - ip: 'localhost'
+    port: 1027
+  - ip: 'localhost'
+    port: 1028
+  - ip: 'localhost'
+    port: 1029
+  - ip: 'localhost'
+    port: 1030
+  - ip: 'localhost'
+    port: 1031
+  - ip: 'localhost'
+    port: 1032
+  - ip: 'localhost'
+    port: 1033

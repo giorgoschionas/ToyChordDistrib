@@ -1,0 +1,6 @@
+options:
+  k: 3
+  strategy: 'E'
+  bootstrap: 
+    ip: 'localhost'
+    port: 2024
