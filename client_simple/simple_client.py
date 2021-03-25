@@ -19,8 +19,11 @@ def query(ip, port, key):
     with grpc.insecure_channel(f'{ip}:{port}') as channel:
         stub = ClientServiceStub(channel)
         response = stub.Query(QueryRequest(song=key))
-        for item in response.pairs:
-            print(f'Result: song {item.key_entry} was {item.value_entry}')
+        if len(response.pairs) == 0:
+            print(f'Result: song {key} not found')
+        else:
+            for item in response.pairs:
+                print(f'Result: song {item.key_entry} was {item.value_entry}')
 
 def overlay(ip, port):
     with grpc.insecure_channel(f'{ip}:{port}') as channel:
@@ -64,16 +67,16 @@ def main(argv):
 
         query(argv[2], argv[3], argv[4])
     elif command == 'overlay':
-        if len(argv) != 3:
+        if len(argv) != 4:
             print('Usage: simple_client.py overlay [ip] [port]')
             exit(0)
 
-        overlay(ip, port)
+        overlay(argv[2], argv[3])
     elif command == 'depart':
-        if len(argv) != 3:
+        if len(argv) != 4:
             print('Usage: simple_client.py depart [ip] [port]')
         
-        depart(ip, port)
+        depart(argv[2], argv[3])
     else:
         print('Usage: simple_client.py {command} [ip] [port] params')
 

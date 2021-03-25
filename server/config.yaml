@@ -2,5 +2,5 @@ options:
   k: 3
   strategy: 'L'
   bootstrap: 
-    ip: '192.168.0.5'
+    ip: 'localhost'
     port: 2024

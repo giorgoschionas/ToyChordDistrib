@@ -76,9 +76,9 @@ def requestsTestSimple(testFilename, addresses):
         for row in csvReader:
             randomAddress = random.choice(addresses)
             if row[0] == 'insert':
-                result = subprocess.run(["python3", "client_simple/simple_client.py", "insert", f"{randomAddress.ip}", f'{randomAddress.port}', f'{row[0]}', f'{row[1]}'])
+                result = subprocess.run(["python3", "client_simple/simple_client.py", "insert", f"{randomAddress.ip}", f'{randomAddress.port}', f'{row[1]}', f'{row[2]}'])
             elif row[0] == 'query':
-                result = subprocess.run(["python3", "client_simple/simple_client.py", "query", f"{randomAddress.ip}", f'{randomAddress.port}', f'{row[0]}'])
+                result = subprocess.run(["python3", "client_simple/simple_client.py", "query", f"{randomAddress.ip}", f'{randomAddress.port}', f'{row[1]}'])
             else:
                 print("ERROR: Unknown command")
                 exit(0)
