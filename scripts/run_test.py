@@ -100,7 +100,7 @@ def main(argv):
     client = 'chordy'
     if len(argv) == 4:
         if argv[3] == 'simple':
-            client = 'python3 client_simple/simple_client.py'
+            client = 'simple'
         elif argv[3] == 'chordy':
             client = 'chordy'
         else:
