@@ -1,101 +1,501 @@
-Result: song insert with value  Hey Jude was Added
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Respect was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  What's Going On was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Hey Jude was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-Result: song insert with value  Like a Rolling Stone was Updated
-66.21036100387573
+Result: song  Hey Jude with value  501 was Updated
+Result: song  Hey Jude was  501
+Result: song  Hey Jude was  501
+Result: song  Hey Jude was  501
+Result: song  What's Going On was  510
+Result: song  Hey Jude with value  502 was Updated
+Result: song  Like a Rolling Stone was  514
+Result: song  What's Going On was  510
+Result: song  Hey Jude was  502
+Result: song  Respect was  512
+Result: song  Respect with value  503 was Updated
+Result: song  Hey Jude was  502
+Result: song  Like a Rolling Stone was  514
+Result: song  What's Going On was  510
+Result: song  Respect was  503
+Result: song  Like a Rolling Stone with value  504 was Updated
+Result: song  What's Going On was  510
+Result: song  Hey Jude was  502
+Result: song  Hey Jude was  502
+Result: song  Like a Rolling Stone was  504
+Result: song  Hey Jude with value  505 was Updated
+Result: song  What's Going On was  510
+Result: song  Respect was  503
+Result: song  Hey Jude was  505
+Result: song  Hey Jude was  505
+Result: song  Hey Jude with value  506 was Updated
+Result: song  Hey Jude was  506
+Result: song  Hey Jude was  506
+Result: song  Like a Rolling Stone was  504
+Result: song  Respect was  503
+Result: song  Hey Jude with value  507 was Updated
+Result: song  What's Going On was  510
+Result: song  Hey Jude was  507
+Result: song  What's Going On was  510
+Result: song  Hey Jude was  507
+Result: song  What's Going On with value  508 was Updated
+Result: song  What's Going On was  508
+Result: song  Hey Jude was  507
+Result: song  Hey Jude was  507
+Result: song  Like a Rolling Stone was  504
+Result: song  Like a Rolling Stone with value  509 was Updated
+Result: song  What's Going On was  508
+Result: song  What's Going On was  508
+Result: song  Hey Jude was  507
+Result: song  Hey Jude was  507
+Result: song  What's Going On with value  510 was Updated
+Result: song  Respect was  503
+Result: song  Hey Jude was  507
+Result: song  Hey Jude was  507
+Result: song  Hey Jude was  507
+Result: song  Hey Jude with value  511 was Updated
+Result: song  Like a Rolling Stone was  509
+Result: song  What's Going On was  510
+Result: song  Like a Rolling Stone was  509
+Result: song  Respect was  503
+Result: song  Respect with value  512 was Updated
+Result: song  Hey Jude was  511
+Result: song  Respect was  512
+Result: song  Like a Rolling Stone was  509
+Result: song  Hey Jude was  511
+Result: song  Hey Jude with value  513 was Updated
+Result: song  Respect was  512
+Result: song  Respect was  512
+Result: song  Hey Jude was  513
+Result: song  Hey Jude was  513
+Result: song  Like a Rolling Stone with value  514 was Updated
+Result: song  Hey Jude was  513
+Result: song  Hey Jude was  513
+Result: song  Respect was  512
+Result: song  Respect was  512
+Result: song  What's Going On with value  515 was Updated
+Result: song  Hey Jude was  513
+Result: song  What's Going On was  515
+Result: song  What's Going On was  515
+Result: song  What's Going On was  515
+Result: song  Respect with value  516 was Updated
+Result: song  Hey Jude was  513
+Result: song  Respect was  516
+Result: song  Respect was  516
+Result: song  Hey Jude was  513
+Result: song  What's Going On with value  517 was Updated
+Result: song  What's Going On was  517
+Result: song  Hey Jude was  513
+Result: song  Like a Rolling Stone was  514
+Result: song  Hey Jude was  513
+Result: song  Hey Jude with value  518 was Updated
+Result: song  Hey Jude was  518
+Result: song  What's Going On was  517
+Result: song  Like a Rolling Stone was  514
+Result: song  Hey Jude was  518
+Result: song  Hey Jude with value  519 was Updated
+Result: song  Like a Rolling Stone was  514
+Result: song  Like a Rolling Stone was  514
+Result: song  Hey Jude was  519
+Result: song  Hey Jude was  519
+Result: song  Like a Rolling Stone with value  520 was Updated
+Result: song  Hey Jude was  519
+Result: song  Like a Rolling Stone was  520
+Result: song  Like a Rolling Stone was  520
+Result: song  Respect was  516
+Result: song  What's Going On with value  521 was Updated
+Result: song  Like a Rolling Stone was  520
+Result: song  Hey Jude was  519
+Result: song  Respect was  516
+Result: song  Hey Jude was  519
+Result: song  Respect with value  522 was Updated
+Result: song  Respect was  522
+Result: song  What's Going On was  521
+Result: song  Hey Jude was  519
+Result: song  What's Going On was  521
+Result: song  Hey Jude with value  523 was Updated
+Result: song  Like a Rolling Stone was  520
+Result: song  Hey Jude was  523
+Result: song  Hey Jude was  523
+Result: song  Hey Jude was  523
+Result: song  Hey Jude with value  524 was Updated
+Result: song  Hey Jude was  524
+Result: song  Hey Jude was  524
+Result: song  Like a Rolling Stone was  520
+Result: song  Like a Rolling Stone was  520
+Result: song  Hey Jude with value  525 was Updated
+Result: song  Hey Jude was  525
+Result: song  Like a Rolling Stone was  520
+Result: song  Hey Jude was  525
+Result: song  Hey Jude was  525
+Result: song  Hey Jude with value  526 was Updated
+Result: song  Respect was  522
+Result: song  Like a Rolling Stone was  520
+Result: song  Like a Rolling Stone was  520
+Result: song  Hey Jude was  526
+Result: song  Like a Rolling Stone with value  527 was Updated
+Result: song  Respect was  522
+Result: song  Respect was  522
+Result: song  Hey Jude was  526
+Result: song  What's Going On was  521
+Result: song  Respect with value  528 was Updated
+Result: song  What's Going On was  521
+Result: song  Hey Jude was  526
+Result: song  Hey Jude was  526
+Result: song  What's Going On was  521
+Result: song  What's Going On with value  529 was Updated
+Result: song  Respect was  528
+Result: song  Hey Jude was  526
+Result: song  What's Going On was  529
+Result: song  Hey Jude was  526
+Result: song  Hey Jude with value  530 was Updated
+Result: song  Respect was  528
+Result: song  Hey Jude was  530
+Result: song  Respect was  528
+Result: song  What's Going On was  529
+Result: song  What's Going On with value  531 was Updated
+Result: song  What's Going On was  531
+Result: song  Hey Jude was  530
+Result: song  Respect was  528
+Result: song  Hey Jude was  530
+Result: song  Hey Jude with value  532 was Updated
+Result: song  Hey Jude was  532
+Result: song  Hey Jude was  532
+Result: song  Respect was  528
+Result: song  Hey Jude was  532
+Result: song  What's Going On with value  533 was Updated
+Result: song  Like a Rolling Stone was  527
+Result: song  Hey Jude was  532
+Result: song  Respect was  528
+Result: song  Hey Jude was  532
+Result: song  Hey Jude with value  534 was Updated
+Result: song  Hey Jude was  534
+Result: song  What's Going On was  533
+Result: song  Hey Jude was  534
+Result: song  Like a Rolling Stone was  527
+Result: song  Hey Jude with value  535 was Updated
+Result: song  Hey Jude was  535
+Result: song  What's Going On was  533
+Result: song  Like a Rolling Stone was  527
+Result: song  Hey Jude was  535
+Result: song  Like a Rolling Stone with value  536 was Updated
+Result: song  Hey Jude was  535
+Result: song  What's Going On was  533
+Result: song  Hey Jude was  535
+Result: song  Hey Jude was  535
+Result: song  What's Going On with value  537 was Updated
+Result: song  Hey Jude was  535
+Result: song  Respect was  528
+Result: song  Hey Jude was  535
+Result: song  Like a Rolling Stone was  536
+Result: song  What's Going On with value  538 was Updated
+Result: song  Hey Jude was  535
+Result: song  Hey Jude was  535
+Result: song  Hey Jude was  535
+Result: song  What's Going On was  538
+Result: song  Hey Jude with value  539 was Updated
+Result: song  What's Going On was  538
+Result: song  Hey Jude was  539
+Result: song  What's Going On was  538
+Result: song  Like a Rolling Stone was  536
+Result: song  Hey Jude with value  540 was Updated
+Result: song  Respect was  528
+Result: song  Hey Jude was  540
+Result: song  Like a Rolling Stone was  536
+Result: song  Respect was  528
+Result: song  Respect with value  541 was Updated
+Result: song  Respect was  541
+Result: song  Like a Rolling Stone was  536
+Result: song  What's Going On was  538
+Result: song  Hey Jude was  540
+Result: song  Hey Jude with value  542 was Updated
+Result: song  What's Going On was  538
+Result: song  Hey Jude was  542
+Result: song  What's Going On was  538
+Result: song  Like a Rolling Stone was  536
+Result: song  Hey Jude with value  543 was Updated
+Result: song  Hey Jude was  543
+Result: song  Respect was  541
+Result: song  Hey Jude was  543
+Result: song  Hey Jude was  543
+Result: song  Hey Jude with value  544 was Updated
+Result: song  Respect was  541
+Result: song  What's Going On was  538
+Result: song  Hey Jude was  544
+Result: song  Respect was  541
+Result: song  Like a Rolling Stone with value  545 was Updated
+Result: song  Like a Rolling Stone was  545
+Result: song  Respect was  541
+Result: song  What's Going On was  538
+Result: song  What's Going On was  538
+Result: song  What's Going On with value  546 was Updated
+Result: song  Hey Jude was  544
+Result: song  What's Going On was  546
+Result: song  Hey Jude was  544
+Result: song  Hey Jude was  544
+Result: song  Like a Rolling Stone with value  547 was Updated
+Result: song  What's Going On was  546
+Result: song  Hey Jude was  544
+Result: song  Hey Jude was  544
+Result: song  Hey Jude was  544
+Result: song  Respect with value  548 was Updated
+Result: song  Hey Jude was  544
+Result: song  Like a Rolling Stone was  547
+Result: song  Like a Rolling Stone was  547
+Result: song  Hey Jude was  544
+Result: song  Hey Jude with value  549 was Updated
+Result: song  Hey Jude was  549
+Result: song  What's Going On was  546
+Result: song  Respect was  548
+Result: song  Respect was  548
+Result: song  Respect with value  550 was Updated
+Result: song  Respect was  550
+Result: song  Hey Jude was  549
+Result: song  What's Going On was  546
+Result: song  Hey Jude was  549
+Result: song  Like a Rolling Stone with value  551 was Updated
+Result: song  What's Going On was  546
+Result: song  What's Going On was  546
+Result: song  Respect was  550
+Result: song  Respect was  550
+Result: song  Hey Jude with value  552 was Updated
+Result: song  Hey Jude was  552
+Result: song  Respect was  550
+Result: song  What's Going On was  546
+Result: song  Hey Jude was  552
+Result: song  Respect with value  553 was Updated
+Result: song  Hey Jude was  552
+Result: song  Respect was  553
+Result: song  Like a Rolling Stone was  551
+Result: song  What's Going On was  546
+Result: song  Respect with value  554 was Updated
+Result: song  Hey Jude was  552
+Result: song  Like a Rolling Stone was  551
+Result: song  Hey Jude was  552
+Result: song  Hey Jude was  552
+Result: song  Hey Jude with value  555 was Updated
+Result: song  Hey Jude was  555
+Result: song  Respect was  554
+Result: song  What's Going On was  546
+Result: song  Hey Jude was  555
+Result: song  Hey Jude with value  556 was Updated
+Result: song  Like a Rolling Stone was  551
+Result: song  Like a Rolling Stone was  551
+Result: song  Hey Jude was  556
+Result: song  What's Going On was  546
+Result: song  Hey Jude with value  557 was Updated
+Result: song  Hey Jude was  557
+Result: song  Hey Jude was  557
+Result: song  Like a Rolling Stone was  551
+Result: song  Respect was  554
+Result: song  Hey Jude with value  558 was Updated
+Result: song  What's Going On was  546
+Result: song  Hey Jude was  558
+Result: song  Hey Jude was  558
+Result: song  Respect was  554
+Result: song  Respect with value  559 was Updated
+Result: song  Hey Jude was  558
+Result: song  Respect was  559
+Result: song  Hey Jude was  558
+Result: song  Hey Jude was  558
+Result: song  Respect with value  560 was Updated
+Result: song  Respect was  560
+Result: song  Hey Jude was  558
+Result: song  What's Going On was  546
+Result: song  What's Going On was  546
+Result: song  Hey Jude with value  561 was Updated
+Result: song  What's Going On was  546
+Result: song  Like a Rolling Stone was  551
+Result: song  Respect was  560
+Result: song  Like a Rolling Stone was  551
+Result: song  What's Going On with value  562 was Updated
+Result: song  Hey Jude was  561
+Result: song  Hey Jude was  561
+Result: song  Like a Rolling Stone was  551
+Result: song  What's Going On was  562
+Result: song  What's Going On with value  563 was Updated
+Result: song  Hey Jude was  561
+Result: song  Hey Jude was  561
+Result: song  Respect was  560
+Result: song  Hey Jude was  561
+Result: song  What's Going On with value  564 was Updated
+Result: song  Hey Jude was  561
+Result: song  Like a Rolling Stone was  551
+Result: song  What's Going On was  564
+Result: song  Respect was  560
+Result: song  Hey Jude with value  565 was Updated
+Result: song  Respect was  560
+Result: song  Like a Rolling Stone was  551
+Result: song  Hey Jude was  565
+Result: song  Respect was  560
+Result: song  Respect with value  566 was Updated
+Result: song  Hey Jude was  565
+Result: song  What's Going On was  564
+Result: song  Respect was  566
+Result: song  What's Going On was  564
+Result: song  Respect with value  567 was Updated
+Result: song  Respect was  567
+Result: song  Like a Rolling Stone was  551
+Result: song  Hey Jude was  565
+Result: song  Hey Jude was  565
+Result: song  Hey Jude with value  568 was Updated
+Result: song  Hey Jude was  568
+Result: song  Respect was  567
+Result: song  Respect was  567
+Result: song  Respect was  567
+Result: song  What's Going On with value  569 was Updated
+Result: song  Hey Jude was  568
+Result: song  Hey Jude was  568
+Result: song  Hey Jude was  568
+Result: song  Hey Jude was  568
+Result: song  Hey Jude with value  570 was Updated
+Result: song  Hey Jude was  570
+Result: song  Hey Jude was  570
+Result: song  What's Going On was  569
+Result: song  Respect was  567
+Result: song  Like a Rolling Stone with value  571 was Updated
+Result: song  Hey Jude was  570
+Result: song  What's Going On was  569
+Result: song  Like a Rolling Stone was  571
+Result: song  Hey Jude was  570
+Result: song  Hey Jude with value  572 was Updated
+Result: song  What's Going On was  569
+Result: song  What's Going On was  569
+Result: song  What's Going On was  569
+Result: song  What's Going On was  569
+Result: song  Hey Jude with value  573 was Updated
+Result: song  Hey Jude was  573
+Result: song  Hey Jude was  573
+Result: song  Hey Jude was  573
+Result: song  Hey Jude was  573
+Result: song  What's Going On with value  574 was Updated
+Result: song  Like a Rolling Stone was  571
+Result: song  Hey Jude was  573
+Result: song  Respect was  567
+Result: song  Respect was  567
+Result: song  Like a Rolling Stone with value  575 was Updated
+Result: song  Hey Jude was  573
+Result: song  Hey Jude was  573
+Result: song  Like a Rolling Stone was  575
+Result: song  Hey Jude was  573
+Result: song  Hey Jude with value  576 was Updated
+Result: song  Respect was  567
+Result: song  Hey Jude was  576
+Result: song  Hey Jude was  576
+Result: song  What's Going On was  574
+Result: song  Like a Rolling Stone with value  577 was Updated
+Result: song  Respect was  567
+Result: song  Like a Rolling Stone was  577
+Result: song  What's Going On was  574
+Result: song  Like a Rolling Stone was  577
+Result: song  Like a Rolling Stone with value  578 was Updated
+Result: song  Like a Rolling Stone was  578
+Result: song  Hey Jude was  576
+Result: song  Hey Jude was  576
+Result: song  What's Going On was  574
+Result: song  Hey Jude with value  579 was Updated
+Result: song  Hey Jude was  579
+Result: song  What's Going On was  574
+Result: song  What's Going On was  574
+Result: song  Hey Jude was  579
+Result: song  Hey Jude with value  580 was Updated
+Result: song  Respect was  567
+Result: song  Like a Rolling Stone was  578
+Result: song  Like a Rolling Stone was  578
+Result: song  What's Going On was  574
+Result: song  Hey Jude with value  581 was Updated
+Result: song  Respect was  567
+Result: song  Hey Jude was  581
+Result: song  What's Going On was  574
+Result: song  Hey Jude was  581
+Result: song  Like a Rolling Stone with value  582 was Updated
+Result: song  Respect was  567
+Result: song  Respect was  567
+Result: song  Hey Jude was  581
+Result: song  Hey Jude was  581
+Result: song  Like a Rolling Stone with value  583 was Updated
+Result: song  Hey Jude was  581
+Result: song  Like a Rolling Stone was  583
+Result: song  Hey Jude was  581
+Result: song  Hey Jude was  581
+Result: song  Respect with value  584 was Updated
+Result: song  Hey Jude was  581
+Result: song  Like a Rolling Stone was  583
+Result: song  Hey Jude was  581
+Result: song  Hey Jude was  581
+Result: song  Like a Rolling Stone with value  585 was Updated
+Result: song  Respect was  584
+Result: song  What's Going On was  574
+Result: song  Like a Rolling Stone was  585
+Result: song  Respect was  584
+Result: song  Hey Jude with value  586 was Updated
+Result: song  Hey Jude was  586
+Result: song  Like a Rolling Stone was  585
+Result: song  Hey Jude was  586
+Result: song  Hey Jude was  586
+Result: song  Respect with value  587 was Updated
+Result: song  Hey Jude was  586
+Result: song  Hey Jude was  586
+Result: song  Hey Jude was  586
+Result: song  Hey Jude was  586
+Result: song  Hey Jude with value  588 was Updated
+Result: song  Respect was  587
+Result: song  Hey Jude was  588
+Result: song  Hey Jude was  588
+Result: song  Like a Rolling Stone was  585
+Result: song  Respect with value  589 was Updated
+Result: song  What's Going On was  574
+Result: song  Hey Jude was  588
+Result: song  Like a Rolling Stone was  585
+Result: song  What's Going On was  574
+Result: song  What's Going On with value  590 was Updated
+Result: song  Respect was  589
+Result: song  Like a Rolling Stone was  585
+Result: song  Respect was  589
+Result: song  Hey Jude was  588
+Result: song  Hey Jude with value  591 was Updated
+Result: song  Hey Jude was  591
+Result: song  Hey Jude was  591
+Result: song  Like a Rolling Stone was  585
+Result: song  Like a Rolling Stone was  585
+Result: song  What's Going On with value  592 was Updated
+Result: song  Respect was  589
+Result: song  Respect was  589
+Result: song  Like a Rolling Stone was  585
+Result: song  Like a Rolling Stone was  585
+Result: song  Like a Rolling Stone with value  593 was Updated
+Result: song  Hey Jude was  591
+Result: song  Like a Rolling Stone was  593
+Result: song  Hey Jude was  591
+Result: song  Hey Jude was  591
+Result: song  Hey Jude with value  594 was Updated
+Result: song  What's Going On was  592
+Result: song  Hey Jude was  594
+Result: song  Like a Rolling Stone was  593
+Result: song  Hey Jude was  594
+Result: song  Hey Jude with value  595 was Updated
+Result: song  Like a Rolling Stone was  593
+Result: song  Hey Jude was  595
+Result: song  Respect was  589
+Result: song  Hey Jude was  595
+Result: song  Hey Jude with value  596 was Updated
+Result: song  Like a Rolling Stone was  593
+Result: song  Hey Jude was  596
+Result: song  Hey Jude was  596
+Result: song  What's Going On was  592
+Result: song  Hey Jude with value  597 was Updated
+Result: song  Hey Jude was  597
+Result: song  What's Going On was  592
+Result: song  Like a Rolling Stone was  593
+Result: song  Hey Jude was  597
+Result: song  Hey Jude with value  598 was Updated
+Result: song  Hey Jude was  598
+Result: song  Like a Rolling Stone was  593
+Result: song  What's Going On was  592
+Result: song  Respect was  589
+Result: song  Like a Rolling Stone with value  599 was Updated
+Result: song  Hey Jude was  598
+Result: song  Respect was  589
+Result: song  What's Going On was  592
+Result: song  Respect was  589
+Result: song  Like a Rolling Stone with value  600 was Updated
+Result: song  Hey Jude was  598
+Result: song  Hey Jude was  598
+Result: song  Respect was  589
+Result: song  Like a Rolling Stone was  600
+67.31516194343567
