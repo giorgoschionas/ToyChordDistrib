@@ -15,11 +15,11 @@ then
 
     # Name first Pane and start zsh
     tmux rename-window -t 0 'Server1'
-    tmux send-keys -t 'Server1' 'python3 server/main.py $IP $PORT' C-m
+    tmux send-keys -t 'Server1' 'python3 server/main.py' "$IP" "$PORT" C-m
 
     # Create and setup pane for hugo server
     tmux new-window -t $SESSION:1 -n 'Server2'
-    tmux send-keys -t 'Server2' 'python3 server/main.py $IP $((PORT + 1))' C-m
+    tmux send-keys -t 'Server2' 'python3 server/main.py' "$IP" $((PORT + 1)) C-m
 fi
 
 # Attach Session, on the Main window

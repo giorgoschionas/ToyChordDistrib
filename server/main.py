@@ -21,8 +21,8 @@ def main(argv):
     ip = argv[1]
     port = int(argv[2])
 
-    CONFIG_PATH = "config.yaml"
-    config = yaml.safe_load(open(CONFIG_PATH))
+    CONFIG_PATH = "server/config.yaml"
+    serverConfig = yaml.safe_load(open(CONFIG_PATH))
     serverOptions = serverConfig['options']
     k = serverOptions['k']
     strategy = serverOptions['strategy']
