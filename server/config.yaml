@@ -1,5 +1,5 @@
 options:
-  k: 20
+  k: 2
   strategy: 'E'
   bootstrap: 
     ip: '192.168.0.5'

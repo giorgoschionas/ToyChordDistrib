@@ -87,7 +87,7 @@ class SongServicer(ClientServiceServicer):
         # Send a shutdown event to the server
         self._shutdownServerEvent.set()
         self._shutdownServerEvent2.set()
-        return DepartResponse(response='Node {self.chordNode.id} left chord successfully')
+        return DepartResponse(response=f'Node {self.chordNode.id} left chord successfully')
 
     def Overlay(self, request, context):
         self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING overlay request to {self.chordNode.successor.id}")
