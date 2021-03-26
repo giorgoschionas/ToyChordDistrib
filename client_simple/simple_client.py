@@ -23,7 +23,10 @@ def query(ip, port, key):
             print(f'Result: song {key} not found')
         else:
             for item in response.pairs:
-                print(f'Result: song {item.key_entry} was {item.value_entry}')
+                if item.key_entry != '---':
+                    print(f'Result: song {item.key_entry} was {item.value_entry}')
+                else:
+                    print('-----------------------------')
 
 def overlay(ip, port):
     with grpc.insecure_channel(f'{ip}:{port}') as channel:

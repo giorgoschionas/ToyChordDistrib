@@ -48,6 +48,8 @@ class NodeServicer(NodeServiceServicer):
             response = self.chordNode.successor.nodeService.queryAll(request.id)
 
         data = self.chordNode.songRepository.getDHT()
+        space = {'---','---'}
+        data['---']= '---'
         return self._concatData(response, data)
 
     def _concatData(self, data, newData):
