@@ -31,7 +31,7 @@ def query(ip, port, key):
 def overlay(ip, port):
     with grpc.insecure_channel(f'{ip}:{port}') as channel:
         stub = ClientServiceStub(channel)
-        response = stub.overlay(OverlayRequest())
+        response = stub.Overlay(OverlayRequest())
         print('Chord Network topology')
         for item in response.ids:
             print(f'Node id: {item}') 

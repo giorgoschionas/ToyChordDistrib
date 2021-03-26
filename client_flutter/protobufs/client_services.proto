@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package chord;
+
+service ClientService {
+    rpc Insert(InsertRequest) returns (InsertResponse) {}
+    rpc Delete(DeleteRequest) returns (DeleteResponse)  {}
+    rpc Query(QueryRequest) returns (QueryResponse) {}
+    rpc Depart(DepartRequest) returns(DepartResponse){}
+    rpc Overlay(OverlayRequest) returns(OverlayResponse){}
+}
+
+message InsertRequest {
+    string song = 1;
+    string value = 2;
+}
+
+message InsertResponse {
+    string response = 1;
+}
+
+message DeleteRequest {
+    string song = 1;
+}
+
+message DeleteResponse{
+    string response = 1;
+}
+
+message QueryRequest{
+    string song = 1;
+}
+
+message PairClient {
+    string key_entry = 1;
+    string value_entry = 2;
+}
+
+message QueryResponse{
+    repeated PairClient pairs = 1;
+}
+
+message DepartRequest{
+    string req=1;
+}
+
+message DepartResponse{
+    string response=1;
+}
+
+message OverlayRequest{
+    string req=1;
+}
+
+message OverlayResponse{
+    repeated uint64 ids =1;
+}
