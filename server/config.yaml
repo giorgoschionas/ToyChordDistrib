@@ -1,6 +1,6 @@
 options:
   k: 20
-  strategy: 'L'
+  strategy: 'E'
   bootstrap: 
     ip: '192.168.0.5'
     port: 2024
