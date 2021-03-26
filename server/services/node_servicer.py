@@ -49,8 +49,8 @@ class NodeServicer(NodeServiceServicer):
             self.chordNode.logger.debug(f"NODE {self.chordNode.id}: SENDING query-all request to {self.chordNode.successor.id}")
             response = self.chordNode.successor.nodeService.queryAll(request.id)
             data = self.chordNode.songRepository.getDHT()
-            space = {'---','---'}
-            data['---']= '---'
+            # space = {'---','---'}
+            # data['---']= '---'
             return self._concatData(response, data)
 
     def _concatData(self, data, newData):
